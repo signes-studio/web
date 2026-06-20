@@ -5,93 +5,71 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIGNES | Visual Research</title>
     
-    <meta name="description" content="SIGNES — Visual Research. Architectural curation and material memory.">
+    <!-- Meta tags básicas para SEO -->
+    <meta name="description" content="SIGNES.STUDIO — Visual Research.">
+    
+    <!-- Vinculación del favicon en formato SVG -->
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
+    <!-- Importamos la tipografía Cormorant desde Google Fonts (Pesos 300, 400 y 600) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@300;400;600&display=swap" rel="stylesheet">
     
+    <!-- Vinculamos los estilos externos -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- Estilos de contingencia para tipografía y enlaces limpios -->
+    <style>
+        /* Fuerza la nueva tipografía editorial */
+        body {
+            font-family: 'Cormorant', serif;
+        }
+
+        /* Desactiva el azul hipervínculo por defecto y aplica gris suave */
+        .contact-link {
+            color: #8c8c8c; /* Gris suave */
+            text-decoration: none; /* Elimina el subrayado técnico */
+            transition: color 0.3s ease;
+        }
+
+        /* Efecto sutil al pasar el cursor (hover) a un gris más oscuro */
+        .contact-link:hover {
+            color: #2c2c2c; 
+        }
+    </style>
 </head>
 <body>
 
-    <div class="scroll-container">
-
-        <section class="panel cover">
-            <div class="container">
-                <h1 class="logo">
-                    <span class="bold">SIGNES</span><span class="extralight">.STUDIO</span>
-                </h1>
-                <p class="subtitle">Visual Research</p>
-            </div>
-            <div class="scroll-indicator">[ Scroll ]</div>
-        </section>
-
-        <section class="panel">
-            <picture class="image-wrapper">
-                <source media="(max-width: 768px)" srcset="img/img-01-mobile.webp">
-                <img src="img/img-01-desktop.webp" alt="SIGNES Visual Research - Archive Vol I - 01" class="obra-visual">
-            </picture>
-        </section>
-
-        <section class="panel">
-            <picture class="image-wrapper">
-                <source media="(max-width: 768px)" srcset="img/img-02-mobile.webp">
-                <img src="img/img-02-desktop.webp" alt="SIGNES Visual Research - Archive Vol I - 02" class="obra-visual">
-            </picture>
-        </section>
-
-        <section class="panel">
-            <picture class="image-wrapper">
-                <source media="(max-width: 768px)" srcset="img/img-03-mobile.webp">
-                <img src="img/img-03-desktop.webp" alt="SIGNES Visual Research - Archive Vol I - 03" class="obra-visual">
-            </picture>
-        </section>
-
-        <section class="panel">
-            <picture class="image-wrapper">
-                <source media="(max-width: 768px)" srcset="img/img-04-mobile.webp">
-                <img src="img/img-04-desktop.webp" alt="SIGNES Visual Research - Archive Vol I - 04" class="obra-visual">
-            </picture>
-        </section>
-
-        <section class="panel">
-            <picture class="image-wrapper">
-                <source media="(max-width: 768px)" srcset="img/img-05-mobile.webp">
-                <img src="img/img-05-desktop.webp" alt="SIGNES Visual Research - Archive Vol I - 05" class="obra-visual">
-            </picture>
-        </section>
-
-        <section class="panel">
-            <picture class="image-wrapper">
-                <source media="(max-width: 768px)" srcset="img/img-06-mobile.webp">
-                <img src="img/img-06-desktop.webp" alt="SIGNES Visual Research - Archive Vol I - 06" class="obra-visual">
-            </picture>
-        </section>
-
-        <section class="panel footer-panel">
-            <div class="manifesto">
-                <p class="italic-text">"Exploring material memory through art direction and visual archaeology."</p>
-                
-                <p class="studio-description">SIGNES.STUDIO is an independent architectural visual research practice based in Valencia, Spain. We specialize in spatial curation, recovering the material memory of unbuilt environments through a cinematic and analog lens.</p>
-                
-                <p class="project-details">Vol. I — SANTA FE: The Unbuilt Archive</p>
-            </div>
-            
-            <footer class="footer">
-                <a href="mailto:office@signes.studio" class="contact-link">office@signes.studio</a>
-            </footer>
-        </section>
-
+    <div class="container">
+        <h1 class="logo">
+            <span class="bold">SIGNES</span><span class="extralight">.STUDIO</span>
+        </h1>
+        <p class="subtitle">Visual Research</p>
     </div>
 
+<!-- PIE DE PÁGINA: Correo de contacto sutil -->
+    <footer class="footer">
+        <a href="mailto:office@signes.studio" class="contact-link">office@signes.studio</a>
+    </footer>
+
+    <!-- SCRIPT DE PROTECCIÓN BÁSICA -->
     <script>
-        document.addEventListener('contextmenu', e => e.preventDefault());
+        // 1. Bloquear el clic derecho del ratón
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        // 2. Bloquear atajos de teclado para ver el código fuente e inspeccionar
         document.onkeydown = function(e) {
-            if(e.keyCode == 123) return false;
-            if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false;
-            if(e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) return false;
+            // F12 (Herramientas de desarrollador)
+            if(e.keyCode == 123) { return false; }
+            // Ctrl+U (Ver código fuente)
+            if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { return false; }
+            // Ctrl+Shift+I / Ctrl+Shift+C / Ctrl+Shift+J (Inspeccionar elemento)
+            if(e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) {
+                return false;
+            }
         }
     </script>
 </body>
