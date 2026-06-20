@@ -5,10 +5,11 @@
     box-sizing: border-box;
 }
 
-/* Ocultar barra de scroll en navegadores genéricos */
+/* Ocultar barra de scroll global y fijar altura dinámica (dvh) */
 html, body {
     height: 100%;
-    overflow: hidden; /* Congelamos el fondo, solo el contenedor de scroll se moverá */
+    height: 100dvh; /* Altura dinámica para evitar la barra de Safari en iPhone */
+    overflow: hidden;
     background-color: #F5F4F0;
     font-family: 'Cormorant', serif;
     -webkit-user-select: none;
@@ -17,17 +18,18 @@ html, body {
     user-select: none;
 }
 
-/* 2. El Motor de Scroll Snapping */
+/* 2. El Motor de Scroll Snapping (Corregido para fluidez) */
 .scroll-container {
-    height: 100vh;
+    height: 100%;
+    height: 100dvh;
     width: 100vw;
     overflow-y: scroll;
-    scroll-snap-type: y mandatory; /* Obliga a alinear verticalmente */
-    scroll-behavior: smooth;
+    scroll-snap-type: y mandatory;
+    /* Eliminado scroll-behavior: smooth para evitar conflictos con el imán nativo */
     animation: fadeIn 1.5s ease-in-out;
 }
 
-/* Ocultar la barra interna del scroll-container */
+/* Ocultar la barra interna del contenedor */
 .scroll-container {
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -36,11 +38,13 @@ html, body {
     display: none;
 }
 
-/* 3. Comportamiento de cada Panel (Página) */
+/* 3. Comportamiento de cada Panel (Imán de pantalla completa) */
 .panel {
-    height: 100vh; /* Cada panel ocupa el 100% de la pantalla */
+    height: 100%;
+    height: 100dvh;
     width: 100vw;
-    scroll-snap-align: center; /* El imán se engancha en el centro de la sección */
+    scroll-snap-align: start; /* Cambiado a 'start' para asegurar que la página encaje perfectamente arriba */
+    scroll-snap-stop: always; /* Obliga a frenar en cada imagen, evitando saltarse varias al deslizar rápido */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -61,6 +65,7 @@ html, body {
 }
 
 .bold { font-weight: 600; }
+.extralight { font-weight: 300; }
 
 .subtitle {
     color: #777777;
@@ -82,7 +87,7 @@ html, body {
     animation: pulse 2s infinite ease-in-out;
 }
 
-/* 5. Estilos del Manifiesto y Cierre */
+/* 5. Estilos del Manifiesto, Descripción y Cierre */
 .footer-panel {
     flex-direction: column;
 }
@@ -99,14 +104,24 @@ html, body {
     color: #2c2c2c;
     font-weight: 400;
     line-height: 1.4;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+/* NUEVO: Estilos para la descripción del estudio */
+.studio-description {
+    font-size: 1.1rem;
+    color: #555555;
+    font-weight: 300;
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
+    letter-spacing: 0.05em;
 }
 
 .project-details {
     font-size: 0.9rem;
     text-transform: uppercase;
     letter-spacing: 0.15em;
-    color: #777777;
+    color: #8c8c8c;
 }
 
 .footer {
@@ -127,10 +142,11 @@ html, body {
     color: #2c2c2c;
 }
 
-/* 6. Comportamiento de la Galería (Paspartú Museístico) */
+/* 6. Comportamiento de la Galería (Imágenes) */
 .image-wrapper {
-    width: 85vw; /* Deja un 15% de margen a los lados */
-    height: 85vh; /* Deja un 15% de margen arriba y abajo */
+    width: 85vw;
+    height: 85vh;
+    height: 85dvh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -139,7 +155,7 @@ html, body {
 .obra-visual {
     max-width: 100%;
     max-height: 100%;
-    object-fit: contain; /* Ajusta la imagen sin recortarla, manteniendo el formato original */
+    object-fit: contain;
     -webkit-user-drag: none;
     -khtml-user-drag: none;
     -moz-user-drag: none;
@@ -170,10 +186,15 @@ html, body {
         letter-spacing: 0.15em;
     }
     .image-wrapper {
-        width: 90vw;
-        height: 90vh; /* Maximiza el recorte 4:5 en la pantalla del móvil */
+        width: 100vw; /* En móvil, aprovecha todo el ancho disponible */
+        height: 100vh;
+        height: 100dvh;
+        padding: 2rem; /* Margen interior para que no toque los bordes */
     }
     .italic-text {
         font-size: 1.4rem;
+    }
+    .studio-description {
+        font-size: 1rem;
     }
 }
