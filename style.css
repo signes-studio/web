@@ -1,8 +1,8 @@
-/* 1. Reset básico para asegurar que se vea igual en todos los navegadores */
+/* 1. Reset básico */
 * {
     margin: 0;
     padding: 0;
-    box-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 /* 2. Configuración del lienzo de fondo */
@@ -13,38 +13,39 @@ body {
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    /* Aplicamos Outfit como tipografía principal */
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 /* 3. Contenedor centrado */
 .container {
     text-align: center;
-    user-select: none; /* Evita el parpadeo de selección al hacer doble clic */
+    user-select: none;
 }
 
 /* 4. Estilo del logotipo */
 .logo {
-    color: #000000; /* Negro absoluto */
-    font-size: 3.5rem; /* Tamaño grande y equilibrado */
-    letter-spacing: 0.15em; /* Espaciado entre letras elegante/editorial */
+    color: #1a1a1a; /* Negro suave, elegante y mitigado */
+    font-size: 3.5rem;
+    letter-spacing: 0.15em; /* Espaciado editorial premium */
     line-height: 1;
     text-transform: uppercase;
 }
 
-/* Variante Bold para SIGNES */
+/* SIGNES: Weight 700 (Bold) */
 .bold {
     font-weight: 700;
 }
 
-/* Variante Thin para .STUDIO */
-.thin {
-    font-weight: 300;
+/* .STUDIO: Weight 200 (ExtraLight) */
+.extralight {
+    font-weight: 200;
 }
 
-/* Ajuste de tamaño para pantallas de móvil (Responsivo) */
+/* Ajuste responsivo para pantallas móviles */
 @media (max-width: 768px) {
     .logo {
-        font-size: 2.2rem; /* Se reduce el tamaño en pantallas pequeñas */
+        font-size: 2.2rem;
         letter-spacing: 0.1em;
     }
 }
