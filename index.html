@@ -48,10 +48,29 @@
         <p class="subtitle">Visual Research</p>
     </div>
 
-    <!-- PIE DE PÁGINA: Correo de contacto sutil -->
+<!-- PIE DE PÁGINA: Correo de contacto sutil -->
     <footer class="footer">
         <a href="mailto:office@signes.studio" class="contact-link">office@signes.studio</a>
     </footer>
 
+    <!-- SCRIPT DE PROTECCIÓN BÁSICA -->
+    <script>
+        // 1. Bloquear el clic derecho del ratón
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        // 2. Bloquear atajos de teclado para ver el código fuente e inspeccionar
+        document.onkeydown = function(e) {
+            // F12 (Herramientas de desarrollador)
+            if(e.keyCode == 123) { return false; }
+            // Ctrl+U (Ver código fuente)
+            if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { return false; }
+            // Ctrl+Shift+I / Ctrl+Shift+C / Ctrl+Shift+J (Inspeccionar elemento)
+            if(e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) {
+                return false;
+            }
+        }
+    </script>
 </body>
 </html>
