@@ -10,7 +10,7 @@ body {
     background-color: #ffffff; /* Blanco absoluto */
     height: 100vh;
     display: flex;
-    flex-direction: column; /* Cambiado a columna para estructurar el pie de página */
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     overflow: hidden;
@@ -21,7 +21,7 @@ body {
 .container {
     text-align: center;
     user-select: none;
-    flex-grow: 1; /* Empuja al footer hacia abajo manteniendo el logo centrado */
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -46,37 +46,27 @@ body {
     font-weight: 200;
 }
 
-/* Subtítulo descriptivo para SEO y balance visual */
-.subtitle {
-    color: #777777;
-    font-weight: 200;
-    font-size: 0.85rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    margin-top: 1.5rem;
-    user-select: none;
-}
-
 /* 5. Pie de página fijo abajo */
 .footer {
     position: absolute;
-    bottom: 2.5rem; /* Margen generoso y limpio desde abajo */
+    bottom: 2.5rem; /* Margen generoso desde abajo */
     text-align: center;
 }
 
-/* Estilo del enlace del correo */
+/* Estilo del enlace del correo (Elimina el azul y el subrayado por defecto) */
 .contact-link {
-    color: #a0a0a0; /* Gris muy suave y sofisticado */
+    color: #b0b0b0 !important; /* Gris suave y sofisticado garantizado */
     font-weight: 200;
     font-size: 0.9rem;
     letter-spacing: 0.15em;
-    text-decoration: none;
-    transition: color 0.3s ease; /* Transición suave para el interactivo */
+    text-decoration: none !important; /* Fuerza a eliminar el subrayado */
+    transition: color 0.3s ease;
 }
 
-/* Efecto sutil al pasar el ratón */
+/* Efecto al pasar el ratón */
 .contact-link:hover {
-    color: #1a1a1a; /* Oscurece al tono del logo al interactuar */
+    color: #1a1a1a !important; /* Cambia sutilmente al tono del logo */
+    text-decoration: none !important;
 }
 
 /* Ajuste responsivo para pantallas móviles */
@@ -84,11 +74,6 @@ body {
     .logo {
         font-size: 2.2rem;
         letter-spacing: 0.1em;
-    }
-    .subtitle {
-        font-size: 0.7rem;
-        letter-spacing: 0.2em;
-        margin-top: 1rem;
     }
     .footer {
         bottom: 2rem;
