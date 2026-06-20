@@ -1,23 +1,43 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIGNES.STUDIO</title>
+    <title>SIGNES | Visual Research</title>
     
     <!-- Meta tags básicas para SEO -->
-    <meta name="description" content="SIGNES.STUDIO — Estudio de arquitectura y visualización arquitectónica de alta gama.">
+    <meta name="description" content="SIGNES.STUDIO — Visual Research.">
     
     <!-- Vinculación del favicon en formato SVG -->
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
-    <!-- Importamos la tipografía Outfit desde Google Fonts (Pesos 200 y 700) -->
+    <!-- Importamos la tipografía Cormorant desde Google Fonts (Pesos 300, 400 y 600) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@300;400;600&display=swap" rel="stylesheet">
     
     <!-- Vinculamos los estilos externos -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- Estilos de contingencia para tipografía y enlaces limpios -->
+    <style>
+        /* Fuerza la nueva tipografía editorial */
+        body {
+            font-family: 'Cormorant', serif;
+        }
+
+        /* Desactiva el azul hipervínculo por defecto y aplica gris suave */
+        .contact-link {
+            color: #8c8c8c; /* Gris suave */
+            text-decoration: none; /* Elimina el subrayado técnico */
+            transition: color 0.3s ease;
+        }
+
+        /* Efecto sutil al pasar el cursor (hover) a un gris más oscuro */
+        .contact-link:hover {
+            color: #2c2c2c; 
+        }
+    </style>
 </head>
 <body>
 
