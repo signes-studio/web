@@ -1,200 +1,133 @@
-/* 1. Reset básico */
+/* 1. Reset básico y ocultación de scrollbar */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Ocultar barra de scroll global y fijar altura dinámica (dvh) */
-html, body {
-    height: 100%;
-    height: 100dvh; /* Altura dinámica para evitar la barra de Safari en iPhone */
+/* Oculta la barra de desplazamiento lateral manteniendo la capacidad de hacer scroll */
+html {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE y Edge */
+}
+::-webkit-scrollbar {
+    display: none; /* Chrome, Safari y Opera */
+}
+
+/* 2. Configuración del lienzo de fondo y animaciones */
+body {
+    background-color: #F5F4F0; /* Tono hueso pergamino (Lujo Silencioso) */
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     overflow: hidden;
-    background-color: #F5F4F0;
-    font-family: 'Cormorant', serif;
+    font-family: 'Cormorant', serif; /* Tipografía editorial */
+    
+    /* Bloqueo global de selección de texto (evita el resaltado azul) */
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-}
-
-/* 2. El Motor de Scroll Snapping (Corregido para fluidez) */
-.scroll-container {
-    height: 100%;
-    height: 100dvh;
-    width: 100vw;
-    overflow-y: scroll;
-    scroll-snap-type: y mandatory;
-    /* Eliminado scroll-behavior: smooth para evitar conflictos con el imán nativo */
+    
+    /* Animación de entrada suave (fade-in) */
     animation: fadeIn 1.5s ease-in-out;
 }
 
-/* Ocultar la barra interna del contenedor */
-.scroll-container {
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-}
-.scroll-container::-webkit-scrollbar {
-    display: none;
+/* Definición de la animación cinematográfica */
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
 }
 
-/* 3. Comportamiento de cada Panel (Imán de pantalla completa) */
-.panel {
-    height: 100%;
-    height: 100dvh;
-    width: 100vw;
-    scroll-snap-align: start; /* Cambiado a 'start' para asegurar que la página encaje perfectamente arriba */
-    scroll-snap-stop: always; /* Obliga a frenar en cada imagen, evitando saltarse varias al deslizar rápido */
+/* 3. Protección de imágenes (Anti-arrastre y Anti-clic derecho sobre fotos) */
+img {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+    pointer-events: none; /* El ratón atraviesa la imagen, impidiendo descargas rápidas */
+}
+
+/* 4. Contenedor centrado */
+.container {
+    text-align: center;
+    user-select: none;
+    flex-grow: 1;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-}
-
-/* 4. Estilos de la Portada */
-.cover {
     flex-direction: column;
+    justify-content: center;
 }
 
+/* 5. Estilo del logotipo */
 .logo {
-    color: #2c2c2c;
+    color: #2c2c2c; /* Gris antracita profundo, más orgánico que el negro puro */
     font-size: 3.5rem;
     letter-spacing: 0.15em;
     line-height: 1;
     text-transform: uppercase;
 }
 
-.bold { font-weight: 600; }
-.extralight { font-weight: 300; }
+/* SIGNES: Peso 600 (Semibold para Cormorant) */
+.bold {
+    font-weight: 600;
+}
 
+/* .STUDIO: Peso 300 (El más ligero disponible en Cormorant) */
+.extralight {
+    font-weight: 300;
+}
+
+/* Subtítulo descriptivo */
 .subtitle {
     color: #777777;
     font-weight: 300;
-    font-size: 1rem;
-    letter-spacing: 0.25em;
+    font-size: 1rem; /* Subido ligeramente, las Serif se leen más pequeñas que las Sans */
+    letter-spacing: 0.25em; /* Tracking ligeramente más cerrado para tipografías Serif */
     text-transform: uppercase;
     margin-top: 1.5rem;
+    user-select: none;
 }
 
-.scroll-indicator {
-    position: absolute;
-    bottom: 3rem;
-    font-size: 0.8rem;
-    letter-spacing: 0.15em;
-    color: #8c8c8c;
-    text-transform: uppercase;
-    font-weight: 300;
-    animation: pulse 2s infinite ease-in-out;
-}
-
-/* 5. Estilos del Manifiesto, Descripción y Cierre */
-.footer-panel {
-    flex-direction: column;
-}
-
-.manifesto {
-    text-align: center;
-    max-width: 600px;
-    padding: 0 2rem;
-}
-
-.italic-text {
-    font-size: 1.8rem;
-    font-style: italic;
-    color: #2c2c2c;
-    font-weight: 400;
-    line-height: 1.4;
-    margin-bottom: 1.5rem;
-}
-
-/* NUEVO: Estilos para la descripción del estudio */
-.studio-description {
-    font-size: 1.1rem;
-    color: #555555;
-    font-weight: 300;
-    line-height: 1.6;
-    margin-bottom: 2.5rem;
-    letter-spacing: 0.05em;
-}
-
-.project-details {
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    color: #8c8c8c;
-}
-
+/* 6. Pie de página fijo abajo */
 .footer {
     position: absolute;
-    bottom: 3rem;
+    bottom: 2.5rem;
+    text-align: center;
 }
 
+/* Estilo del enlace del correo */
 .contact-link {
-    color: #8c8c8c;
+    color: #8c8c8c; /* Gris suave, elegante y discreto */
     font-weight: 300;
     font-size: 1rem;
     letter-spacing: 0.1em;
-    text-decoration: none;
+    text-decoration: none; /* Elimina el subrayado y el modo hipervínculo azul */
     transition: color 0.3s ease;
 }
 
+/* Efecto sutil al pasar el ratón */
 .contact-link:hover {
-    color: #2c2c2c;
+    color: #2c2c2c; /* Oscurece al gris antracita del logo */
 }
 
-/* 6. Comportamiento de la Galería (Imágenes) */
-.image-wrapper {
-    width: 85vw;
-    height: 85vh;
-    height: 85dvh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.obra-visual {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-    -webkit-user-drag: none;
-    -khtml-user-drag: none;
-    -moz-user-drag: none;
-    -o-user-drag: none;
-    user-drag: none;
-    pointer-events: none;
-}
-
-/* 7. Animaciones */
-@keyframes fadeIn {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
-}
-
-@keyframes pulse {
-    0%, 100% { opacity: 0.3; }
-    50% { opacity: 0.8; }
-}
-
-/* 8. Responsive para Móviles */
+/* 7. Ajuste responsivo para pantallas móviles */
 @media (max-width: 768px) {
     .logo {
         font-size: 2.2rem;
         letter-spacing: 0.1em;
     }
     .subtitle {
-        font-size: 0.8rem;
+        font-size: 0.9rem;
         letter-spacing: 0.15em;
+        margin-top: 1rem;
     }
-    .image-wrapper {
-        width: 100vw; /* En móvil, aprovecha todo el ancho disponible */
-        height: 100vh;
-        height: 100dvh;
-        padding: 2rem; /* Margen interior para que no toque los bordes */
+    .footer {
+        bottom: 2rem;
     }
-    .italic-text {
-        font-size: 1.4rem;
-    }
-    .studio-description {
-        font-size: 1rem;
+    .contact-link {
+        font-size: 0.95rem;
     }
 }
