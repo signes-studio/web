@@ -3,74 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIGNES | Visual Research</title>
     
-    <!-- Meta tags básicas para SEO -->
-    <meta name="description" content="SIGNES.STUDIO — Visual Research.">
+    <title>Signes Studio | Visual Research & Architectural Visualization</title>
+    <meta name="description" content="Signes Studio is a specialized creative studio focused on high-end architectural visualization (ArchViz) and visual research. Crafting aesthetic, minimalist, and contemporary visual narratives for global architectural projects.">
     
-    <!-- Vinculación del favicon en formato SVG -->
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <meta property="og:title" content="Signes Studio | Visual Research">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://signes.studio">
+    <meta property="og:description" content="High-end architectural visualization and visual research studio.">
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "CreativeWork",
+      "name": "Signes Studio",
+      "url": "https://signes.studio",
+      "description": "Professional architectural visualization and visual research creative studio.",
+      "knowsAbout": ["Architectural Visualization", "Visual Research", "3D Rendering", "Minimalist Design"]
+    }
+    </script>
 
-    <!-- Importamos la tipografía Cormorant desde Google Fonts (Pesos 300, 400 y 600) -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@300;400;600&display=swap" rel="stylesheet">
-    
-    <!-- Vinculamos los estilos externos -->
     <link rel="stylesheet" href="style.css">
 
-    <!-- Estilos de contingencia para tipografía y enlaces limpios -->
     <style>
-        /* Fuerza la nueva tipografía editorial */
-        body {
-            font-family: 'Cormorant', serif;
-        }
-
-        /* Desactiva el azul hipervínculo por defecto y aplica gris suave */
-        .contact-link {
-            color: #8c8c8c; /* Gris suave */
-            text-decoration: none; /* Elimina el subrayado técnico */
-            transition: color 0.3s ease;
-        }
-
-        /* Efecto sutil al pasar el cursor (hover) a un gris más oscuro */
-        .contact-link:hover {
-            color: #2c2c2c; 
-        }
+        body { font-family: 'Cormorant', serif; margin: 0; padding: 0; }
+        .container { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; }
+        .logo { font-size: 2.5rem; letter-spacing: 0.1em; margin-bottom: 0.5rem; }
+        .bold { font-weight: 600; }
+        .extralight { font-weight: 300; }
+        .subtitle { font-size: 1.2rem; font-weight: 400; color: #666; margin-top: 0; }
+        .contact-link { color: #888; text-decoration: none; transition: color 0.3s ease; }
+        .contact-link:hover { color: #2c2c2c; }
     </style>
 </head>
 <body>
 
-    <div class="container">
+    <main class="container">
         <h1 class="logo">
             <span class="bold">SIGNES</span><span class="extralight">.STUDIO</span>
         </h1>
-        <p class="subtitle">Visual Research</p>
-    </div>
+        <p class="subtitle">Visual Research & Architectural Visualization</p>
+    </main>
 
-<!-- PIE DE PÁGINA: Correo de contacto sutil -->
-    <footer class="footer">
+    <footer class="footer" style="position: fixed; bottom: 30px; width: 100%; text-align: center;">
         <a href="mailto:office@signes.studio" class="contact-link">office@signes.studio</a>
     </footer>
 
-    <!-- SCRIPT DE PROTECCIÓN BÁSICA -->
     <script>
-        // 1. Bloquear el clic derecho del ratón
-        document.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
-        });
-
-        // 2. Bloquear atajos de teclado para ver el código fuente e inspeccionar
-        document.onkeydown = function(e) {
-            // F12 (Herramientas de desarrollador)
-            if(e.keyCode == 123) { return false; }
-            // Ctrl+U (Ver código fuente)
-            if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { return false; }
-            // Ctrl+Shift+I / Ctrl+Shift+C / Ctrl+Shift+J (Inspeccionar elemento)
-            if(e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) {
-                return false;
-            }
-        }
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.onkeydown = e => {
+            if(e.keyCode == 123) return false;
+            if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false;
+        };
     </script>
 </body>
 </html>
