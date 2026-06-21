@@ -1,0 +1,6 @@
+# Permitir que todos los buscadores rastreen todo
+User-agent: *
+Allow: /
+
+# Sitemap para ayudar a Google a indexar tu contenido rápidamente
+Sitemap: https://signes.studio/sitemap.xml
