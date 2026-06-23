@@ -131,3 +131,13 @@ img {
         font-size: 0.95rem;
     }
 }
+@media (max-width: 900px) {
+    .about-content {
+        grid-template-columns: 1fr !important; /* Pasamos a 1 columna */
+        gap: 40px !important;
+    }
+    .manifesto {
+        font-size: 1.6rem !important; /* Reducimos tamaño en móvil */
+        margin-bottom: 0 !important;
+    }
+}
