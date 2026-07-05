@@ -1,437 +1,133 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- SEO: Título y descripción -->
-    <title>SIGNES.STUDIO | Visual Research</title>
-    <meta name="description" content="SIGNES.STUDIO es un estudio de investigación visual especializado en fotografía de arquitectura e interiorismo. Captamos el peso de los espacios y la intención del diseño.">
-    <meta name="author" content="SIGNES.STUDIO">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://signes.studio/">
-
-    <!-- SEO: Open Graph (para redes sociales y previsualizaciones) -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="SIGNES.STUDIO | Visual Research">
-    <meta property="og:description" content="Estudio de investigación visual. Fotografía de arquitectura e interiorismo con mirada humana y criterio artesanal.">
-    <meta property="og:url" content="https://signes.studio/">
-    <meta property="og:locale" content="es_ES">
-    <!-- <meta property="og:image" content="https://signes.studio/og-cover.jpg"> -->
-
-    <!-- SEO: Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="SIGNES.STUDIO | Visual Research">
-    <meta name="twitter:description" content="Estudio de investigación visual. Fotografía de arquitectura e interiorismo.">
-
-    <!-- SEO: Datos estructurados (Schema.org) -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "ProfessionalService",
-      "name": "SIGNES.STUDIO",
-      "description": "Estudio de investigación visual.",
-      "url": "https://signes.studio",
-      "email": "office@signes.studio",
-      "telephone": "+34614459144",
-      "address": {
-        "@type": "PostalAddress",
-        "addressCountry": "ES"
-      },
-      "sameAs": [
-        "https://instagram.com",
-        "https://behance.net",
-        "https://linkedin.com"
-      ]
-    }
-    </script>
-
+    <title>SIGNES.STUDIO | Creative Studio</title>
+    <!-- Elegant and minimalist font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     
     <style>
+        /* Basic reset and design variables */
         :root {
-            --bg-color: #fdfdfd;
-            --text-main: #1a1a1a;
-            --text-muted: #666666;
-            --text-light: #999999;
+            --bg-color: #fcfbf9;       /* Warm white / ivory */
+            --text-main: #1a1a1a;      /* Dark charcoal */
+            --text-muted: #707070;     /* Soft grey for secondary text */
+            --accent: #8c8275;         /* Muted earth tone */
         }
 
-        ::-webkit-scrollbar { width: 0px; background: transparent; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-        *, *::before, *::after { box-sizing: border-box; }
-
-        body, html { 
-            font-family: 'Cormorant', serif; 
-            margin: 0; 
-            padding: 0; 
+        body {
+            font-family: 'Inter', sans-serif;
             background-color: var(--bg-color);
             color: var(--text-main);
-            /* CORRECCIÓN: eliminamos overflow hidden + height fijo que causaba recortes en móvil */
-        }
-
-        .presentation-container {
-            height: 100vh;
-            width: 100vw;
-            overflow-y: scroll;
-            scroll-snap-type: y mandatory;
-            scroll-behavior: smooth;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
-
-        .presentation-container::-webkit-scrollbar { display: none; }
-
-        /* CORRECCIÓN PRINCIPAL: usamos min-height con svh (small viewport height) 
-           para que en móvil la barra del navegador no recorte el contenido.
-           100svh descuenta la UI del navegador. Fallback a 100vh para navegadores antiguos. */
-        .slide {
             min-height: 100vh;
-            min-height: 100svh;
-            width: 100%;
-            scroll-snap-align: start;
-            scroll-snap-stop: always;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            position: relative;
             padding: 2rem;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* Tipografía base */
-        .logo { font-size: 2.5rem; letter-spacing: 0.1em; margin-bottom: 0.5rem; margin-top: 0; }
-        .bold { font-weight: 600; }
-        .extralight { font-weight: 300; }
-        .subtitle { font-size: 1.2rem; font-weight: 400; color: var(--text-muted); margin-top: 0; margin-bottom: 0; }
-
-        /* PORTADA: reemplazamos position:absolute por flexbox para evitar recortes */
-        #hero {
-            justify-content: space-between;
-            padding-top: clamp(3rem, 10vh, 6rem);
-            padding-bottom: clamp(2rem, 6vh, 4rem);
-        }
-
-        .hero-center {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        /* Main container */
+        .container {
+            max-width: 600px;
             text-align: center;
-            flex: 1;
-            justify-content: center;
+            animation: fadeIn 1.2s ease-out;
         }
 
-        .hero-bottom {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1.2rem;
-            width: 100%;
-        }
-
-        .scroll-indicator {
-            font-size: 0.8rem;
-            color: var(--text-light);
+        /* Branding / Identity */
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 500;
+            letter-spacing: 0.25em;
             text-transform: uppercase;
-            letter-spacing: 0.2em;
-            text-decoration: none;
-            opacity: 0.7;
-            transition: opacity 0.3s ease;
+            margin-bottom: 0.75rem;
+            color: var(--text-main);
         }
 
-        .scroll-indicator:hover { opacity: 1; }
-
-        .hero-footer-email {
-            font-size: 1rem;
+        .subtitle {
+            font-size: 0.95rem;
+            font-weight: 300;
+            letter-spacing: 0.05em;
             color: var(--text-muted);
+            margin-bottom: 4rem;
+        }
+
+        /* Contact Details */
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+
+        .contact-link {
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: var(--text-main);
             text-decoration: none;
+            letter-spacing: 0.03em;
             transition: color 0.3s ease;
-            letter-spacing: 0.05em;
         }
 
-        .hero-footer-email:hover { color: var(--text-main); }
-
-        /* Galería */
-        .image-wrapper {
-            width: 100%;
-            max-width: 1000px;
-            height: 75vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
+        /* Subtle hover effect */
+        .contact-link:hover {
+            color: var(--accent);
         }
 
-        .image-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0;
-            transform: scale(0.95) translateY(20px);
-            transition: opacity 1.2s cubic-bezier(0.2, 0.8, 0.2, 1), 
-                        transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+        /* Minimal divider */
+        .divider {
+            width: 30px;
+            height: 1px;
+            background-color: #e0dbd5;
+            margin: 3rem auto;
         }
 
-        /* CORRECCIÓN: el caption también en flujo normal, no absoluto */
-        .slide-caption {
-            margin-top: 1.5rem;
-            font-size: 1rem;
-            font-weight: 400;
-            letter-spacing: 0.1em;
-            color: var(--text-light);
-            text-transform: lowercase;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: all 1s ease 0.5s;
-            /* Espacio de seguridad inferior en móvil */
-            padding-bottom: env(safe-area-inset-bottom, 0px);
-        }
-
-        /* About / Manifesto */
-        #about { align-items: flex-start; }
-
-        .about-content {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            /* CORRECCIÓN: padding vertical para que el contenido nunca toque el borde */
-            padding: clamp(3rem, 8vh, 5rem) 5%;
-            min-height: 100vh;
-            min-height: 100svh;
-        }
-
-        .manifesto {
-            max-width: 850px;
-            text-align: left;
-            font-size: 2.8rem;
-            font-weight: 400;
-            line-height: 1.2;
-            letter-spacing: -0.01em;
-            color: var(--text-main);
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 1.2s ease;
-        }
-
-        /* Bloque de Contacto */
-        .contact-block {
-            margin-top: 4rem;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 0.5rem;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 1.2s ease 0.3s;
-            /* Respeta el notch/home bar en iPhone */
-            padding-bottom: env(safe-area-inset-bottom, 0px);
-        }
-
-        .contact-link { 
-            color: var(--text-muted); 
-            text-decoration: none; 
-            font-size: 0.85rem;
-            letter-spacing: 0.05em;
-            transition: color 0.3s ease; 
-        }
-
-        .contact-link:hover { color: var(--text-main); }
-
-        .social-links {
-            display: flex;
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-        }
-
-        /* Animaciones de entrada */
-        .slide.is-active .image-wrapper img {
-            opacity: 1;
-            transform: scale(1) translateY(0);
-        }
-
-        .slide.is-active .slide-caption,
-        .slide.is-active .manifesto,
-        .slide.is-active .contact-block {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Logo flotante */
-        .floating-logo {
-            position: fixed;
-            top: 30px;
-            left: 30px;
-            font-size: 1.2rem;
-            letter-spacing: 0.1em;
-            text-decoration: none;
-            color: var(--text-main);
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.5s ease;
-            z-index: 100;
-        }
-
-        .floating-logo.visible {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        /* Responsive móvil */
-        @media (max-width: 768px) {
-            .logo { font-size: 2rem; }
-            
-            #hero {
-                padding-top: clamp(2rem, 8vh, 4rem);
-                padding-bottom: clamp(1.5rem, 5vh, 3rem);
+        /* Smooth fade-in animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
             }
-
-            .manifesto { 
-                font-size: 1.7rem;
-                line-height: 1.3;
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
+        }
 
-            .image-wrapper { height: 60vh; }
-
-            .floating-logo { top: 20px; left: 20px; font-size: 1rem; }
-
-            .about-content { 
-                padding: clamp(2rem, 6vh, 3rem) 5%;
-            }
-
-            .contact-block { margin-top: 2.5rem; }
+        /* Responsive adjustments for mobile */
+        @media (max-width: 480px) {
+            h1 { font-size: 1.4rem; letter-spacing: 0.2em; }
+            .subtitle { margin-bottom: 3rem; }
+            .divider { margin: 2rem auto; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Logo flotante (aria-label para accesibilidad) -->
-    <a href="#hero" class="floating-logo" id="floatingLogo" aria-label="SIGNES.STUDIO – Volver al inicio">
-        <span class="bold">SIGNES</span><span class="extralight">.STUDIO</span>
-    </a>
+    <div class="container">
+        <!-- Header -->
+        <h1>SIGNES.STUDIO</h1>
+        <p class="subtitle">Creative Studio</p>
 
-    <!-- CORRECCIÓN semántica: main + header + articles -->
-    <main class="presentation-container" id="presentation" role="main">
-        
-        <!-- DIAPOSITIVA 1: PORTADA -->
-        <!-- CORRECCIÓN: estructura flex columna en lugar de position:absolute para los elementos del footer -->
-        <header class="slide is-active" id="hero" aria-label="Portada">
+        <div class="divider"></div>
 
-            <div class="hero-center">
-                <h1 class="logo">
-                    <span class="bold">SIGNES</span><span class="extralight">.STUDIO</span>
-                </h1>
-                <p class="subtitle">Visual Research</p>
-            </div>
-
-            <div class="hero-bottom">
-                <a href="#slide-2" class="scroll-indicator" 
-                   aria-label="Ir al siguiente proyecto"
-                   onclick="event.preventDefault(); document.getElementById('slide-2').scrollIntoView({behavior: 'smooth'})">
-                    Scroll
-                </a>
-                <a href="mailto:office@signes.studio" class="hero-footer-email">office@signes.studio</a>
-            </div>
-
-        </header>
-
-        <!-- DIAPOSITIVA 2: PROYECTO 1 -->
-        <article class="slide" id="slide-2" aria-label="Proyecto: The Glass Pavilion">
-            <div class="image-wrapper">
-                <!-- fetchpriority="high" en la primera imagen real; lazy en las demás -->
-                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80" 
-                     alt="The Glass Pavilion – Arquitectura de cristal y luz natural"
-                     fetchpriority="high"
-                     width="1600" height="1067">
-            </div>
-            <p class="slide-caption">the glass pavilion</p>
-        </article>
-
-        <!-- DIAPOSITIVA 3: PROYECTO 2 -->
-        <article class="slide" id="slide-3" aria-label="Proyecto: Concrete & Light">
-            <div class="image-wrapper">
-                <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1600&q=80" 
-                     alt="Concrete & Light – Arquitectura brutalista con juego de luces y sombras"
-                     loading="lazy"
-                     width="1600" height="1067">
-            </div>
-            <p class="slide-caption">concrete & light</p>
-        </article>
-
-        <!-- DIAPOSITIVA 4: PROYECTO 3 -->
-        <article class="slide" id="slide-4" aria-label="Proyecto: Nordic Residence">
-            <div class="image-wrapper">
-                <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1600&q=80" 
-                     alt="Nordic Residence – Interior escandinavo minimalista"
-                     loading="lazy"
-                     width="1600" height="1067">
-            </div>
-            <p class="slide-caption">nordic residence</p>
-        </article>
-
-        <!-- DIAPOSITIVA 5: ABOUT / CONTACTO -->
-        <footer class="slide" id="about" aria-label="Sobre el estudio y contacto">
-    <div class="about-content" style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;">
-        
-        <article>
-            <p class="manifesto" style="font-size: 2.2rem; font-style: italic; line-height: 1.4; color: #2d2d2d; margin: 0;">
-                “We live in a time of incessant digital noise. While machines can generate infinite imagery, they cannot experience the weight of a space or the intent of a design. We use AI for efficiency, but we keep the craft entirely human. We don’t seek to flood your screen; we seek to create a space for you to observe.”
-            </p>
-        </article>
-
-        <div class="meta-container">
-            <h3 style="font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-light); margin-bottom: 2rem;">Studio Information</h3>
-            
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; font-size: 0.9rem; margin-bottom: 3rem;">
-                <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-                    <span style="color: var(--text-light);">Office</span>
-                    <a href="mailto:office@signes.studio" class="contact-link" style="color: var(--text-main);">office@signes.studio</a>
-                </div>
-                <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-                    <span style="color: var(--text-light);">Location</span>
-                    <span style="color: var(--text-main);">Valencia, Spain</span>
-                </div>
-            </div>
-
-            <nav class="social-links" style="display: flex; flex-direction: column; gap: 0.8rem; font-size: 0.9rem;">
-                <a href="https://instagram.com/signesstudio" target="_blank" rel="noopener noreferrer" class="contact-link">Instagram</a>
-                <a href="https://behance.net" target="_blank" rel="noopener noreferrer" class="contact-link">Behance</a>
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="contact-link">LinkedIn</a>
-            </nav>
+        <!-- Contact Info -->
+        <div class="contact-info">
+            <!-- Replace these with your final details -->
+            <a href="mailto:hello@signes.studio" class="contact-link">hello@signes.studio</a>
+            <a href="tel:+34600000000" class="contact-link">+34 600 000 000</a>
         </div>
-
     </div>
-</footer>
 
-    </main>
-
-    <script>
-        const slides = document.querySelectorAll('.slide');
-        const floatingLogo = document.getElementById('floatingLogo');
-        const container = document.getElementById('presentation');
-
-        const observerOptions = {
-            root: container,
-            rootMargin: '0px',
-            threshold: 0.6
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-active');
-                    floatingLogo.classList.toggle('visible', entry.target.id !== 'hero');
-                } else {
-                    entry.target.classList.remove('is-active');
-                }
-            });
-        }, observerOptions);
-
-        slides.forEach(slide => observer.observe(slide));
-    </script>
 </body>
 </html>
