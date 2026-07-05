@@ -1,143 +1,155 @@
-/* 1. Reset básico y ocultación de scrollbar */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* Oculta la barra de desplazamiento lateral manteniendo la capacidad de hacer scroll */
-html {
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE y Edge */
-}
-::-webkit-scrollbar {
-    display: none; /* Chrome, Safari y Opera */
-}
-
-/* 2. Configuración del lienzo de fondo y animaciones */
-body {
-    background-color: #F5F4F0; /* Tono hueso pergamino (Lujo Silencioso) */
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    font-family: 'Cormorant', serif; /* Tipografía editorial */
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIGNES.STUDIO | Creative Studio</title>
     
-    /* Bloqueo global de selección de texto (evita el resaltado azul) */
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+    <!-- Tipografía Editorial de tu CSS antiguo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@300;400;600&display=swap" rel="stylesheet">
     
-    /* Animación de entrada suave (fade-in) */
-    animation: fadeIn 1.5s ease-in-out;
-}
+    <style>
+        /* 1. Reset básico y ocultación de scrollbar */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-/* Definición de la animación cinematográfica */
-@keyframes fadeIn {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
-}
+        html {
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE y Edge */
+        }
+        ::-webkit-scrollbar {
+            display: none; /* Chrome, Safari y Opera */
+        }
 
-/* 3. Protección de imágenes (Anti-arrastre y Anti-clic derecho sobre fotos) */
-img {
-    -webkit-user-drag: none;
-    -khtml-user-drag: none;
-    -moz-user-drag: none;
-    -o-user-drag: none;
-    user-drag: none;
-    pointer-events: none; /* El ratón atraviesa la imagen, impidiendo descargas rápidas */
-}
+        /* 2. Configuración del lienzo de fondo y animaciones */
+        body {
+            background-color: #F5F4F0; /* Tono hueso pergamino (Lujo Silencioso) */
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-family: 'Cormorant', serif; /* Tipografía editorial */
+            
+            /* Bloqueo global de selección de texto */
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            
+            /* Animación de entrada suave (fade-in) */
+            animation: fadeIn 1.5s ease-in-out;
+        }
 
-/* 4. Contenedor centrado */
-.container {
-    text-align: center;
-    user-select: none;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
 
-/* 5. Estilo del logotipo */
-.logo {
-    color: #2c2c2c; /* Gris antracita profundo, más orgánico que el negro puro */
-    font-size: 3.5rem;
-    letter-spacing: 0.15em;
-    line-height: 1;
-    text-transform: uppercase;
-}
+        /* 3. Contenedor centrado */
+        .container {
+            text-align: center;
+            user-select: none;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
 
-/* SIGNES: Peso 600 (Semibold para Cormorant) */
-.bold {
-    font-weight: 600;
-}
+        /* 4. Estilo del logotipo */
+        .logo {
+            color: #2c2c2c; /* Gris antracita profundo */
+            font-size: 3.5rem;
+            letter-spacing: 0.15em;
+            line-height: 1;
+            text-transform: uppercase;
+        }
 
-/* .STUDIO: Peso 300 (El más ligero disponible en Cormorant) */
-.extralight {
-    font-weight: 300;
-}
+        .bold {
+            font-weight: 600;
+        }
 
-/* Subtítulo descriptivo */
-.subtitle {
-    color: #777777;
-    font-weight: 300;
-    font-size: 1rem; /* Subido ligeramente, las Serif se leen más pequeñas que las Sans */
-    letter-spacing: 0.25em; /* Tracking ligeramente más cerrado para tipografías Serif */
-    text-transform: uppercase;
-    margin-top: 1.5rem;
-    user-select: none;
-}
+        .extralight {
+            font-weight: 300;
+        }
 
-/* 6. Pie de página fijo abajo */
-.footer {
-    position: absolute;
-    bottom: 2.5rem;
-    text-align: center;
-}
+        /* Subtítulo descriptivo */
+        .subtitle {
+            color: #777777;
+            font-weight: 300;
+            font-size: 1rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            margin-top: 1.5rem;
+            user-select: none;
+        }
 
-/* Estilo del enlace del correo */
-.contact-link {
-    color: #8c8c8c; /* Gris suave, elegante y discreto */
-    font-weight: 300;
-    font-size: 1rem;
-    letter-spacing: 0.1em;
-    text-decoration: none; /* Elimina el subrayado y el modo hipervínculo azul */
-    transition: color 0.3s ease;
-}
+        /* 5. Pie de página fijo abajo (Optimizado para Mail y Teléfono) */
+        .footer {
+            position: absolute;
+            bottom: 2.5rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem; /* Separación sutil entre mail y teléfono */
+        }
 
-/* Efecto sutil al pasar el ratón */
-.contact-link:hover {
-    color: #2c2c2c; /* Oscurece al gris antracita del logo */
-}
+        /* Estilo de los enlaces de contacto */
+        .contact-link {
+            color: #8c8c8c; /* Gris suave, elegante y discreto */
+            font-weight: 300;
+            font-size: 1rem;
+            letter-spacing: 0.1em;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
 
-/* 7. Ajuste responsivo para pantallas móviles */
-@media (max-width: 768px) {
-    .logo {
-        font-size: 2.2rem;
-        letter-spacing: 0.1em;
-    }
-    .subtitle {
-        font-size: 0.9rem;
-        letter-spacing: 0.15em;
-        margin-top: 1rem;
-    }
-    .footer {
-        bottom: 2rem;
-    }
-    .contact-link {
-        font-size: 0.95rem;
-    }
-}
-@media (max-width: 900px) {
-    .about-content {
-        grid-template-columns: 1fr !important; /* Pasamos a 1 columna */
-        gap: 40px !important;
-    }
-    .manifesto {
-        font-size: 1.6rem !important; /* Reducimos tamaño en móvil */
-        margin-bottom: 0 !important;
-    }
-}
+        /* Efecto al pasar el ratón */
+        .contact-link:hover {
+            color: #2c2c2c; /* Oscurece al gris antracita del logo */
+        }
+
+        /* 6. Ajuste responsivo para pantallas móviles */
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2.2rem;
+                letter-spacing: 0.1em;
+            }
+            .subtitle {
+                font-size: 0.9rem;
+                letter-spacing: 0.15em;
+                margin-top: 1rem;
+            }
+            .footer {
+                bottom: 2rem;
+            }
+            .contact-link {
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Logotipo dividido según tus clases del CSS -->
+        <h1 class="logo">
+            <span class="bold">SIGNES</span><span class="extralight">.STUDIO</span>
+        </h1>
+        <p class="subtitle">Creative Studio</p>
+    </div>
+
+    <!-- Pie de página con tus datos mínimos -->
+    <div class="footer">
+        <a href="mailto:hello@signes.studio" class="contact-link">hello@signes.studio</a>
+        <a href="tel:+34600000000" class="contact-link">+34 600 000 000</a>
+    </div>
+
+</body>
+</html>
