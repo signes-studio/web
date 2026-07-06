@@ -196,6 +196,7 @@
             font-weight: 300;
         }
 
+        /* Footer */
         footer {
             max-width: var(--max-width);
             margin: 160px auto 0 auto;
@@ -206,12 +207,24 @@
             color: var(--text-muted);
             display: flex;
             justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .footer-right {
+            display: flex;
+            gap: 32px;
+            text-align: right;
         }
 
         footer a {
             color: var(--text-color);
             text-decoration: none;
             font-weight: 400;
+            transition: opacity 0.2s ease;
+        }
+
+        footer a:hover {
+            opacity: 0.6;
         }
 
         /* Responsive */
@@ -246,6 +259,15 @@
                 flex-direction: column;
                 gap: 4px;
             }
+            footer {
+                flex-direction: column;
+                gap: 20px;
+            }
+            .footer-right {
+                flex-direction: column;
+                gap: 12px;
+                text-align: left;
+            }
         }
     </style>
 </head>
@@ -258,7 +280,6 @@
     </header>
 
     <main class="portfolio-grid">
-
         <!-- PROYECTO 1 -->
         <section class="project">
             <div class="image-container">
@@ -313,7 +334,6 @@
                 <div class="project-meta">Role: Art Direction, Lighting, Shading & Post-production<br>Software: 3ds Max + Corona + Photoshop</div>
             </div>
         </section>
-
     </main>
 
     <!-- SECCIÓN CV / EXPERIENCIA -->
@@ -324,12 +344,12 @@
                 <p>Architect and Visualization Specialist with a deep focus on the artistry of the final image. Experienced in managing complex lighting setups, high-fidelity shading, and cinematic post-production workflows for tier-one international studios and real estate developments.</p>
                 <a href="Luis_Signes_CV.pdf" class="cv-button" download>Download Full CV (PDF)</a>
             </div>
-            
+                        
             <div class="cv-column">
                 <!-- BLOQUE DE EXPERIENCIA -->
                 <div class="cv-block">
                     <h3>Professional Experience</h3>
-                    
+                                        
                     <div class="cv-item">
                         <span class="cv-date">Jan 2024 — Present</span>
                         <div class="cv-details">
@@ -337,7 +357,7 @@
                             <span class="cv-company">DRAWFIELD — Full-time</span>
                         </div>
                     </div>
-                    
+                                        
                     <div class="cv-item">
                         <span class="cv-date">Oct 2023 — Dec 2023</span>
                         <div class="cv-details">
@@ -345,7 +365,7 @@
                             <span class="cv-company">Boira Visuals — Full-time</span>
                         </div>
                     </div>
-                    
+                                        
                     <div class="cv-item">
                         <span class="cv-date">Jun 2022 — Aug 2023</span>
                         <div class="cv-details">
@@ -353,7 +373,7 @@
                             <span class="cv-company">DRAWFIELD — Part-time</span>
                         </div>
                     </div>
-                    
+                                        
                     <div class="cv-item">
                         <span class="cv-date">Mar 2021 — Apr 2022</span>
                         <div class="cv-details">
@@ -366,7 +386,7 @@
                 <!-- BLOQUE DE EDUCACIÓN -->
                 <div class="cv-block">
                     <h3>Education</h3>
-                    
+                                        
                     <div class="cv-item">
                         <span class="cv-date">Degree</span>
                         <div class="cv-details">
@@ -389,8 +409,10 @@
 
     <footer>
         <div>Selected work by Luis Alberto Signes</div>
-        <div>Contact: <a href="mailto:office@signes.studio">office@signes.studio</a> | <a href="https://signes.studio" target="_blank">signes.studio</a></div>
+        <div class="footer-right">
+            <div>Contact: <a href="mailto:office@signes.studio">office@signes.studio</a> | <a href="https://signes.studio" target="_blank">signes.studio</a></div>
+            <div>Network: <a href="https://www.linkedin.com/in/luissignes/" target="_blank">LinkedIn</a> | <a href="https://instagram.com/signesarch" target="_blank">Instagram</a></div>
+        </div>
     </footer>
-
 </body>
 </html>
