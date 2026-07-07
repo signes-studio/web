@@ -1,4 +1,286 @@
-<main class="portfolio-grid">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archviz Portfolio | Volume Vision Selection</title>
+    
+    <!-- Evita que los buscadores indexen la página -->
+    <meta name="robots" content="noindex, nofollow">
+
+    <!-- Tipografía elegante y limpia -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght=300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --text-color: #111111;
+            --text-muted: #767676;
+            --max-width: 1400px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 80px 40px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        header {
+            max-width: var(--max-width);
+            margin: 0 auto 100px auto;
+        }
+
+        .brand {
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 300;
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
+            max-width: 600px;
+        }
+
+        .intro {
+            font-size: 16px;
+            font-weight: 300;
+            color: var(--text-muted);
+            max-width: 550px;
+        }
+
+        /* Layout del Portfolio */
+        .portfolio-grid {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 120px;
+        }
+
+        .project {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }
+
+        .project-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-top: 1px solid #e5e5e5;
+            padding-top: 16px;
+        }
+
+        .project-title {
+            font-size: 16px;
+            font-weight: 400;
+        }
+
+        .project-meta {
+            font-size: 14px;
+            font-weight: 300;
+            color: var(--text-muted);
+            text-align: right;
+            line-height: 1.5;
+        }
+
+        /* Sección CV / Experiencia */
+        .cv-section {
+            max-width: var(--max-width);
+            margin: 140px auto 0 auto;
+            border-top: 1px solid #e5e5e5;
+            padding-top: 60px;
+        }
+
+        .cv-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+        }
+
+        .cv-section h2 {
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 24px;
+        }
+
+        .cv-column p {
+            font-size: 16px;
+            font-weight: 300;
+            color: var(--text-muted);
+            max-width: 500px;
+            margin-bottom: 32px;
+        }
+
+        .cv-button {
+            display: inline-block;
+            padding: 12px 24px;
+            border: 1px solid var(--text-color);
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 400;
+            transition: all 0.3s ease;
+        }
+
+        .cv-button:hover {
+            background-color: var(--text-color);
+            color: var(--bg-color);
+        }
+
+        .cv-block {
+            margin-bottom: 40px;
+        }
+
+        .cv-block h3 {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+
+        .cv-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 14px 0;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 15px;
+        }
+
+        .cv-date {
+            color: var(--text-muted);
+            font-weight: 300;
+            width: 140px;
+            flex-shrink: 0;
+        }
+
+        .cv-details {
+            flex-grow: 1;
+        }
+
+        .cv-role {
+            font-weight: 400;
+            display: block;
+        }
+
+        .cv-company {
+            font-size: 14px;
+            color: var(--text-muted);
+            font-weight: 300;
+        }
+
+        /* Footer */
+        footer {
+            max-width: var(--max-width);
+            margin: 160px auto 0 auto;
+            border-top: 1px solid #e5e5e5;
+            padding-top: 40px;
+            font-size: 14px;
+            font-weight: 300;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .footer-right {
+            display: flex;
+            gap: 32px;
+            text-align: right;
+        }
+
+        footer a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 400;
+            transition: opacity 0.2s ease;
+        }
+
+        footer a:hover {
+            opacity: 0.6;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 40px 20px;
+            }
+            header {
+                margin-bottom: 60px;
+            }
+            h1 {
+                font-size: 26px;
+            }
+            .portfolio-grid {
+                gap: 60px;
+            }
+            .project-info {
+                flex-direction: column;
+                gap: 8px;
+            }
+            .project-meta {
+                text-align: left;
+            }
+            .cv-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            .cv-section {
+                margin-top: 80px;
+            }
+            .cv-item {
+                flex-direction: column;
+                gap: 4px;
+            }
+            footer {
+                flex-direction: column;
+                gap: 20px;
+            }
+            .footer-right {
+                flex-direction: column;
+                gap: 12px;
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="brand">Signes.Studio</div>
+        <h1>Senior 3D Artist Portfolio Selection</h1>
+        <p class="intro">Architect and Visualization Specialist with a deep focus on the artistry of the final image. Having successfully delivered over 200 projects, I am highly experienced in managing complex lighting setups, high-fidelity shading, and cinematic post-production workflows. Skilled in integrating advanced Generative AI pipelines (ComfyUI, Stable Diffusion, and neural video generation) to enhance look-development and scale production for tier-one international studios.</p>
+    </header>
+
+    <main class="portfolio-grid">
         <!-- PROYECTO 1: EDA CAMPUS (Zaha Hadid) -->
         <section class="project">
             <div class="image-container">
@@ -104,3 +386,84 @@
             </div>
         </section>
     </main>
+
+    <!-- SECCIÓN CV / EXPERIENCIA -->
+    <section class="cv-section">
+        <div class="cv-container">
+            <div class="cv-column">
+                <h2>Profile</h2>
+                <p>Architect and Visualization Specialist with a deep focus on the artistry of the final image. Experienced in managing complex lighting setups, high-fidelity shading, and cinematic post-production workflows for tier-one international studios and real estate developments.</p>
+                <a href="Luis_Signes_CV.pdf" class="cv-button" download>Download Full CV (PDF)</a>
+            </div>
+                        
+            <div class="cv-column">
+                <!-- BLOQUE DE EXPERIENCIA -->
+                <div class="cv-block">
+                    <h3>Professional Experience</h3>
+                                        
+                    <div class="cv-item">
+                        <span class="cv-date">Jan 2024 — Present</span>
+                        <div class="cv-details">
+                            <span class="cv-role">Architect | Visualization Specialist</span>
+                            <span class="cv-company">DRAWFIELD — Full-time</span>
+                        </div>
+                    </div>
+                                        
+                    <div class="cv-item">
+                        <span class="cv-date">Oct 2023 — Dec 2023</span>
+                        <div class="cv-details">
+                            <span class="cv-role">Architect | Visualization Specialist</span>
+                            <span class="cv-company">Boira Visuals — Full-time</span>
+                        </div>
+                    </div>
+                                        
+                    <div class="cv-item">
+                        <span class="cv-date">Jun 2022 — Aug 2023</span>
+                        <div class="cv-details">
+                            <span class="cv-role">Architect | Visualization Specialist</span>
+                            <span class="cv-company">DRAWFIELD — Part-time</span>
+                        </div>
+                    </div>
+                                        
+                    <div class="cv-item">
+                        <span class="cv-date">Mar 2021 — Apr 2022</span>
+                        <div class="cv-details">
+                            <span class="cv-role">Architect | Visualization Specialist</span>
+                            <span class="cv-company">GO estudio — Remote / Part-time</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BLOQUE DE EDUCACIÓN -->
+                <div class="cv-block">
+                    <h3>Education</h3>
+                                        
+                    <div class="cv-item">
+                        <span class="cv-date">Degree</span>
+                        <div class="cv-details">
+                            <span class="cv-role">Master's Degree in Architecture (Máster Habilitante)</span>
+                            <span class="cv-company">ETSAV — Universitat Politècnica de València (UPV)</span>
+                        </div>
+                    </div>
+
+                    <div class="cv-item">
+                        <span class="cv-date">Degree</span>
+                        <div class="cv-details">
+                            <span class="cv-role">Bachelor's Degree in Fundamentals of Architecture</span>
+                            <span class="cv-company">ETSAV — Universitat Politècnica de València (UPV)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div>Selected work by Luis Alberto Signes</div>
+        <div class="footer-right">
+            <div>Contact: <a href="mailto:office@signes.studio">office@signes.studio</a> | <a href="https://signes.studio" target="_blank">signes.studio</a></div>
+            <div>Network: <a href="https://www.linkedin.com/in/luissignes/" target="_blank">LinkedIn</a> | <a href="https://instagram.com/signesarch" target="_blank">Instagram</a></div>
+        </div>
+    </footer>
+</body>
+</html>
