@@ -5,10 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Archviz Portfolio | Volume Vision Selection</title>
     
-    <!-- Evita que los buscadores indexen la página -->
     <meta name="robots" content="noindex, nofollow">
 
-    <!-- Tipografía elegante y limpia -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght=300;400;500&display=swap" rel="stylesheet">
@@ -79,11 +77,45 @@
             gap: 20px;
         }
 
-        .image-container img {
+        /* CONTENEDOR BLUR-UP PREPARADO PARA CARGA PROGRESIVA */
+        .image-container {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            background-color: #f0f0f0; /* Color base mientras carga todo */
+        }
+
+        /* La imagen pequeña borrosa de fondo */
+        .image-container img.blur-thumb {
             width: 100%;
             height: auto;
             display: block;
-            object-fit: cover;
+            filter: blur(15px);
+            transform: scale(1.05); /* Evita bordes blancos por el blur */
+            transition: opacity 0.4s ease;
+        }
+
+        /* La imagen real de alta resolución (oculta al inicio) */
+        .image-container img.main-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: auto;
+            opacity: 0;
+            filter: blur(10px);
+            transition: opacity 0.8s ease-in-out, filter 0.8s ease-in-out;
+        }
+
+        /* Estado cuando la imagen de alta resolución ya se ha descargado */
+        .image-container img.main-img.loaded {
+            opacity: 1;
+            filter: blur(0);
+            position: relative; /* Devuelve el flujo normal al contenedor */
+        }
+
+        .image-container img.main-img.loaded + .blur-thumb {
+            display: none; /* Oculta la miniatura una vez cargado el render real */
         }
 
         .project-info {
@@ -107,7 +139,7 @@
             line-height: 1.5;
         }
 
-        /* Sección CV / Experiencia */
+        /* Sección CV */
         .cv-section {
             max-width: var(--max-width);
             margin: 140px auto 0 auto;
@@ -197,7 +229,6 @@
             font-weight: 300;
         }
 
-        /* Footer */
         footer {
             max-width: var(--max-width);
             margin: 160px auto 0 auto;
@@ -228,47 +259,18 @@
             opacity: 0.6;
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
-            body {
-                padding: 40px 20px;
-            }
-            header {
-                margin-bottom: 60px;
-            }
-            h1 {
-                font-size: 26px;
-            }
-            .portfolio-grid {
-                gap: 60px;
-            }
-            .project-info {
-                flex-direction: column;
-                gap: 8px;
-            }
-            .project-meta {
-                text-align: left;
-            }
-            .cv-container {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
-            .cv-section {
-                margin-top: 80px;
-            }
-            .cv-item {
-                flex-direction: column;
-                gap: 4px;
-            }
-            footer {
-                flex-direction: column;
-                gap: 20px;
-            }
-            .footer-right {
-                flex-direction: column;
-                gap: 12px;
-                text-align: left;
-            }
+            body { padding: 40px 20px; }
+            header { margin-bottom: 60px; }
+            h1 { font-size: 26px; }
+            .portfolio-grid { gap: 60px; }
+            .project-info { flex-direction: column; gap: 8px; }
+            .project-meta { text-align: left; }
+            .cv-container { grid-template-columns: 1fr; gap: 40px; }
+            .cv-section { margin-top: 80px; }
+            .cv-item { flex-direction: column; gap: 4px; }
+            footer { flex-direction: column; gap: 20px; }
+            .footer-right { flex-direction: column; gap: 12px; text-align: left; }
         }
     </style>
 </head>
@@ -281,10 +283,10 @@
     </header>
 
     <main class="portfolio-grid">
-        <!-- PROYECTO 1: EDA CAMPUS (Zaha Hadid) -->
         <section class="project">
             <div class="image-container">
-                <img src="img/archviz-aerial-campus.jpg" alt="EDA Campus — Landscape & Aerial Integration">
+                <img class="main-img" data-src="img/archviz-aerial-campus.jpg" alt="EDA Campus — Landscape & Aerial Integration">
+                <img class="blur-thumb" src="img/thumbs/archviz-aerial-campus-thumb.jpg" alt="Loading...">
             </div>
             <div class="project-info">
                 <div class="project-title">EDA Campus — Landscape & High-End Aerial Integration</div>
@@ -296,10 +298,10 @@
             </div>
         </section>
 
-        <!-- PROYECTO 2: ROIG ARENA (ERRE + HOK) -->
         <section class="project">
             <div class="image-container">
-                <img src="img/archviz-aerial-arena.jpg" alt="Roig Arena — Urban Drone Photography Integration">
+                <img class="main-img" data-src="img/archviz-aerial-arena.jpg" alt="Roig Arena — Urban Drone Photography Integration">
+                <img class="blur-thumb" src="img/thumbs/archviz-aerial-arena-thumb.jpg" alt="Loading...">
             </div>
             <div class="project-info">
                 <div class="project-title">Roig Arena — Drone Photography Integration & Urban Context</div>
@@ -311,10 +313,10 @@
             </div>
         </section>
 
-        <!-- PROYECTO 3: ROZAFA TOWER (Selgascano) -->
         <section class="project">
             <div class="image-container">
-                <img src="img/archviz-exterior-tower.jpg" alt="Rozafa Tower — High-Rise Commercial Exterior">
+                <img class="main-img" data-src="img/archviz-exterior-tower.jpg" alt="Rozafa Tower — High-Rise Commercial Exterior">
+                <img class="blur-thumb" src="img/thumbs/archviz-exterior-tower-thumb.jpg" alt="Loading...">
             </div>
             <div class="project-info">
                 <div class="project-title">Rozafa Tower — High-Rise Commercial Exterior</div>
@@ -326,10 +328,10 @@
             </div>
         </section>
 
-        <!-- PROYECTO 4: GLORIES (Undisclosed) -->
         <section class="project">
             <div class="image-container">
-                <img src="img/archviz-exterior-avenue.jpg" alt="Glories — Avenue Diagonal Street View">
+                <img class="main-img" data-src="img/archviz-exterior-avenue.jpg" alt="Glories — Avenue Diagonal Street View">
+                <img class="blur-thumb" src="img/thumbs/archviz-exterior-avenue-thumb.jpg" alt="Loading...">
             </div>
             <div class="project-info">
                 <div class="project-title">Glories — High-End Residential Avenue View</div>
@@ -341,10 +343,10 @@
             </div>
         </section>
 
-        <!-- PROYECTO 5: UNIVERSIDAD ROSARIO (Moneo+Brock) -->
         <section class="project">
             <div class="image-container">
-                <img src="img/archviz-exterior-institutional.jpg" alt="Universidad Rosario — Institutional Complex View">
+                <img class="main-img" data-src="img/archviz-exterior-institutional.jpg" alt="Universidad Rosario — Institutional Complex View">
+                <img class="blur-thumb" src="img/thumbs/archviz-exterior-institutional-thumb.jpg" alt="Loading...">
             </div>
             <div class="project-info">
                 <div class="project-title">Universidad Rosario — Institutional Complex Look-Development</div>
@@ -356,10 +358,10 @@
             </div>
         </section>
 
-        <!-- PROYECTO 6: TABUK (Undisclosed) -->
         <section class="project">
             <div class="image-container">
-                <img src="img/archviz-exterior-civic.jpg" alt="Tabuk — Mosque Contemplation Walkway">
+                <img class="main-img" data-src="img/archviz-exterior-civic.jpg" alt="Tabuk — Mosque Contemplation Walkway">
+                <img class="blur-thumb" src="img/thumbs/archviz-exterior-civic-thumb.jpg" alt="Loading...">
             </div>
             <div class="project-info">
                 <div class="project-title">Tabuk — Civic Walkway & Mosque Contemplation Study</div>
@@ -371,10 +373,10 @@
             </div>
         </section>
 
-        <!-- PROYECTO 7: RESIDENTIAL INTERIOR (Arqtistic) -->
         <section class="project">
             <div class="image-container">
-                <img src="img/archviz-interior-minimal.jpg" alt="Premium Residential Interior — Minimalist Shading">
+                <img class="main-img" data-src="img/archviz-interior-minimal.jpg" alt="Premium Residential Interior — Minimalist Shading">
+                <img class="blur-thumb" src="img/thumbs/archviz-interior-minimal-thumb.jpg" alt="Loading...">
             </div>
             <div class="project-info">
                 <div class="project-title">Premium Residential Interior — Warm Minimalism Study</div>
@@ -387,7 +389,6 @@
         </section>
     </main>
 
-    <!-- SECCIÓN CV / EXPERIENCIA -->
     <section class="cv-section">
         <div class="cv-container">
             <div class="cv-column">
@@ -397,10 +398,8 @@
             </div>
                         
             <div class="cv-column">
-                <!-- BLOQUE DE EXPERIENCIA -->
                 <div class="cv-block">
                     <h3>Professional Experience</h3>
-                                        
                     <div class="cv-item">
                         <span class="cv-date">Jan 2024 — Present</span>
                         <div class="cv-details">
@@ -408,7 +407,6 @@
                             <span class="cv-company">DRAWFIELD — Full-time</span>
                         </div>
                     </div>
-                                        
                     <div class="cv-item">
                         <span class="cv-date">Oct 2023 — Dec 2023</span>
                         <div class="cv-details">
@@ -416,40 +414,14 @@
                             <span class="cv-company">Boira Visuals — Full-time</span>
                         </div>
                     </div>
-                                        
-                    <div class="cv-item">
-                        <span class="cv-date">Jun 2022 — Aug 2023</span>
-                        <div class="cv-details">
-                            <span class="cv-role">Architect | Visualization Specialist</span>
-                            <span class="cv-company">DRAWFIELD — Part-time</span>
-                        </div>
-                    </div>
-                                        
-                    <div class="cv-item">
-                        <span class="cv-date">Mar 2021 — Apr 2022</span>
-                        <div class="cv-details">
-                            <span class="cv-role">Architect | Visualization Specialist</span>
-                            <span class="cv-company">GO estudio — Remote / Part-time</span>
-                        </div>
-                    </div>
                 </div>
 
-                <!-- BLOQUE DE EDUCACIÓN -->
                 <div class="cv-block">
                     <h3>Education</h3>
-                                        
                     <div class="cv-item">
                         <span class="cv-date">Degree</span>
                         <div class="cv-details">
                             <span class="cv-role">Master's Degree in Architecture (Máster Habilitante)</span>
-                            <span class="cv-company">ETSAV — Universitat Politècnica de València (UPV)</span>
-                        </div>
-                    </div>
-
-                    <div class="cv-item">
-                        <span class="cv-date">Degree</span>
-                        <div class="cv-details">
-                            <span class="cv-role">Bachelor's Degree in Fundamentals of Architecture</span>
                             <span class="cv-company">ETSAV — Universitat Politècnica de València (UPV)</span>
                         </div>
                     </div>
@@ -465,5 +437,37 @@
             <div>Network: <a href="https://www.linkedin.com/in/luissignes/" target="_blank">LinkedIn</a> | <a href="https://instagram.com/signesarch" target="_blank">Instagram</a></div>
         </div>
     </footer>
-</body>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const mainImages = document.querySelectorAll('img.main-img');
+            
+            mainImages.forEach(img => {
+                // Creamos una imagen fantasma en memoria para descargar el archivo pesado
+                const imgLoader = new Image();
+                imgLoader.src = img.getAttribute('data-src');
+                
+                imgLoader.onload = function() {
+                    // Cuando termina de descargar el archivo real, se lo asignamos a la etiqueta
+                    img.src = imgLoader.src;
+                    img.classList.add('loaded');
+                };
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        var sc_project = XXXXXXXX; // <-- SUSTITUYE CON TU NÚMERO DE PROYECTO DE STATCOUNTER
+        var sc_invisible = 1;      // Hace que el radar sea 100% invisible en diseño
+        var sc_security = "XXXXXXXX"; // <-- SUSTITUYE CON TU CLAVE DE SEGURIDAD
+    </script>
+    <script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script>
+    <noscript>
+        <div class="statcounter">
+            <a title="Web Analytics" href="https://statcounter.com/" target="_blank">
+                <img class="statcounter" src="https://c.statcounter.com/XXXXXXXX/0/XXXXXXXX/1/" alt="Web Analytics" referrerPolicy="no-referrer-when-downgrade">
+            </a>
+        </div>
+    </noscript>
+    </body>
 </html>
