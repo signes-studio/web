@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Signes.Studio — Creador de Manifiestos</title>
+    <style>
+        body { font-family: sans-serif; background: #fbfaf7; padding: 40px; color: #1a1a1a; }
+        .box { max-width: 600px; margin: 0 auto; background: white; border: 1px solid #e6e3dc; padding: 30px; border-radius: 4px; }
+        h1 { font-size: 18px; font-weight: 500; margin-bottom: 20px; }
+        .dropzone { border: 2px dashed #c4a47c; padding: 40px 20px; text-align: center; color: #706e68; cursor: pointer; background: #fdfdfc; }
+        textarea { width: 100%; height: 180px; margin-top: 20px; font-family: monospace; font-size: 12px; padding: 10px; border: 1px solid #e6e3dc; background: #fdfdfc; display: none; }
+        .btn { display: none; background: #1a1a1a; color: white; padding: 10px 20px; text-decoration: none; font-size: 13px; margin-top: 15px; cursor: pointer; border: none; width: 100%; text-align: center; }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h1>Generador Automático de manifest.json</h1>
+    <p style="font-size: 13px; color: #666;">Selecciona o arrastra todos los renders de la fase actual para generar el archivo del búnker de forma automática.</p>
+    
+    <div class="dropzone" id="dropzone">Haz clic aquí para seleccionar los renders de tu ordenador</div>
+    <input type="file" id="fileInput" multiple accept="image/*" style="display: none;">
+
+    <textarea id="resultJson" readonly></textarea>
+    <button class="btn" id="downloadBtn">Descargar manifest.json</button>
+</div>
+
+<script>
+    const dropzone = document.getElementById('dropzone');
+    const fileInput = document.getElementById('fileInput');
+    const resultJson = document.getElementById('resultJson');
+    const downloadBtn = document.getElementById('downloadBtn');
+
+    dropzone.addEventListener('click', () => fileInput.click());
+
+    fileInput.addEventListener('change', handleFiles);
+
+    function handleFiles(e) {
+        const files = Array.from(e.target.files);
+        if(files.length === 0) return;
+
+        // Extraer los nombres de archivos reales de las imágenes seleccionadas
+        const fileNames = files.map(f => f.name);
+
+        // Estructura limpia que requiere el visualizador
+        const manifestData = {
+            "imagenes": fileNames
+        };
+
+        const jsonString = JSON.stringify(manifestData, null, 2);
+        
+        // Mostrar en el cuadro de texto y activar botón de descarga
+        resultJson.value = jsonString;
+        resultJson.style.display = 'block';
+        downloadBtn.style.display = 'block';
+        dropzone.innerText = `¡Listo! Detectados ${files.length} archivos de imagen.`;
+    }
+
+    downloadBtn.addEventListener('click', () => {
+        const blob = new Blob([resultJson.value], {type: "application/json"});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = "manifest.json";
+        a.click();
+    });
+</script>
+</body>
+</html>
