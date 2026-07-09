@@ -5,21 +5,36 @@
     <title>Signes.Studio — Creador de Manifiestos</title>
     <style>
         body { font-family: sans-serif; background: #fbfaf7; padding: 40px; color: #1a1a1a; -webkit-font-smoothing: antialiased; }
-        .box { max-width: 600px; margin: 0 auto; background: white; border: 1px solid #e6e3dc; padding: 40px; border-radius: 4px; }
+        .box { max-width: 600px; margin: 0 auto; background: white; border: 1px solid #e6e3dc; padding: 40px; border-radius: 4px; display: none; } /* Oculto por defecto */
         h1 { font-size: 16px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 25px; border-bottom: 1px solid #e6e3dc; padding-bottom: 10px; }
         .input-group { margin-bottom: 20px; }
         label { display: block; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: #706e68; margin-bottom: 6px; }
-        input[type="text"] { width: 100%; padding: 10px; border: 1px solid #e6e3dc; background: #fdfdfc; border-radius: 3px; font-size: 14px; box-sizing: border-box; color: #1a1a1a; }
-        input[type="text"]:focus { border-color: #c4a47c; outline: none; }
+        input[type="text"], input[type="password"] { width: 100%; padding: 10px; border: 1px solid #e6e3dc; background: #fdfdfc; border-radius: 3px; font-size: 14px; box-sizing: border-box; color: #1a1a1a; }
+        input[type="text"]:focus, input[type="password"]:focus { border-color: #c4a47c; outline: none; }
         .dropzone { border: 2px dashed #c4a47c; padding: 40px 20px; text-align: center; color: #706e68; cursor: pointer; background: #fdfdfc; margin-top: 25px; border-radius: 3px; font-size: 14px; }
         textarea { width: 100%; height: 140px; margin-top: 20px; font-family: monospace; font-size: 12px; padding: 10px; border: 1px solid #e6e3dc; background: #fdfdfc; display: none; }
         .btn { display: none; background: #1a1a1a; color: white; padding: 12px 20px; text-decoration: none; font-size: 13px; font-weight: 500; margin-top: 20px; cursor: pointer; border: none; width: 100%; text-align: center; border-radius: 3px; letter-spacing: 0.05em; text-transform: uppercase; }
         .btn:hover { background: #404040; }
+
+        /* Estilos del bloqueo de acceso */
+        .lock-container { max-width: 350px; margin: 100px auto; background: white; border: 1px solid #e6e3dc; padding: 30px; border-radius: 4px; text-align: center; }
+        .lock-title { font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: #706e68; margin-bottom: 15px; }
+        .lock-btn { background: #1a1a1a; color: white; padding: 10px 20px; font-size: 13px; margin-top: 15px; cursor: pointer; border: none; width: 100%; border-radius: 3px; }
+        .error-msg { color: #b22222; font-size: 12px; margin-top: 10px; display: none; }
     </style>
 </head>
 <body>
 
-<div class="box">
+<!-- Pantalla de Login -->
+<div class="lock-container" id="lockScreen">
+    <div class="lock-title">Acceso Restringido — Signes.Studio</div>
+    <input type="password" id="passwordInput" placeholder="Introduce la clave de acceso">
+    <div class="error-msg" id="errorMsg">Clave incorrecta. Inténtalo de nuevo.</div>
+    <button class="lock-btn" onclick="checkPassword()">Desbloquear Panel</button>
+</div>
+
+<!-- Contenedor del Generador (Solo se muestra si la clave es correcta) -->
+<div class="box" id="generatorBox">
     <h1>Estructura de Revisión Automática</h1>
     
     <div class="input-group">
@@ -40,6 +55,31 @@
 </div>
 
 <script>
+    // 🔑 CONFIGURA TU CONTRASEÑA AQUÍ
+    const PASSWORD_CORRECTA = "Signes2026"; 
+
+    const lockScreen = document.getElementById('lockScreen');
+    const generatorBox = document.getElementById('generatorBox');
+    const passwordInput = document.getElementById('passwordInput');
+    const errorMsg = document.getElementById('errorMsg');
+
+    // Permitir dar al 'Enter' para entrar
+    passwordInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') checkPassword();
+    });
+
+    function checkPassword() {
+        if (passwordInput.value === PASSWORD_CORRECTA) {
+            lockScreen.style.display = 'none';
+            generatorBox.style.display = 'block';
+        } else {
+            errorMsg.style.display = 'block';
+            passwordInput.value = '';
+            passwordInput.focus();
+        }
+    }
+
+    // Lógica interna del Generador de Archivos
     const dropzone = document.getElementById('dropzone');
     const fileInput = document.getElementById('fileInput');
     const proyectoInput = document.getElementById('proyectoInput');
@@ -56,7 +96,6 @@
 
         const fileNames = files.map(f => f.name);
 
-        // Guardamos los nombres limpios dentro del objeto
         const manifestData = {
             "proyecto": proyectoInput.value.trim() || "Revisión de Encargo",
             "cliente": clienteInput.value.trim() || "Exclusivo",
