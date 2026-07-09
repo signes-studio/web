@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signes.Studio — Revisión de Proyecto</title>
+    <style>
+        /* Estética Warm Minimalism / Japandi */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #fbfaf7; /* Blanco roto / Hueso */
+            color: #1a1a1a;
+            margin: 0;
+            padding: 40px 20px;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        header {
+            margin-bottom: 50px;
+            border-bottom: 1px solid #e6e3dc;
+            padding-bottom: 20px;
+        }
+        .logo {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .project-title {
+            font-size: 24px;
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            margin: 10px 0 5px 0;
+        }
+        .client-name {
+            font-size: 14px;
+            color: #706e68;
+            font-weight: 300;
+        }
+        .fase-section {
+            margin-bottom: 40px;
+        }
+        .fase-title {
+            font-size: 16px;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid #e6e3dc;
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+            color: #8c887e;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .image-card {
+            background: #ffffff;
+            border: 1px solid #e6e3dc;
+            padding: 10px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        .image-card:hover {
+            transform: translateY(-2px);
+        }
+        .image-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+        .image-caption {
+            font-size: 12px;
+            color: #555;
+            margin-top: 8px;
+            text-align: center;
+            font-weight: 300;
+        }
+        /* Estado de Carga y Error */
+        .status-msg {
+            text-align: center;
+            padding: 100px 20px;
+            font-weight: 300;
+            color: #706e68;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container" id="app">
+    <div class="status-msg">Cargando espacio de revisión confidencial...</div>
+</div>
+
+<script>
+    // 1. Configura aquí la URL pública de acceso a tu Bucket de Cloudflare R2
+    // En R2, ve a Settings -> Public Sharing -> Puedes asociar un subdominio tuyo (ej: share.signes.studio) 
+    // o usar el dominio R2 dev provisto temporalmente por Cloudflare.
+    const BUCKET_URL = "https://TU_SUBDOMINIO_O_URL_R2.com"; 
+
+    // 2. Leer el ID de la URL (?id=2025-aritz-x9f2)
+    const urlParams = new URLSearchParams(window.location.search);
+    const projectId = urlParams.get('id');
+
+    const appContainer = document.getElementById('app');
+
+    if (!projectId) {
+        appContainer.innerHTML = '<div class="status-msg">Error 404: Enlace de revisión no válido o expirado.</div>';
+    } else {
+        // Ir a buscar el archivo manifest.json dentro de la carpeta privada de Cloudflare
+        fetch(`${BUCKET_URL}/${projectId}/manifest.json`)
+            .then(response => {
+                if (!response.ok) throw new Error('No encontrado');
+                return response.json();
+            })
+            .then(data => {
+                renderInterface(data);
+            })
+            .catch(err => {
+                appContainer.innerHTML = '<div class="status-msg">Acceso denegado. Este enlace requiere credenciales de acceso directas válidas.</div>';
+            });
+    }
+
+    function renderInterface(data) {
+        let html = `
+            <header>
+                <div class="logo">Signes.Studio</div>
+                <h1 class="project-title">${data.proyecto}</h1>
+                <div class="client-name">Cliente: ${data.cliente}</div>
+            </header>
+        `;
+
+        data.fases.forEach(fase => {
+            html += `
+                <section class="fase-section">
+                    <div class="fase-title">${fase.nombre}</div>
+                    <div class="grid">
+            `;
+
+            fase.imagenes.forEach(img => {
+                const imgUrl = `${BUCKET_URL}/${projectId}/${img}`;
+                html += `
+                    <div class="image-card" onclick="window.open('${imgUrl}', '_blank')">
+                        <img src="${imgUrl}" alt="${img}">
+                        <div class="image-caption">${img}</div>
+                    </div>
+                `;
+            });
+
+            html += `
+                    </div>
+                </section>
+            `;
+        });
+
+        appContainer.innerHTML = html;
+    }
+</script>
+</body>
+</html>
