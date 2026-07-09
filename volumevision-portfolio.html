@@ -77,45 +77,40 @@
             gap: 20px;
         }
 
-        /* CONTENEDOR BLUR-UP PREPARADO PARA CARGA PROGRESIVA */
+        /* CONTENEDOR BLUR-UP RECTIFICADO (Fijado por flujo de imagen base) */
         .image-container {
             position: relative;
             overflow: hidden;
             width: 100%;
-            background-color: #f0f0f0; /* Color base mientras carga todo */
+            background-color: #f5f5f5;
         }
 
-        /* La imagen pequeña borrosa de fondo */
+        /* La imagen miniatura borrosa que define el tamaño inicial */
         .image-container img.blur-thumb {
             width: 100%;
             height: auto;
             display: block;
             filter: blur(15px);
-            transform: scale(1.05); /* Evita bordes blancos por el blur */
-            transition: opacity 0.4s ease;
+            transform: scale(1.03); /* Evita bordes blancos por el desenfoque */
+            transition: opacity 0.4s ease-out;
         }
 
-        /* La imagen real de alta resolución (oculta al inicio) */
+        /* La imagen real de alta resolución en superposición absoluta */
         .image-container img.main-img {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: auto;
+            height: 100%;
+            object-fit: cover;
             opacity: 0;
-            filter: blur(10px);
-            transition: opacity 0.8s ease-in-out, filter 0.8s ease-in-out;
+            transition: opacity 0.6s ease-in-out;
+            z-index: 2;
         }
 
-        /* Estado cuando la imagen de alta resolución ya se ha descargado */
+        /* Estado activado por JavaScript cuando la alta resolución carga */
         .image-container img.main-img.loaded {
             opacity: 1;
-            filter: blur(0);
-            position: relative; /* Devuelve el flujo normal al contenedor */
-        }
-
-        .image-container img.main-img.loaded + .blur-thumb {
-            display: none; /* Oculta la miniatura una vez cargado el render real */
         }
 
         .project-info {
@@ -283,6 +278,7 @@
     </header>
 
     <main class="portfolio-grid">
+        <!-- PROYECTO 1 -->
         <section class="project">
             <div class="image-container">
                 <img class="main-img" data-src="img/archviz-aerial-campus.jpg" alt="EDA Campus — Landscape & Aerial Integration">
@@ -298,6 +294,7 @@
             </div>
         </section>
 
+        <!-- PROYECTO 2 -->
         <section class="project">
             <div class="image-container">
                 <img class="main-img" data-src="img/archviz-aerial-arena.jpg" alt="Roig Arena — Urban Drone Photography Integration">
@@ -313,6 +310,7 @@
             </div>
         </section>
 
+        <!-- PROYECTO 3 -->
         <section class="project">
             <div class="image-container">
                 <img class="main-img" data-src="img/archviz-exterior-tower.jpg" alt="Rozafa Tower — High-Rise Commercial Exterior">
@@ -328,6 +326,7 @@
             </div>
         </section>
 
+        <!-- PROYECTO 4 -->
         <section class="project">
             <div class="image-container">
                 <img class="main-img" data-src="img/archviz-exterior-avenue.jpg" alt="Glories — Avenue Diagonal Street View">
@@ -343,6 +342,7 @@
             </div>
         </section>
 
+        <!-- PROYECTO 5 -->
         <section class="project">
             <div class="image-container">
                 <img class="main-img" data-src="img/archviz-exterior-institutional.jpg" alt="Universidad Rosario — Institutional Complex View">
@@ -358,6 +358,7 @@
             </div>
         </section>
 
+        <!-- PROYECTO 6 -->
         <section class="project">
             <div class="image-container">
                 <img class="main-img" data-src="img/archviz-exterior-civic.jpg" alt="Tabuk — Mosque Contemplation Walkway">
@@ -373,6 +374,7 @@
             </div>
         </section>
 
+        <!-- PROYECTO 7 -->
         <section class="project">
             <div class="image-container">
                 <img class="main-img" data-src="img/archviz-interior-minimal.jpg" alt="Premium Residential Interior — Minimalist Shading">
@@ -438,51 +440,43 @@
         </div>
     </footer>
 
+    <!-- SCRIPT CORREGIDO: Activa src y gestiona caché nativa sin atascos -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const mainImages = document.querySelectorAll('img.main-img');
             
             mainImages.forEach(img => {
-                // Creamos una imagen fantasma en memoria para descargar el archivo pesado
-                const imgLoader = new Image();
-                imgLoader.src = img.getAttribute('data-src');
-                
-                imgLoader.onload = function() {
-                    // Cuando termina de descargar el archivo real, se lo asignamos a la etiqueta
-                    img.src = imgLoader.src;
+                const srcTarget = img.getAttribute('data-src');
+                if (srcTarget) {
+                    img.src = srcTarget;
+                }
+
+                // Control de carga si ya está en caché o se descarga en el acto
+                if (img.complete) {
                     img.classList.add('loaded');
-                };
+                } else {
+                    img.addEventListener('load', function() {
+                        img.classList.add('loaded');
+                    });
+                }
             });
         });
     </script>
 
+    <!-- RADAR DEFINITIVO DE STATCOUNTER (Limpio y Unificado) -->
     <script type="text/javascript">
-        var sc_project = XXXXXXXX; // <-- SUSTITUYE CON TU NÚMERO DE PROYECTO DE STATCOUNTER
-        var sc_invisible = 1;      // Hace que el radar sea 100% invisible en diseño
-        var sc_security = "XXXXXXXX"; // <-- SUSTITUYE CON TU CLAVE DE SEGURIDAD
+        var sc_project=13335344; 
+        var sc_invisible=1; 
+        var sc_security="6cdc1586"; 
     </script>
     <script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script>
     <noscript>
         <div class="statcounter">
             <a title="Web Analytics" href="https://statcounter.com/" target="_blank">
-                <img class="statcounter" src="https://c.statcounter.com/XXXXXXXX/0/XXXXXXXX/1/" alt="Web Analytics" referrerPolicy="no-referrer-when-downgrade">
+                <img class="statcounter" src="https://c.statcounter.com/13335344/0/6cdc1586/1/" alt="Web Analytics" referrerPolicy="no-referrer-when-downgrade">
             </a>
         </div>
     </noscript>
 
-<!-- Default Statcounter code for SIGNES.STUDIO https://signes.studio/ -->
-<script type="text/javascript">
-var sc_project=13335344; 
-var sc_invisible=1; 
-var sc_security="6cdc1586"; 
-</script>
-<script type="text/javascript"
-src="https://www.statcounter.com/counter/counter.js" async></script>
-<noscript><div class="statcounter"><a title="Web Analytics"
-href="https://statcounter.com/" target="_blank"><img class="statcounter"
-src="https://c.statcounter.com/13335344/0/6cdc1586/1/" alt="Web Analytics"
-referrerPolicy="no-referrer-when-downgrade"></a></div></noscript>
-<!-- End of Statcounter Code -->
-
-    </body>
+</body>
 </html>
