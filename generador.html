@@ -2,67 +2,265 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Signes.Studio — Creador de Manifiestos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signes.Studio — Portal de Revisión</title>
     <style>
-        body { font-family: sans-serif; background: #fbfaf7; padding: 40px; color: #1a1a1a; }
-        .box { max-width: 600px; margin: 0 auto; background: white; border: 1px solid #e6e3dc; padding: 30px; border-radius: 4px; }
-        h1 { font-size: 18px; font-weight: 500; margin-bottom: 20px; }
-        .dropzone { border: 2px dashed #c4a47c; padding: 40px 20px; text-align: center; color: #706e68; cursor: pointer; background: #fdfdfc; }
-        textarea { width: 100%; height: 180px; margin-top: 20px; font-family: monospace; font-size: 12px; padding: 10px; border: 1px solid #e6e3dc; background: #fdfdfc; display: none; }
-        .btn { display: none; background: #1a1a1a; color: white; padding: 10px 20px; text-decoration: none; font-size: 13px; margin-top: 15px; cursor: pointer; border: none; width: 100%; text-align: center; }
+        /* Estética General Warm Minimalism */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #fbfaf7;
+            color: #1a1a1a;
+            margin: 0;
+            padding: 40px 20px;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+        header { margin-bottom: 50px; border-bottom: 1px solid #e6e3dc; padding-bottom: 20px; }
+        .logo { font-size: 14px; text-transform: uppercase; letter-spacing: 0.15em; font-weight: 600; }
+        .project-title { font-size: 24px; font-weight: 300; letter-spacing: -0.02em; margin: 15px 0 5px 0; text-transform: uppercase; }
+        
+        /* Secciones y Grid */
+        .fase-section { margin-bottom: 50px; }
+        .fase-title { font-size: 14px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; border-bottom: 1px solid #e6e3dc; padding-bottom: 8px; margin-bottom: 25px; color: #8c887e; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
+        
+        /* Tarjeta de Imagen */
+        .image-card { 
+            background: #ffffff; 
+            border: 1px solid #e6e3dc; 
+            padding: 12px; 
+            position: relative;
+            cursor: zoom-in; 
+            transition: transform 0.2s ease, box-shadow 0.2s ease; 
+        }
+        .image-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
+        .image-card img { width: 100%; height: 210px; object-fit: cover; display: block; }
+        .image-caption { font-size: 12px; color: #555; margin-top: 10px; text-align: center; font-weight: 300; text-transform: capitalize; }
+        
+        /* Icono de descarga en miniatura */
+        .thumb-download {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(251, 250, 247, 0.9);
+            border: 1px solid #e6e3dc;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            cursor: pointer;
+            text-decoration: none;
+            color: #1a1a1a;
+            font-weight: bold;
+            font-size: 16px;
+            opacity: 0;
+            transition: opacity 0.2s ease, background 0.2s ease;
+            z-index: 2;
+        }
+        .image-card:hover .thumb-download { opacity: 1; }
+        .thumb-download:hover { background: #1a1a1a; color: #ffffff; border-color: #1a1a1a; }
+
+        /* Visor Interactivo / Lightbox */
+        .lightbox {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(251, 250, 247, 0.98);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .lightbox.active { opacity: 1; pointer-events: auto; }
+        
+        /* Contenedor del zoom */
+        .lightbox-wrapper {
+            position: relative;
+            max-width: 85vw;
+            max-height: 80vh;
+            overflow: hidden;
+            cursor: zoom-out;
+        }
+        .lightbox img {
+            max-width: 100%;
+            max-height: 80vh;
+            display: block;
+            object-fit: contain;
+            transition: transform 0.1s ease-out;
+            transform-origin: center center;
+        }
+        /* Al hacer hover en el visor grande, permitimos el zoom dinámico */
+        .lightbox-wrapper:hover img { transform: scale(1.6); cursor: crosshair; }
+
+        /* Botones del Visor */
+        .lightbox-close {
+            position: absolute;
+            top: 30px; right: 40px;
+            font-size: 28px; font-weight: 200;
+            cursor: pointer; color: #706e68;
+            background: none; border: none;
+        }
+        .lightbox-close:hover { color: #1a1a1a; }
+
+        .lightbox-actions {
+            position: absolute;
+            bottom: 30px; left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            background: #ffffff;
+            padding: 10px 24px;
+            border: 1px solid #e6e3dc;
+            border-radius: 4px;
+        }
+        .lightbox-caption { font-size: 13px; font-weight: 300; color: #1a1a1a; text-transform: capitalize; }
+        .lightbox-download {
+            color: #1a1a1a;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            border-left: 1px solid #e6e3dc;
+            padding-left: 15px;
+            letter-spacing: 0.02em;
+        }
+        .lightbox-download:hover { opacity: 0.6; }
+
+        .status-msg { text-align: center; padding: 100px 20px; font-weight: 300; color: #706e68; }
     </style>
 </head>
 <body>
 
-<div class="box">
-    <h1>Generador Automático de manifest.json</h1>
-    <p style="font-size: 13px; color: #666;">Selecciona o arrastra todos los renders de la fase actual para generar el archivo del búnker de forma automática.</p>
-    
-    <div class="dropzone" id="dropzone">Haz clic aquí para seleccionar los renders de tu ordenador</div>
-    <input type="file" id="fileInput" multiple accept="image/*" style="display: none;">
+<div class="container" id="app">
+    <div class="status-msg">Abriendo espacio de revisión confidencial...</div>
+</div>
 
-    <textarea id="resultJson" readonly></textarea>
-    <button class="btn" id="downloadBtn">Descargar manifest.json</button>
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+    <button class="lightbox-close" onclick="forceCloseLightbox()">&times;</button>
+    <div class="lightbox-wrapper" id="lightboxWrapper" onmousemove="zoomPan(event)" onmouseleave="resetZoom()">
+        <img id="lightboxImg" src="" alt="Vista ampliada">
+    </div>
+    <div class="lightbox-actions">
+        <span class="lightbox-caption" id="lightboxCaption"></span>
+        <a class="lightbox-download" id="lightboxDownload" href="#" download>Descargar Imagen ↓</a>
+    </div>
 </div>
 
 <script>
-    const dropzone = document.getElementById('dropzone');
-    const fileInput = document.getElementById('fileInput');
-    const resultJson = document.getElementById('resultJson');
-    const downloadBtn = document.getElementById('downloadBtn');
+    const BUCKET_URL = "https://share.signes.studio"; 
 
-    dropzone.addEventListener('click', () => fileInput.click());
+    const urlParams = new URLSearchParams(window.location.search);
+    const projectId = urlParams.get('id');
+    const appContainer = document.getElementById('app');
 
-    fileInput.addEventListener('change', handleFiles);
+    const FASE_NAMES = {
+        'rev1': '01. Primera Revisión — Volumetrías y Encuadres',
+        'rev2': '02. Segunda Revisión — Iluminación y Materialidad',
+        'rev3': '03. Tercera Revisión — Detalles y Ajustes Finales',
+        'signes': '04. Entrega Final — Renders Autoría Signes'
+    };
 
-    function handleFiles(e) {
-        const files = Array.from(e.target.files);
-        if(files.length === 0) return;
-
-        // Extraer los nombres de archivos reales de las imágenes seleccionadas
-        const fileNames = files.map(f => f.name);
-
-        // Estructura limpia que requiere el visualizador
-        const manifestData = {
-            "imagenes": fileNames
-        };
-
-        const jsonString = JSON.stringify(manifestData, null, 2);
-        
-        // Mostrar en el cuadro de texto y activar botón de descarga
-        resultJson.value = jsonString;
-        resultJson.style.display = 'block';
-        downloadBtn.style.display = 'block';
-        dropzone.innerText = `¡Listo! Detectados ${files.length} archivos de imagen.`;
+    if (!projectId) {
+        appContainer.innerHTML = '<div class="status-msg">Error 404: Enlace no válido.</div>';
+    } else {
+        fetch(`${BUCKET_URL}/${projectId}/manifest.json`)
+            .then(response => {
+                if (!response.ok) throw new Error();
+                return response.json();
+            })
+            .then(data => buildGallery(data.imagenes))
+            .catch(() => {
+                appContainer.innerHTML = '<div class="status-msg">Acceso denegado o el ID del proyecto no existe en el búnker de archivos.</div>';
+            });
     }
 
-    downloadBtn.addEventListener('click', () => {
-        const blob = new Blob([resultJson.value], {type: "application/json"});
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = "manifest.json";
-        a.click();
+    function buildGallery(fileNames) {
+        const dataStructure = { rev1: [], rev2: [], rev3: [], signes: [] };
+
+        fileNames.forEach(fileName => {
+            const lowerName = fileName.toLowerCase();
+            if (lowerName.startsWith('rev1_')) dataStructure.rev1.push(fileName);
+            else if (lowerName.startsWith('rev2_')) dataStructure.rev2.push(fileName);
+            else if (lowerName.startsWith('rev3_')) dataStructure.rev3.push(fileName);
+            else if (lowerName.startsWith('signes_')) dataStructure.signes.push(fileName);
+        });
+
+        let displayTitle = projectId.replace(/-/g, ' ');
+        let html = `<header><div class="logo">Signes.Studio</div><h1 class="project-title">${displayTitle}</h1></header>`;
+        let hasContent = false;
+
+        for (const [faseKey, group] of Object.entries(dataStructure)) {
+            if (group.length === 0) continue;
+            hasContent = true;
+            group.sort();
+
+            html += `<section class="fase-section"><div class="fase-title">${FASE_NAMES[faseKey]}</div><div class="grid">`;
+
+            group.forEach(img => {
+                const imgUrl = `${BUCKET_URL}/${projectId}/${img}`;
+                let cleanCaption = img.replace(/^rev\d+_/i, '').replace(/^SIGNES_/i, '').replace(/\.[^/.]+$/, '').replace(/^[0-9]+[-_]/, '').replace(/[-_]/g, ' ');
+
+                html += `
+                    <div class="image-card" onclick="openLightbox('${imgUrl}', '${cleanCaption}', event)">
+                        <a href="${imgUrl}" download="${img}" class="thumb-download" title="Descargar render" onclick="event.stopPropagation();">↓</a>
+                        <img src="${imgUrl}" alt="${img}" loading="lazy">
+                        <div class="image-caption">${cleanCaption}</div>
+                    </div>
+                `;
+            });
+
+            html += `</div></section>`;
+        }
+
+        appContainer.innerHTML = hasContent ? html : '<div class="status-msg">No se han encontrado imágenes en este espacio.</div>';
+    }
+
+    /* Lógica Interactiva del Visor (Zoom, Pan y Descargas) */
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxCaption = document.getElementById('lightboxCaption');
+    const lightboxDownload = document.getElementById('lightboxDownload');
+
+    function openLightbox(url, caption, event) {
+        lightboxImg.src = url;
+        lightboxCaption.innerText = caption;
+        lightboxDownload.href = url;
+        lightboxDownload.setAttribute('download', url.split('/').pop());
+        lightbox.classList.add('active');
+    }
+
+    function closeLightbox(event) {
+        // Cierra si hace clic fuera del marco de la imagen
+        if (event.target.id === 'lightbox' || event.target.id === 'lightboxWrapper') {
+            forceCloseLightbox();
+        }
+    }
+
+    function forceCloseLightbox() {
+        lightbox.classList.remove('active');
+        resetZoom();
+    }
+
+    // Centrar el encuadre dinámico del zoom según la posición del cursor
+    function zoomPan(event) {
+        const img = lightboxImg;
+        const rect = event.currentTarget.getBoundingClientRect();
+        const x = ((event.clientX - rect.left) / rect.width) * 100;
+        const y = ((event.clientY - rect.top) / rect.height) * 100;
+        img.style.transformOrigin = `${x}% ${y}%`;
+    }
+
+    function resetZoom() {
+        lightboxImg.style.transformOrigin = 'center center';
+    }
+
+    // Permitir cerrar el visor con la tecla Escape
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') forceCloseLightbox();
     });
 </script>
 </body>
