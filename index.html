@@ -215,6 +215,7 @@
     <div class="status-msg">Abriendo espacio de revisión confidencial...</div>
 </div>
 
+<!-- Ventana Flotante / Lightbox -->
 <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
     <button class="lightbox-close" onclick="forceCloseLightbox()">&times;</button>
     
@@ -245,7 +246,6 @@
         'signes': '04. Entrega Final — Renders Autoría Signes'
     };
 
-    // Almacenamiento global para gestionar la navegación con flechas
     let globalActiveImages = [];
     let currentImageIndex = 0;
 
@@ -257,7 +257,7 @@
                 if (!response.ok) throw new Error();
                 return response.json();
             })
-            .then(data => buildGallery(data))
+            .then(data => buildGallery(data)) // Le pasamos todo el objeto data
             .catch(() => {
                 appContainer.innerHTML = '<div class="status-msg">Acceso denegado o el ID del proyecto no existe en el búnker de archivos.</div>';
             });
@@ -274,6 +274,7 @@
             else if (lowerName.startsWith('signes_')) dataStructure.signes.push(fileName);
         });
 
+        // Leemos dinámicamente el título del proyecto y el cliente desde tu manifest.json
         let html = `
             <header>
                 <div class="logo">Signes.Studio</div>
@@ -283,8 +284,6 @@
         `;
 
         let hasContent = false;
-
-        // Limpiar y aplanar la lista de imágenes para permitir saltar de una a otra con flechas de forma lineal
         globalActiveImages = [];
 
         for (const [faseKey, group] of Object.entries(dataStructure)) {
@@ -298,7 +297,6 @@
                 const imgUrl = `${BUCKET_URL}/${projectId}/${img}`;
                 let cleanCaption = img.replace(/^rev\d+_/i, '').replace(/^SIGNES_/i, '').replace(/\.[^/.]+$/, '').replace(/^[0-9]+[-_]/, '').replace(/[-_]/g, ' ');
 
-                // Añadimos a la cola de navegación
                 globalActiveImages.push({ url: imgUrl, caption: cleanCaption, filename: img });
                 const currentGlobalIndex = globalActiveImages.length - 1;
 
@@ -314,7 +312,6 @@
             html += `</div></section>`;
         }
 
-        // Bloque Legal Obligatorio solicitado al pie de página
         html += `
             <footer>
                 <div class="legal-notice">
@@ -326,7 +323,7 @@
         appContainer.innerHTML = hasContent ? html : '<div class="status-msg">No se han encontrado imágenes en este espacio.</div>';
     }
 
-    /* Interactividad de la Ventana Superpuesta (Lightbox) */
+    /* Funciones del Lightbox */
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightboxImg');
     const lightboxCaption = document.getElementById('lightboxCaption');
@@ -345,10 +342,9 @@
     }
 
     function navigateImage(direction, event) {
-        event.stopPropagation(); // Evitar que el clic cierre el visor
+        event.stopPropagation();
         currentImageIndex += direction;
         
-        // Efecto bucle: si pasa del final vuelve al principio, y viceversa
         if (currentImageIndex >= globalActiveImages.length) currentImageIndex = 0;
         if (currentImageIndex < 0) currentImageIndex = globalActiveImages.length - 1;
         
@@ -356,7 +352,6 @@
     }
 
     function closeLightbox(event) {
-        // Cierra únicamente si el clic se hace en el fondo translúcido, no sobre los botones o la foto
         if (event.target.id === 'lightbox' || event.target.id === 'lightboxWrapper') {
             forceCloseLightbox();
         }
@@ -367,7 +362,6 @@
         resetZoom();
     }
 
-    /* Efecto Lupa/Zoom dinámico según posición del ratón */
     function zoomPan(event) {
         const img = lightboxImg;
         const rect = event.currentTarget.getBoundingClientRect();
@@ -380,7 +374,6 @@
         lightboxImg.style.transformOrigin = 'center center';
     }
 
-    // Atajos de teclado: Escape para cerrar, Flechas para navegar por los renders
     document.addEventListener('keydown', (e) => {
         if (!lightbox.classList.contains('active')) return;
         if (e.key === 'Escape') forceCloseLightbox();
