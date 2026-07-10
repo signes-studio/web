@@ -347,7 +347,7 @@
         html += `
             <footer>
                 <div class="legal-notice">
-                    Avís de confidencialitat: L'accés a aquest enllaç i a la documentació gràfica continguda és estrictament privat i exclusiu per al client. Queda totalment prohibida la seua distribució o filtració a tercers. Amb la finalitat d'optimitzar el rendiment i garantir la privacitat de l'encàrrec, tota la informació d'aquest espai serà eliminada permanentment transcorreguts 15 dies des del tancament i lliurament del projecte.
+                    Avís de confidencialitat: L'accés a aquest enllaç i a la documentació gràfica continguda és estrictamente privat i exclusiu per al client. Queda totalment prohibida la seua distribució o filtració a tercers. Amb la finalitat d'optimitzar el rendiment i garantir la privacitat de l'encàrrec, tota la informació d'aquest espai serà eliminada permanentment transcorreguts 15 dies des del tancament i lliurament del projecte.
                 </div>
             </footer>
         `;
@@ -434,19 +434,33 @@
         const zipFolder = zip.folder(folderName);
 
         const downloadPromises = filesToDownload.map(fileName => {
-            const fileUrl = `${BUCKET_URL}/${projectId}/${fileName}`;
-            return fetch(fileUrl)
-                .then(response => {
-                    if (!response.ok) throw new Error(`Fallo al descarregar ${fileName}`);
-                    return response.blob();
-                })
-                .then(blob => {
+            const fileUrl = `${BUCKET_URL}/${projectId}/${fileName}?nocache=${new Date().getTime()}`;
+            return fetch(fileUrl, {
+                method: 'GET',
+                mode: 'cors',
+                credentials: 'omit'
+            })
+            .then(response => {
+                if (!response.ok) throw new Error(`Fallo al descarregar ${fileName}`);
+                return response.blob();
+            })
+            .then(blob => {
+                if (blob.size > 0) {
                     zipFolder.file(fileName, blob);
-                })
-                .catch(err => console.error(err));
+                }
+            })
+            .catch(err => console.error(err));
         });
 
         Promise.all(downloadPromises).then(() => {
+            const zipLength = Object.keys(zip.files).length;
+            if (zipLength <= 1) {
+                alert("La descàrrega massiva ha fallat. Si us plau, descarrega les imatges individualment mentre s'actualitza la xarxa.");
+                targetElement.innerText = originalText;
+                targetElement.style.pointerEvents = "auto";
+                return;
+            }
+
             zip.generateAsync({ type: "blob" }).then(content => {
                 const link = document.createElement("a");
                 link.href = URL.createObjectURL(content);
