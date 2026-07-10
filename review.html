@@ -516,7 +516,7 @@
                 const currentGlobalIndex = globalActiveImages.length - 1;
 
                 // URL OPTIMIZADA: Cloudflare procesa el render original de R2 y sirve un WebP minúsculo de 450px para el grid
-                const thumbnailUrl = `https://signes.studio/cdn-cgi/image/width=450,quality=80,format=auto/share/${projectId}/${img}`;
+                const thumbnailUrl = `${BUCKET_URL}/cdn-cgi/image/width=450,quality=80,format=auto/${projectId}/${img}`;
 
                 html += `
                     <div class="image-card" onclick="openLightbox(${currentGlobalIndex})">
