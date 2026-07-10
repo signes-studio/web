@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Signes.Studio — 404 Not Found</title>
+    <style>
+        /* Estética Warm Minimalism / Japandi */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #fbfaf7;
+            color: #1a1a1a;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .error-container {
+            max-width: 500px;
+            width: 100%;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 80px;
+        }
+
+        .error-code {
+            font-size: 84px;
+            font-weight: 100;
+            line-height: 1;
+            color: #8c887e;
+            margin: 0 0 20px 0;
+            letter-spacing: -0.02em;
+        }
+
+        .error-title {
+            font-size: 18px;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #1a1a1a;
+            margin-bottom: 16px;
+        }
+
+        .error-message {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #706e68;
+            font-weight: 300;
+            margin-bottom: 40px;
+        }
+
+        /* Enlaces y Botones Minimalistas */
+        .btn-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 500;
+            color: #ffffff;
+            background-color: #1a1a1a;
+            text-decoration: none;
+            padding: 14px 32px;
+            border-radius: 2px;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #4a4a4a;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            display: inline-block;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 400;
+            color: #706e68;
+            text-decoration: none;
+            border-bottom: 1px solid #e6e3dc;
+            padding-bottom: 2px;
+            transition: color 0.2s ease, border-color 0.2s ease;
+        }
+
+        .btn-secondary:hover {
+            color: #1a1a1a;
+            border-color: #1a1a1a;
+        }
+
+        footer {
+            margin-top: 100px;
+            font-size: 11px;
+            color: #a09e96;
+            font-weight: 300;
+            letter-spacing: 0.02em;
+        }
+    </style>
+</head>
+<body>
+
+<div class="error-container">
+    <div class="logo">Signes.Studio</div>
+    
+    <div class="error-code">404</div>
+    <h1 class="error-title" id="msgTitle">Page Not Found</h1>
+    
+    <p class="error-message" id="msgText">
+        The link you followed may be broken, or the review space has expired and been permanently deleted from our vault.
+    </p>
+    
+    <div class="btn-stack">
+        <a href="https://signes.studio" class="btn-primary">Back to Studio</a>
+        <a href="mailto:info@signes.studio" class="btn-secondary">Contact Support</a>
+    </div>
+
+    <footer>
+        &copy; 2026 Signes.Studio. All rights reserved.
+    </footer>
+</div>
+
+<script>
+    // Inteligencia sutil: Si venían buscando un espacio de revisión, adaptamos los textos dinámicamente
+    const currentUrl = window.location.href;
+    const msgTitle = document.getElementById('msgTitle');
+    const msgText = document.getElementById('msgText');
+
+    if (currentUrl.includes('id=') || currentUrl.includes('review')) {
+        msgTitle.innerText = "Review Space Expired";
+        msgText.innerHTML = "This unique review link is no longer active. To ensure confidentiality and data privacy, delivery spaces are automatically wiped 15 days after project closure. <br><br>Please verify the code or request a new upload.";
+    }
+</script>
+</body>
+</html>
