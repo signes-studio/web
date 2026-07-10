@@ -74,10 +74,6 @@
             border-bottom: 1px solid #e6e3dc; 
             padding-bottom: 8px; 
             margin-bottom: 28px; 
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            gap: 16px;
         }
         .fase-title { 
             font-size: 13px; 
@@ -87,22 +83,6 @@
             color: #8c887e; 
             margin: 0;
         }
-        .download-all-btn {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: #706e68;
-            background: none;
-            border: 1px solid #e6e3dc;
-            padding: 5px 10px;
-            border-radius: 3px;
-            cursor: pointer;
-            font-weight: 500;
-            white-space: nowrap;
-            transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
-        }
-        .download-all-btn:hover:not(:disabled) { color: #ffffff; background: #1a1a1a; border-color: #1a1a1a; }
-        .download-all-btn:disabled { opacity: 0.5; cursor: default; }
         .grid { 
             display: grid; 
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
@@ -171,7 +151,6 @@
         }
         .lightbox.active { opacity: 1; pointer-events: auto; }
         
-        /* Marco del Zoom Ajustado (Sin Auto-Zoom) */
         .lightbox-wrapper {
             position: relative;
             max-width: 85vw;
@@ -244,6 +223,18 @@
         }
         .lightbox-download:hover { opacity: 0.5; }
 
+        /* Contenedor del Widget Turnstile (Estilo Japandi discreto) */
+        .security-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 140px 20px;
+        }
+        #turnstile-widget {
+            margin-top: 24px;
+        }
+
         /* Texto Legal Pie de Página */
         footer {
             margin-top: 100px;
@@ -261,17 +252,21 @@
             letter-spacing: 0.01em;
         }
 
-        .status-msg { text-align: center; padding: 120px 20px; font-weight: 300; color: #706e68; }
+        .status-msg { text-align: center; padding: 120px 20px; font-weight: 300; color: #706e68; font-size: 14px; letter-spacing: 0.02em; }
 
         @media (max-width: 560px) {
             header { flex-direction: column; gap: 16px; }
         }
     </style>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
 
 <div class="container" id="app">
-    <div class="status-msg">Opening confidential review space...</div>
+    <div class="security-wrapper">
+        <div class="status-msg" id="sec-msg">Verifying secure connection...</div>
+        <div id="turnstile-widget" class="cf-turnstile" data-sitekey="0x4AAAAAADzPcFSUMS9BwYBI" data-callback="onTurnstileSuccess"></div>
+    </div>
 </div>
 
 <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
@@ -290,29 +285,21 @@
     </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script>
     const BUCKET_URL = "https://share.signes.studio";
 
-    /* ---------------------------------------------------
-       Diccionario de idiomas — añade aquí cualquier string
-       nuevo que uses en el resto del script.
-    --------------------------------------------------- */
     const STRINGS = {
         en: {
             htmlLang: 'en',
             pageTitle: 'Signes.Studio — Review Portal',
             opening: 'Opening confidential review space...',
+            verifying: 'Verifying secure connection...',
             invalidLink: 'Error 404: Invalid link.',
             accessDenied: 'Access denied or project ID does not exist in the vault.',
             noImages: 'No images found in this space.',
             amplifiedView: 'Amplified view',
             downloadImage: 'Download Image ↓',
             downloadRender: 'Download render',
-            downloadAll: 'Download All',
-            preparingZip: 'Preparing…',
-            zipProgress: (n, total) => `Downloading ${n}/${total}…`,
-            zipError: 'Some images failed to download. Please try again.',
             legalNotice: 'Confidentiality Notice: Access to this link and the contained graphic material is strictly private and exclusive to the client. Its distribution or leakage to third parties is entirely prohibited. To optimize performance and ensure project privacy, all information within this space will be permanently deleted 15 days after project closure and final delivery.',
             fases: {
                 rev1: '01. First Draft — Volumetrics & Framing',
@@ -325,17 +312,14 @@
             htmlLang: 'es',
             pageTitle: 'Signes.Studio — Portal de Revisión',
             opening: 'Abriendo espacio de revisión confidencial...',
+            verifying: 'Verificando conexión segura...',
             invalidLink: 'Error 404: Enlace no válido.',
             accessDenied: 'Acceso denegado o el ID del proyecto no existe en el búnker de archivos.',
             noImages: 'No se han encontrado imágenes en este espacio.',
             amplifiedView: 'Vista ampliada',
             downloadImage: 'Descargar Imagen ↓',
             downloadRender: 'Descargar render',
-            downloadAll: 'Descargar Todo',
-            preparingZip: 'Preparando…',
-            zipProgress: (n, total) => `Descargando ${n}/${total}…`,
-            zipError: 'Algunas imágenes no se han podido descargar. Inténtalo de nuevo.',
-            legalNotice: 'Aviso de confidencialidad: El acceso a este enlace y a la documentación gráfica contenida es estrictamente privado y exclusivo para el cliente. Queda totalmente prohibida su distribución o filtración a terceros. Con el fin de optimizar el rendimiento y garantizar la privacidad del encargo, toda la información de este espacio será eliminada permanentemente transcurridos 15 días desde el cierre y entrega del proyecto.',
+            legalNotice: 'Aviso de confidencialidad: El acceso a este enlace y a la documentación gráfica contenida es strictly privado y exclusivo para el cliente. Queda totalmente prohibida su distribución o filtración a terceros. Con el fin de optimizar el rendimiento y garantizar la privacidad del encargo, toda la información de este espacio será eliminada permanentemente transcurridos 15 días desde el cierre y entrega del proyecto.',
             fases: {
                 rev1: '01. Primera Revisión — Volumetrías y Encuadres',
                 rev2: '02. Segunda Revisión — Iluminación y Materialidad',
@@ -347,17 +331,14 @@
             htmlLang: 'ca',
             pageTitle: 'Signes.Studio — Portal de Revisió',
             opening: 'Obrint espai de revisió confidencial...',
+            verifying: 'Verificant connexió segura...',
             invalidLink: 'Error 404: Enllaç no vàlid.',
             accessDenied: "Accés denegat o l'ID del projecte no existeix al búnquer d'arxius.",
             noImages: "No s'han trobat imatges en aquest espai.",
             amplifiedView: 'Vista ampliada',
             downloadImage: 'Descarregar Imatge ↓',
             downloadRender: 'Descarregar render',
-            downloadAll: 'Descarregar Tot',
-            preparingZip: 'Preparant…',
-            zipProgress: (n, total) => `Descarregant ${n}/${total}…`,
-            zipError: 'Algunes imatges no s\'han pogut descarregar. Torna-ho a provar.',
-            legalNotice: "Avís de confidencialitat: L'accés a aquest enllaç i a la documentació gràfica continguda és estrictament privat i exclusiu per al client. Queda totalment prohibida la seua distribució o filtració a tercers. Amb la finalitat d'optimitzar el rendiment i garantir la privacitat de l'encàrrec, tota la informació d'aquest espai serà eliminada permanentment transcorreguts 15 dies des del tancament i lliurament del projecte.",
+            legalNotice: "Avís de confidencialitat: L'accés a aquest enllaç i a la documentació gràfica continguda és estrictament privat i exclusiu per al client. Queda totalment prohibida la seua distribució o filtración a tercers. Amb la finalitat d'optimitzar el rendiment i garantir la privacitat de l'encàrrec, tota la informació d'aquest espai serà eliminada permanentment transcorreguts 15 dies des del tancament i lliurament del projecte.",
             fases: {
                 rev1: '01. Primera Revisió — Volumetries i Enquadraments',
                 rev2: '02. Segona Revisió — Il·luminació i Materialitat',
@@ -367,45 +348,42 @@
         }
     };
 
-    const SUPPORTED_LANGS = Object.keys(STRINGS); // ['en', 'es', 'ca']
+    const SUPPORTED_LANGS = Object.keys(STRINGS);
     const DEFAULT_LANG = 'en';
-
-    /* ---------------------------------------------------
-       Resolución de idioma
-       Prioridad: ?lang= en la URL  >  idioma del navegador  >  DEFAULT_LANG
-       El resultado se recuerda en localStorage para que el
-       selector manual persista en visitas futuras del cliente.
-    --------------------------------------------------- */
-    function detectLang() {
-        const urlLang = urlParams.get('lang');
-        if (urlLang && SUPPORTED_LANGS.includes(urlLang)) return urlLang;
-
-        const saved = localStorage.getItem('signes_lang');
-        if (saved && SUPPORTED_LANGS.includes(saved)) return saved;
-
-        const browserLang = (navigator.language || '').slice(0, 2).toLowerCase();
-        if (SUPPORTED_LANGS.includes(browserLang)) return browserLang;
-
-        return DEFAULT_LANG;
-    }
 
     const urlParams = new URLSearchParams(window.location.search);
     const projectId = urlParams.get('id');
     const appContainer = document.getElementById('app');
 
+    function detectLang() {
+        const urlLang = urlParams.get('lang');
+        if (urlLang && SUPPORTED_LANGS.includes(urlLang)) return urlLang;
+        const saved = localStorage.getItem('signes_lang');
+        if (saved && SUPPORTED_LANGS.includes(saved)) return saved;
+        const browserLang = (navigator.language || '').slice(0, 2).toLowerCase();
+        if (SUPPORTED_LANGS.includes(browserLang)) return browserLang;
+        return DEFAULT_LANG;
+    }
+
     let currentLang = detectLang();
     let T = STRINGS[currentLang];
-    let manifestData = null; // guardamos el manifest para poder re-renderizar al cambiar idioma
+    let manifestData = null;
 
-    applyStaticStrings();
+    // Ajustar texto del cargador inicial de seguridad
+    document.getElementById('sec-msg').innerText = T.verifying;
+    document.title = T.pageTitle;
 
-    let globalActiveImages = [];
-    let currentImageIndex = 0;
-    let dataStructure = { rev1: [], rev2: [], rev3: [], signes: [] };
-
-    if (!projectId) {
-        appContainer.innerHTML = `<div class="status-msg">${T.invalidLink}</div>`;
-    } else {
+    /* ---------------------------------------------------
+       Callback de Turnstile: Se ejecuta cuando Cloudflare
+       valida que el usuario es un humano real.
+    --------------------------------------------------- */
+    function onTurnstileSuccess(token) {
+        if (!projectId) {
+            appContainer.innerHTML = `<div class="status-msg">${T.invalidLink}</div>`;
+            return;
+        }
+        // Cambiar estado a abriendo búnker e iniciar el fetch
+        document.getElementById('sec-msg').innerText = T.opening;
         fetchManifest();
     }
 
@@ -418,6 +396,7 @@
             .then(data => {
                 manifestData = data;
                 buildGallery(data);
+                applyStaticStrings();
             })
             .catch(() => {
                 appContainer.innerHTML = `<div class="status-msg">${T.accessDenied}</div>`;
@@ -427,8 +406,10 @@
     function applyStaticStrings() {
         document.documentElement.lang = T.htmlLang;
         document.title = T.pageTitle;
-        document.getElementById('lightboxImg').alt = T.amplifiedView;
-        document.getElementById('lightboxDownload').innerText = T.downloadImage;
+        const lbImg = document.getElementById('lightboxImg');
+        if(lbImg) lbImg.alt = T.amplifiedView;
+        const lbDown = document.getElementById('lightboxDownload');
+        if(lbDown) lbDown.innerText = T.downloadImage;
     }
 
     function switchLang(lang) {
@@ -489,7 +470,6 @@
                 <section class="fase-section">
                     <div class="fase-header">
                         <h2 class="fase-title">${T.fases[faseKey]}</h2>
-                        <button class="download-all-btn" id="zipBtn-${faseKey}" onclick="downloadAllInSection('${faseKey}')">${T.downloadAll}</button>
                     </div>
                     <div class="grid">
             `;
@@ -615,76 +595,6 @@
         })
         .catch(() => {
             window.open(fileUrl, '_blank');
-        });
-    }
-
-    function downloadAllInSection(faseKey) {
-        const files = dataStructure[faseKey];
-        if (!files || files.length === 0) return;
-
-        const btn = document.getElementById(`zipBtn-${faseKey}`);
-        const originalLabel = btn.innerText;
-        btn.disabled = true;
-        btn.innerText = T.preparingZip;
-
-        const zip = new JSZip();
-        let completed = 0;
-
-        const fetchOne = (fileName) => {
-            const imgUrl = `${BUCKET_URL}/${projectId}/${fileName}`;
-            const cleanUrl = `${imgUrl}?nocache=${new Date().getTime()}`;
-            return fetch(cleanUrl, { method: 'GET', mode: 'cors', credentials: 'omit' })
-                .then(response => {
-                    if (!response.ok) throw new Error(`Failed: ${fileName}`);
-                    return response.blob();
-                })
-                .then(blob => {
-                    zip.file(fileName, blob);
-                    completed++;
-                    btn.innerText = T.zipProgress(completed, files.length);
-                });
-        };
-
-        // Descargas en paralelo controlado (lotes de 4) para no saturar la conexión
-        const BATCH_SIZE = 4;
-        let results = [];
-
-        function runBatch(startIndex) {
-            const batch = files.slice(startIndex, startIndex + BATCH_SIZE);
-            if (batch.length === 0) return Promise.resolve();
-            return Promise.allSettled(batch.map(fetchOne))
-                .then(batchResults => {
-                    results = results.concat(batchResults);
-                    return runBatch(startIndex + BATCH_SIZE);
-                });
-        }
-
-        runBatch(0).then(() => {
-            const failed = results.filter(r => r.status === 'rejected').length;
-
-            return zip.generateAsync({ type: 'blob' }).then(zipBlob => {
-                const projectName = (manifestData && manifestData.proyecto) ? manifestData.proyecto : 'signes';
-                const safeName = projectName.replace(/[^a-z0-9_\-]+/gi, '_');
-                const zipFileName = `${safeName}_${faseKey}.zip`;
-
-                const blobUrl = URL.createObjectURL(zipBlob);
-                const tempLink = document.createElement('a');
-                tempLink.href = blobUrl;
-                tempLink.download = zipFileName;
-                document.body.appendChild(tempLink);
-                tempLink.click();
-                document.body.removeChild(tempLink);
-                URL.revokeObjectURL(blobUrl);
-
-                if (failed > 0) alert(T.zipError);
-            });
-        })
-        .catch(() => {
-            alert(T.zipError);
-        })
-        .finally(() => {
-            btn.disabled = false;
-            btn.innerText = originalLabel;
         });
     }
 
