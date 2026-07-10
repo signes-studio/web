@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
-    <title>Signes.Studio — Portal de Revisión</title>
+    <title>Signes.Studio — Review Portal</title>
     <style>
         /* Estética General Warm Minimalism / Japandi */
         body {
@@ -146,7 +146,7 @@
             max-width: 85vw;
             max-height: 75vh;
             overflow: hidden;
-            cursor: zoom-in; /* Cambiado para sugerir ampliación */
+            cursor: zoom-in;
         }
         .lightbox img {
             max-width: 100%;
@@ -156,12 +156,11 @@
             transition: transform 0.15s ease-out;
             transform-origin: center center;
         }
-        /* Estado de zoom activo al hacer clic */
         .lightbox-wrapper.zoomed {
             cursor: zoom-out;
         }
         .lightbox-wrapper.zoomed img {
-            transform: scale(2); /* Zoom manual controlado */
+            transform: scale(2);
         }
 
         /* Controles de Navegación */
@@ -233,7 +232,6 @@
 
         .status-msg { text-align: center; padding: 120px 20px; font-weight: 300; color: #706e68; }
     </style>
-    <!-- Librería externa ligera y segura para la generación de ZIPs en local -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </head>
 <body>
@@ -249,9 +247,8 @@
     <button class="nav-btn nav-prev" onclick="navigateImage(-1, event)">&#8249;</button>
     <button class="nav-btn nav-next" onclick="navigateImage(1, event)">&#8250;</button>
     
-    <!-- El wrapper ahora maneja el click de zoom y el movimiento de lupa -->
     <div class="lightbox-wrapper" id="lightboxWrapper" onclick="toggleZoom(event)" onmousemove="panZoom(event)">
-        <img id="lightboxImg" src="" alt="Amplied view">
+        <img id="lightboxImg" src="" alt="Amplified view">
     </div>
     
     <div class="lightbox-actions">
@@ -267,7 +264,6 @@
     const projectId = urlParams.get('id');
     const appContainer = document.getElementById('app');
 
-    // Títulos traducidos al inglés para un look internacional
     const FASE_NAMES = {
         'rev1': '01. First Draft — Volumetrics & Framing',
         'rev2': '02. Second Draft — Lighting & Materiality',
@@ -304,7 +300,6 @@
             else if (lowerName.startsWith('signes_')) dataStructure.signes.push(fileName);
         });
 
-        // Limpieza de títulos: eliminado el texto "Cliente — " y quitado "Renders autoría Signes" de la fase final
         let html = `
             <header>
                 <div class="logo">Signes.Studio</div>
@@ -321,7 +316,6 @@
             hasContent = true;
             group.sort();
 
-            // Añadido el botón dinámico "Download All" al lado de cada título de categoría
             html += `
                 <section class="fase-section">
                     <div class="fase-header">
@@ -333,7 +327,6 @@
 
             group.forEach(img => {
                 const imgUrl = `${BUCKET_URL}/${projectId}/${img}`;
-                // Limpieza estética del pie de la miniatura según tus reglas de autoría
                 let cleanCaption = img.replace(/^rev\d+_/i, '').replace(/^SIGNES_/i, '').replace(/\.[^/.]+$/, '').replace(/^[0-9]+[-_]/, '').replace(/[-_]/g, ' ');
 
                 globalActiveImages.push({ url: imgUrl, caption: cleanCaption, filename: img });
@@ -362,7 +355,6 @@
         appContainer.innerHTML = hasContent ? html : '<div class="status-msg">No images found in this space.</div>';
     }
 
-    /* Lógica Avanzada del Lightbox (Sin Auto-Zoom + Lupa interactiva) */
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightboxImg');
     const lightboxCaption = document.getElementById('lightboxCaption');
@@ -382,18 +374,16 @@
         lightbox.classList.add('active');
     }
 
-    // Activa/Desactiva el zoom al hacer click (Estilo Lupa)
     function toggleZoom(event) {
         event.stopPropagation();
         if (lightboxWrapper.classList.contains('zoomed')) {
             resetZoom();
         } else {
             lightboxWrapper.classList.add('zoomed');
-            panZoom(event); // Centra la lupa al instante del click
+            panZoom(event);
         }
     }
 
-    // Mueve la imagen bajo el cursor coordinando las coordenadas de la lupa
     function panZoom(event) {
         if (!lightboxWrapper.classList.contains('zoomed')) return;
         const rect = lightboxWrapper.getBoundingClientRect();
@@ -428,7 +418,6 @@
         resetZoom();
     }
 
-    /* Motor de Descargas Masivas (.ZIP por Categorías) */
     function downloadAsZip(faseKey, projectName, event) {
         event.preventDefault();
         const targetElement = event.target;
@@ -444,21 +433,34 @@
         const folderName = `${projectName.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_${faseKey}`;
         const zipFolder = zip.folder(folderName);
 
-        // Descarga y empaquetado en paralelo
         const downloadPromises = filesToDownload.map(fileName => {
-            const fileUrl = `${BUCKET_URL}/${projectId}/${fileName}`;
-            return fetch(fileUrl)
-                .then(response => {
-                    if (!response.ok) throw new Error(`Failed to fetch ${fileName}`);
-                    return response.blob();
-                })
-                .then(blob => {
+            const fileUrl = `${BUCKET_URL}/${projectId}/${fileName}?nocache=${new Date().getTime()}`;
+            return fetch(fileUrl, {
+                method: 'GET',
+                mode: 'cors',
+                credentials: 'omit'
+            })
+            .then(response => {
+                if (!response.ok) throw new Error(`Failed to fetch ${fileName}`);
+                return response.blob();
+            })
+            .then(blob => {
+                if (blob.size > 0) {
                     zipFolder.file(fileName, blob);
-                })
-                .catch(err => console.error(err));
+                }
+            })
+            .catch(err => console.error(err));
         });
 
         Promise.all(downloadPromises).then(() => {
+            const zipLength = Object.keys(zip.files).length;
+            if (zipLength <= 1) {
+                alert("Download failed. Please try again or download images individually.");
+                targetElement.innerText = originalText;
+                targetElement.style.pointerEvents = "auto";
+                return;
+            }
+
             zip.generateAsync({ type: "blob" }).then(content => {
                 const link = document.createElement("a");
                 link.href = URL.createObjectURL(content);
