@@ -1,198 +1,76 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIGNES.STUDIO — Visuals Research</title>
+    <title>SIGNES | Visual Research</title>
+    
+    <!-- Meta tags básicas para SEO -->
+    <meta name="description" content="SIGNES.STUDIO — Visual Research.">
+    
+    <!-- Vinculación del favicon en formato SVG -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <!-- Importamos la tipografía Cormorant desde Google Fonts (Pesos 300, 400 y 600) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <!-- Vinculamos los estilos externos -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Estilos de contingencia para tipografía y enlaces limpios -->
     <style>
-        /* Estética General Warm Minimalism / Japandi */
+        /* Fuerza la nueva tipografía editorial */
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: #fbfaf7;
-            color: #1a1a1a;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            -webkit-font-smoothing: antialiased;
+            font-family: 'Cormorant', serif;
         }
 
-        .container {
-            max-width: 1000px;
-            width: 100%;
-            margin: 0 auto;
-            padding: 60px 20px;
-            box-sizing: border-box;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+        /* Desactiva el azul hipervínculo por defecto y aplica gris suave */
+        .contact-link {
+            color: #8c8c8c; /* Gris suave */
+            text-decoration: none; /* Elimina el subrayado técnico */
+            transition: color 0.3s ease;
         }
 
-        /* Cabecera / Navegación */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #e6e3dc;
-            padding-bottom: 24px;
-        }
-
-        .logo {
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            font-weight: 600;
-            color: #1a1a1a;
-            text-decoration: none;
-        }
-
-        nav {
-            display: flex;
-            gap: 24px;
-        }
-
-        nav a {
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: #706e68;
-            text-decoration: none;
-            transition: color 0.2s ease;
-        }
-
-        nav a:hover {
-            color: #1a1a1a;
-        }
-
-        /* Contenido Principal (Hero / Manifiesto) */
-        main {
-            margin: 120px 0;
-            max-width: 650px;
-        }
-
-        .hero-title {
-            font-size: 32px;
-            font-weight: 300;
-            letter-spacing: -0.02em;
-            line-height: 1.3;
-            text-transform: uppercase;
-            margin-bottom: 24px;
-        }
-
-        .hero-description {
-            font-size: 15px;
-            line-height: 1.7;
-            color: #706e68;
-            font-weight: 300;
-            letter-spacing: 0.01em;
-        }
-
-        /* Enlaces de Acción Estéticos */
-        .action-zone {
-            margin-top: 48px;
-            display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
-        }
-
-        .btn-primary {
-            display: inline-block;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            font-weight: 500;
-            color: #ffffff;
-            background-color: #1a1a1a;
-            text-decoration: none;
-            padding: 14px 32px;
-            border-radius: 2px;
-            transition: background-color 0.2s ease, transform 0.2s ease;
-        }
-
-        .btn-primary:hover {
-            background-color: #4a4a4a;
-            transform: translateY(-1px);
-        }
-
-        /* Pie de página */
-        footer {
-            border-top: 1px solid #e6e3dc;
-            padding-top: 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 16px;
-        }
-
-        .copyright {
-            font-size: 11px;
-            color: #a09e96;
-            font-weight: 300;
-            letter-spacing: 0.02em;
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 18px;
-        }
-
-        .footer-links a {
-            font-size: 11px;
-            color: #a09e96;
-            text-decoration: none;
-            transition: color 0.2s ease;
-        }
-
-        .footer-links a:hover {
-            color: #1a1a1a;
-        }
-
-        @media (max-width: 560px) {
-            header, footer {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 16px;
-            }
-            main {
-                margin: 60px 0;
-            }
+        /* Efecto sutil al pasar el cursor (hover) a un gris más oscuro */
+        .contact-link:hover {
+            color: #2c2c2c; 
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <header>
-        <a href="/" class="logo">SIGNES.STUDIO</a>
-        <nav>
-            <a href="mailto:info@signes.studio">Contacto</a>
-        </nav>
-    </header>
+    <div class="container">
+        <h1 class="logo">
+            <span class="bold">SIGNES</span><span class="extralight">.STUDIO</span>
+        </h1>
+        <p class="subtitle">Visual Research</p>
+    </div>
 
-    <main>
-        <h1 class="hero-title">Espacio de investigación visual, arquitectura y documentación gráfica.</h1>
-        <p class="hero-description">
-            Buscamos la sintonía entre la precisión técnica y la pureza estética a través de imágenes y entornos que dialogan con la luz, la materialidad y la sencillez constructiva.
-        </p>
-        
-        <div class="action-zone">
-            <a href="mailto:office@signes.studio" class="btn-primary">Iniciar un proyecto</a>
-        </div>
-    </main>
-
-    <footer>
-        <div class="copyright">
-            &copy; 2026 Signes.Studio. Todos los derechos reservados.
-        </div>
-        <div class="footer-links">
-            <a href="mailto:office@signes.studio">Instagram</a>
-            <a href="mailto:office@signes.studio">LinkedIn</a>
-        </div>
+<!-- PIE DE PÁGINA: Correo de contacto sutil -->
+    <footer class="footer">
+        <a href="mailto:office@signes.studio" class="contact-link">office@signes.studio</a>
     </footer>
-</div>
 
+    <!-- SCRIPT DE PROTECCIÓN BÁSICA -->
+    <script>
+        // 1. Bloquear el clic derecho del ratón
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        // 2. Bloquear atajos de teclado para ver el código fuente e inspeccionar
+        document.onkeydown = function(e) {
+            // F12 (Herramientas de desarrollador)
+            if(e.keyCode == 123) { return false; }
+            // Ctrl+U (Ver código fuente)
+            if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { return false; }
+            // Ctrl+Shift+I / Ctrl+Shift+C / Ctrl+Shift+J (Inspeccionar elemento)
+            if(e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) {
+                return false;
+            }
+        }
+    </script>
 </body>
 </html>
