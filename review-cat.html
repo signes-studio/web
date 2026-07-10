@@ -45,9 +45,6 @@
         /* Secciones y Grid de Renders */
         .fase-section { margin-bottom: 60px; }
         .fase-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
             border-bottom: 1px solid #e6e3dc; 
             padding-bottom: 8px; 
             margin-bottom: 28px; 
@@ -59,18 +56,6 @@
             letter-spacing: 0.08em; 
             color: #8c887e; 
             margin: 0;
-        }
-        .fase-download-all {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: #a09e96;
-            text-decoration: none;
-            font-weight: 400;
-            transition: color 0.2s ease;
-        }
-        .fase-download-all:hover {
-            color: #1a1a1a;
         }
         .grid { 
             display: grid; 
@@ -232,7 +217,6 @@
 
         .status-msg { text-align: center; padding: 120px 20px; font-weight: 300; color: #706e68; }
     </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </head>
 <body>
 
@@ -240,7 +224,6 @@
     <div class="status-msg">Obrint espai de revisió confidencial...</div>
 </div>
 
-<!-- Ventana Flotante / Lightbox -->
 <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
     <button class="lightbox-close" onclick="forceCloseLightbox()">&times;</button>
     
@@ -253,7 +236,7 @@
     
     <div class="lightbox-actions">
         <span class="lightbox-caption" id="lightboxCaption"></span>
-        <a class="lightbox-download" id="lightboxDownload" href="#" download>Descarregar Imatge ↓</a>
+        <a class="lightbox-download" id="lightboxDownload" href="#" onclick="forceDownload(this.href, this.getAttribute('download'), event)">Descarregar Imatge ↓</a>
     </div>
 </div>
 
@@ -320,7 +303,6 @@
                 <section class="fase-section">
                     <div class="fase-header">
                         <h2 class="fase-title">${FASE_NAMES[faseKey]}</h2>
-                        <a href="#" class="fase-download-all" onclick="downloadAsZip('${faseKey}', '${data.proyecto}', event)">Descarregar Tot (.zip)</a>
                     </div>
                     <div class="grid">
             `;
@@ -334,7 +316,7 @@
 
                 html += `
                     <div class="image-card" onclick="openLightbox(${currentGlobalIndex})">
-                        <a href="${imgUrl}" download="${img}" class="thumb-download" title="Descarregar render" onclick="event.stopPropagation();">↓</a>
+                        <a href="#" class="thumb-download" title="Descarregar render" onclick="forceDownload('${imgUrl}', '${img}', event);">↓</a>
                         <img src="${imgUrl}" alt="${img}" loading="lazy">
                         <div class="image-caption">${cleanCaption}</div>
                     </div>
@@ -347,7 +329,7 @@
         html += `
             <footer>
                 <div class="legal-notice">
-                    Avís de confidencialitat: L'accés a aquest enllaç i a la documentació gràfica continguda és estrictamente privat i exclusiu per al client. Queda totalment prohibida la seua distribució o filtració a tercers. Amb la finalitat d'optimitzar el rendiment i garantir la privacitat de l'encàrrec, tota la informació d'aquest espai serà eliminada permanentment transcorreguts 15 dies des del tancament i lliurament del projecte.
+                    Avís de confidencialitat: L'accés a aquest enllaç i a la documentació gràfica continguda és estrictament privat i exclusiu per al client. Queda totalment prohibida la seua distribució o filtració a tercers. Amb la finalitat d'optimitzar el RENDIMENT i garantir la privacitat de l'encàrrec, tota la informació d'aquest espai serà eliminada permanentment transcorreguts 15 dies des del tancament i lliurament del projecte.
                 </div>
             </footer>
         `;
@@ -418,60 +400,34 @@
         resetZoom();
     }
 
-    function downloadAsZip(faseKey, projectName, event) {
-        event.preventDefault();
-        const targetElement = event.target;
-        const filesToDownload = dataStructure[faseKey];
+    function forceDownload(fileUrl, fileName, event) {
+        if (event) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        const cleanUrl = `${fileUrl.split('?')[0]}?nocache=${new Date().getTime()}`;
 
-        if (!filesToDownload || filesToDownload.length === 0) return;
-
-        const originalText = targetElement.innerText;
-        targetElement.innerText = "Comprimint...";
-        targetElement.style.pointerEvents = "none";
-
-        const zip = new JSZip();
-        const folderName = `${projectName.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_${faseKey}`;
-        const zipFolder = zip.folder(folderName);
-
-        const downloadPromises = filesToDownload.map(fileName => {
-            const fileUrl = `${BUCKET_URL}/${projectId}/${fileName}?nocache=${new Date().getTime()}`;
-            return fetch(fileUrl, {
-                method: 'GET',
-                mode: 'cors',
-                credentials: 'omit'
-            })
-            .then(response => {
-                if (!response.ok) throw new Error(`Fallo al descarregar ${fileName}`);
-                return response.blob();
-            })
-            .then(blob => {
-                if (blob.size > 0) {
-                    zipFolder.file(fileName, blob);
-                }
-            })
-            .catch(err => console.error(err));
-        });
-
-        Promise.all(downloadPromises).then(() => {
-            const zipLength = Object.keys(zip.files).length;
-            if (zipLength <= 1) {
-                alert("La descàrrega massiva ha fallat. Si us plau, descarrega les imatges individualment mentre s'actualitza la xarxa.");
-                targetElement.innerText = originalText;
-                targetElement.style.pointerEvents = "auto";
-                return;
-            }
-
-            zip.generateAsync({ type: "blob" }).then(content => {
-                const link = document.createElement("a");
-                link.href = URL.createObjectURL(content);
-                link.download = `${folderName}.zip`;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                
-                targetElement.innerText = originalText;
-                targetElement.style.pointerEvents = "auto";
-            });
+        fetch(cleanUrl, {
+            method: 'GET',
+            mode: 'cors',
+            credentials: 'omit'
+        })
+        .then(response => {
+            if (!response.ok) throw new Error();
+            return response.blob();
+        })
+        .then(blob => {
+            const blobUrl = URL.createObjectURL(blob);
+            const tempLink = document.createElement("a");
+            tempLink.href = blobUrl;
+            tempLink.download = fileName;
+            document.body.appendChild(tempLink);
+            tempLink.click();
+            document.body.removeChild(tempLink);
+            URL.revokeObjectURL(blobUrl);
+        })
+        .catch(() => {
+            window.open(fileUrl, '_blank');
         });
     }
 
