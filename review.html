@@ -515,10 +515,13 @@
                 globalActiveImages.push({ url: imgUrl, caption: cleanCaption, filename: img });
                 const currentGlobalIndex = globalActiveImages.length - 1;
 
+                // URL OPTIMIZADA: Cloudflare procesa el render original de R2 y sirve un WebP minúsculo de 450px para el grid
+                const thumbnailUrl = `https://signes.studio/cdn-cgi/image/width=450,quality=80,format=auto/share/${projectId}/${img}`;
+
                 html += `
                     <div class="image-card" onclick="openLightbox(${currentGlobalIndex})">
                         <a href="#" class="thumb-download" title="${T.downloadRender}" onclick="forceDownload('${imgUrl}', '${img}', event);">↓</a>
-                        <img src="${imgUrl}" alt="${img}" loading="lazy">
+                        <img src="${thumbnailUrl}" alt="${img}" loading="lazy">
                         <div class="image-caption">${cleanCaption}</div>
                     </div>
                 `;
