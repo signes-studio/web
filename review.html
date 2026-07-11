@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
     <title>SIGNES.STUDIO — Review Portal</title>
+    <!-- Importación de la tipografía oficial para mantener consistencia de marca -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500&display=swap" rel="stylesheet">
@@ -292,6 +293,7 @@
             .lang-switch { margin-top: 0; }
         }
     </style>
+    <!-- Script Oficial de Cloudflare Turnstile -->
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
@@ -300,7 +302,6 @@
     <!-- Estado Inicial: Verificación de Seguridad Invisible -->
     <div class="security-wrapper">
         <div class="status-msg" id="sec-msg">Verifying secure connection...</div>
-        <!-- Contenedor del Widget (Aparecerá solo si Cloudflare sospecha del tráfico) -->
         <div id="turnstile-widget" class="cf-turnstile" data-sitekey="0x4AAAAAADzPcFSUMS9BwYBI" data-callback="onTurnstileSuccess"></div>
     </div>
 </div>
@@ -321,7 +322,6 @@
     </div>
 </div>
 
-<!-- Librería JSZip integrada al final para compilar descargas masivas -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script>
     const BUCKET_URL = "https://share.signes.studio";
@@ -365,7 +365,7 @@
             preparingZip: 'Preparando…',
             zipProgress: (n, total) => `Descargando ${n}/${total}…`,
             zipError: 'Algunas imágenes no se han podido descargar. Inténtalo de nuevo.',
-            legalNotice: 'Aviso de confidencialidad: El acceso a este enlace y a la documentación gráfica contenida es strictly privado y exclusivo para el cliente. Queda totalmente prohibida su distribución o filtración a terceros. Con el fin de optimizar el rendimiento y garantizar la privacidad del encargo, toda la información de este espacio será eliminada permanentemente transcurridos 15 días desde el cierre y entrega del proyecto.',
+            legalNotice: 'Aviso de confidencialidad: El acceso a este enlace y a la documentación gráfica contenida es estrictamente privado y exclusivo para el cliente. Queda totalmente prohibida su distribución o filtración a terceros. Con el fin de optimizar el rendimiento y garantizar la privacidad del encargo, toda la información de este espacio será eliminada permanentemente transcurridos 15 dias desde el cierre y entrega del proyecto.',
             fases: {
                 rev1: '01. Primera Revisión — Volumetrías y Materialidad',
                 rev2: '02. Segunda Revisión — Iluminación y Encuadres',
@@ -419,11 +419,9 @@
     let T = STRINGS[currentLang];
     let manifestData = null;
 
-    // Ajustar texto del cargador inicial de seguridad
     document.getElementById('sec-msg').innerText = T.verifying;
     document.title = T.pageTitle;
 
-    /* Callback de Turnstile */
     function onTurnstileSuccess(token) {
         if (!projectId) {
             appContainer.innerHTML = `<div class="status-msg">${T.invalidLink}</div>`;
@@ -496,7 +494,7 @@
         let html = `
             <header>
                 <div class="header-main">
-                    <div class="logo">Signes.Studio</div>
+                    <div class="logo"><span class="bold">SIGNES</span><span class="light">.STUDIO</span></div>
                     <h1 class="project-title">${data.proyecto}</h1>
                     <div class="client-name">${data.cliente}</div>
                 </div>
@@ -528,7 +526,6 @@
                 globalActiveImages.push({ url: imgUrl, caption: cleanCaption, filename: img });
                 const currentGlobalIndex = globalActiveImages.length - 1;
 
-                // URL OPTIMIZADA: Cloudflare procesa el render original de R2 y sirve un WebP minúsculo de 450px para el grid
                 const thumbnailUrl = `${BUCKET_URL}/cdn-cgi/image/width=450,quality=80,format=auto/${projectId}/${img}`;
 
                 html += `
@@ -648,7 +645,6 @@
         });
     }
 
-    /* Tu Motor de Descarga Masiva por Lotes Optimizado */
     function downloadAllInSection(faseKey) {
         const files = dataStructure[faseKey];
         if (!files || files.length === 0) return;
