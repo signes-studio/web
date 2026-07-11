@@ -4,12 +4,54 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SIGNES.STUDIO — Visual Research for Architecture</title>
-<meta name="description" content="SIGNES.STUDIO is an independent visual research practice specializing in architectural visualization and external visual direction.">
+<meta name="description" content="SIGNES.STUDIO is an independent visual research practice specializing in architectural visualization and external visual direction. Based in Valencia, working with architecture firms worldwide.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://signes.studio/">
+
+<!-- Open Graph / Social sharing -->
+<meta property="og:title" content="SIGNES.STUDIO — Visual Research for Architecture">
+<meta property="og:description" content="Independent visual research practice specializing in architectural visualization and external visual direction.">
+<meta property="og:image" content="https://signes.studio/img/og-cover.jpg">
+<meta property="og:url" content="https://signes.studio/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SIGNES.STUDIO — Visual Research for Architecture">
+<meta name="twitter:description" content="Independent visual research practice specializing in architectural visualization and external visual direction.">
+<meta name="twitter:image" content="https://signes.studio/img/og-cover.jpg">
+
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=1.5">
+<link rel="stylesheet" href="style.css?v=1.6">
+
+<!-- Structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "SIGNES.STUDIO",
+  "founder": {
+    "@type": "Person",
+    "name": "Luis Signes"
+  },
+  "description": "Independent visual research practice specializing in architectural visualization and external visual direction.",
+  "url": "https://signes.studio",
+  "email": "office@signes.studio",
+  "telephone": "+34614459144",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Valencia",
+    "addressCountry": "ES"
+  },
+  "sameAs": [
+    "https://linkedin.com/signes.studio",
+    "https://behance.net/signes.studio",
+    "https://instagram.com/signes.studio"
+  ]
+}
+</script>
 </head>
 <body id="collection-signes">
 
@@ -26,10 +68,10 @@
             <p class="tagline">Visual Research for Architecture</p>
           </div>
 
-          <nav id="mainNavigation" class="main-nav">
+          <nav id="mainNavigation" class="main-nav" aria-label="Main navigation">
             <ul>
-              <li id="nav-work-li" class="active-link"><a href="#" id="nav-work">Work</a></li>
-              <li id="nav-contact-li"><a href="#" id="nav-contact">Contact</a></li>
+              <li id="nav-work-li" class="active-link"><a href="#work" id="nav-work">Work</a></li>
+              <li id="nav-contact-li"><a href="#contact" id="nav-contact">Contact</a></li>
             </ul>
           </nav>
         </div>
@@ -43,35 +85,65 @@
       <div id="pageWrapper" role="main">
         
         <!-- VISTA A: WORK (SLIDER HORIZONTAL) -->
-        <section id="page-work" class="page-section active">
+        <section id="page-work" class="page-section active" aria-label="Work gallery">
           <div id="galleryWrapper">
             <div id="slideshowWrapper">
               
-              <div id="slideshow" class="slideshow">
+              <div id="slideshow" class="slideshow" role="region" aria-roledescription="carousel" aria-label="Project images">
                 <!-- Slide 01 -->
                 <div class="slide active" data-title="Hivernacle — Exterior" data-desc="Arqtistic [ES]">
-                  <img src="img/SIGNES_01-Exterior.jpg" alt="Hivernacle Exterior" class="slider-img">
+                  <img
+                    src="img/SIGNES_01-Exterior-1200.jpg"
+                    srcset="img/SIGNES_01-Exterior-640.jpg 640w,
+                            img/SIGNES_01-Exterior-1200.jpg 1200w,
+                            img/SIGNES_01-Exterior-1920.jpg 1920w,
+                            img/SIGNES_01-Exterior-2560.jpg 2560w"
+                    sizes="(max-width: 768px) 100vw, 90vw"
+                    alt="Hivernacle greenhouse exterior architectural visualization, project by Arqtistic"
+                    class="slider-img"
+                    width="1920" height="1280"
+                    loading="eager" fetchpriority="high" decoding="async">
                 </div>
                 
                 <!-- Slide 02 -->
                 <div class="slide" data-title="Hivernacle — Interior B" data-desc="Arqtistic [ES]">
-                  <img src="img/SIGNES_03-Interior B.jpg" alt="Hivernacle Interior B" class="slider-img">
+                  <img
+                    src="img/SIGNES_03-Interior-B-1200.jpg"
+                    srcset="img/SIGNES_03-Interior-B-640.jpg 640w,
+                            img/SIGNES_03-Interior-B-1200.jpg 1200w,
+                            img/SIGNES_03-Interior-B-1920.jpg 1920w,
+                            img/SIGNES_03-Interior-B-2560.jpg 2560w"
+                    sizes="(max-width: 768px) 100vw, 90vw"
+                    alt="Hivernacle greenhouse interior visualization, view B, project by Arqtistic"
+                    class="slider-img"
+                    width="1920" height="1280"
+                    loading="lazy" decoding="async">
                 </div>
                 
                 <!-- Slide 03 -->
                 <div class="slide" data-title="Hivernacle — Interior C" data-desc="Arqtistic [ES]">
-                  <img src="img/SIGNES_05-Interior C.jpg" alt="Hivernacle Interior C" class="slider-img">
+                  <img
+                    src="img/SIGNES_05-Interior-C-1200.jpg"
+                    srcset="img/SIGNES_05-Interior-C-640.jpg 640w,
+                            img/SIGNES_05-Interior-C-1200.jpg 1200w,
+                            img/SIGNES_05-Interior-C-1920.jpg 1920w,
+                            img/SIGNES_05-Interior-C-2560.jpg 2560w"
+                    sizes="(max-width: 768px) 100vw, 90vw"
+                    alt="Hivernacle greenhouse interior visualization, view C, project by Arqtistic"
+                    class="slider-img"
+                    width="1920" height="1280"
+                    loading="lazy" decoding="async">
                 </div>
               </div>
 
               <!-- CONTROLES LATERALES (Zonas interactivas del 50%) -->
-              <div class="overlay-controls left-control" id="prev-zone" title="Previous Image">
-                <svg class="arrow-svg" viewBox="0 0 24 24">
+              <div class="overlay-controls left-control" id="prev-zone" title="Previous Image" role="button" tabindex="0" aria-label="Previous image">
+                <svg class="arrow-svg" viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </div>
-              <div class="overlay-controls right-control" id="next-zone" title="Next Image">
-                <svg class="arrow-svg" viewBox="0 0 24 24">
+              <div class="overlay-controls right-control" id="next-zone" title="Next Image" role="button" tabindex="0" aria-label="Next image">
+                <svg class="arrow-svg" viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </div>
@@ -100,8 +172,9 @@
         </section>
 
         <!-- VISTA B: CONTACT & ABOUT -->
-        <section id="page-contact" class="page-section">
+        <section id="page-contact" class="page-section" aria-label="Contact and about">
           <div class="contact-wrapper">
+            <h2 class="visually-hidden">About &amp; Contact</h2>
             <div class="about-box">
               <p>Founded by Luis Signes, SIGNES.STUDIO is an independent visual research practice operating at the intersection of architecture, precise spatial 3D visualization, and brand narrative. Based in Valencia and working with architectural firms across the world.</p>
             </div>
@@ -116,9 +189,9 @@
               <div class="info-block">
                 <span class="info-label">Channels</span>
                 <div class="sub-links">
-                  <a href="https://linkedin.com/signes.studio" target="_blank">LinkedIn</a>·
-                  <a href="https://behance.net/signes.studio" target="_blank">Behance</a>·
-                  <a href="https://instagram.com/signes.studio" target="_blank">Instagram</a>
+                  <a href="https://linkedin.com/signes.studio" target="_blank" rel="noopener">LinkedIn</a>·
+                  <a href="https://behance.net/signes.studio" target="_blank" rel="noopener">Behance</a>·
+                  <a href="https://instagram.com/signes.studio" target="_blank" rel="noopener">Instagram</a>
                 </div>
               </div>
             </div>
@@ -207,6 +280,14 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('next-zone').addEventListener('click', nextSlide);
   document.getElementById('prev-zone').addEventListener('click', prevSlide);
 
+  // Soporte de teclado para las zonas interactivas (accesibilidad, sin cambiar el diseño)
+  document.getElementById('next-zone').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+  });
+  document.getElementById('prev-zone').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); prevSlide(); }
+  });
+
   document.addEventListener('keydown', (e) => {
     if (pageWork.classList.contains('active')) {
       if (e.key === 'ArrowRight') nextSlide();
@@ -231,7 +312,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { passive: false });
 
   // Pestañas
-  function showPage(page) {
+  function showPage(page, updateHistory = true) {
     if (page === 'work') {
       pageWork.classList.add('active');
       pageContact.classList.remove('active');
@@ -241,6 +322,8 @@ document.addEventListener('DOMContentLoaded', () => {
       if(mobileGalleryMeta) mobileGalleryMeta.style.display = 'flex';
       if(mobileCopyright) mobileCopyright.style.display = 'block';
       setTimeout(alignMetaToImage, 50);
+      if (updateHistory) history.pushState({ page: 'work' }, '', '#work');
+      document.title = 'SIGNES.STUDIO — Visual Research for Architecture';
     } else {
       pageContact.classList.add('active');
       pageWork.classList.remove('active');
@@ -249,6 +332,8 @@ document.addEventListener('DOMContentLoaded', () => {
       if(desktopCanvasMeta) desktopCanvasMeta.style.display = 'none';
       if(mobileGalleryMeta) mobileGalleryMeta.style.display = 'none';
       if(mobileCopyright) mobileCopyright.style.display = 'none';
+      if (updateHistory) history.pushState({ page: 'contact' }, '', '#contact');
+      document.title = 'Contact — SIGNES.STUDIO';
     }
   }
 
@@ -256,11 +341,15 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('go-home').addEventListener('click', (e) => { e.preventDefault(); showPage('work'); });
   document.getElementById('nav-contact').addEventListener('click', (e) => { e.preventDefault(); showPage('contact'); });
 
-  document.addEventListener('contextmenu', (e) => e.preventDefault());
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'F12') e.preventDefault();
-    if (e.ctrlKey && e.key.toLowerCase() === 'u') e.preventDefault();
+  // Soporta navegación con atrás/adelante del navegador y carga directa vía #contact
+  window.addEventListener('popstate', (e) => {
+    const page = (e.state && e.state.page) || (location.hash === '#contact' ? 'contact' : 'work');
+    showPage(page, false);
   });
+
+  if (location.hash === '#contact') {
+    showPage('contact', false);
+  }
 });
 </script>
 </body>
