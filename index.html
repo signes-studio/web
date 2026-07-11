@@ -9,13 +9,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=1.4">
+<link rel="stylesheet" href="style.css?v=1.5">
 </head>
 <body id="collection-signes">
 
   <div id="canvasWrapper">
     <div id="canvas">
       
+      <!-- HEADER / SIDEBAR AREA -->
       <header id="header">
         <div id="header-top-group">
           <div id="logo">
@@ -34,36 +35,36 @@
         </div>
 
         <div id="sidebar-desktop-bottom">
-          <div id="desktop-sidebar-meta" class="meta-container">
-            <div class="meta-text-group">
-              <div class="image-title"><strong class="dyn-title">Hivernacle — Exterior</strong></div>
-              <div class="image-desc"><p class="dyn-desc">Arqtistic [ES]</p></div>
-            </div>
-          </div>
           <p class="header-copyright">© All images by SIGNES.STUDIO</p>
         </div>
       </header>
 
+      <!-- MAIN WRAPPER -->
       <div id="pageWrapper" role="main">
         
+        <!-- VISTA A: WORK (SLIDER HORIZONTAL) -->
         <section id="page-work" class="page-section active">
           <div id="galleryWrapper">
             <div id="slideshowWrapper">
               
               <div id="slideshow" class="slideshow">
+                <!-- Slide 01 -->
                 <div class="slide active" data-title="Hivernacle — Exterior" data-desc="Arqtistic [ES]">
-                  <img src="img/SIGNES_01-Exterior.jpg" alt="Hivernacle Exterior">
+                  <img src="img/SIGNES_01-Exterior.jpg" alt="Hivernacle Exterior" class="slider-img">
                 </div>
                 
+                <!-- Slide 02 -->
                 <div class="slide" data-title="Hivernacle — Interior B" data-desc="Arqtistic [ES]">
-                  <img src="img/SIGNES_03-Interior B.jpg" alt="Hivernacle Interior B">
+                  <img src="img/SIGNES_03-Interior B.jpg" alt="Hivernacle Interior B" class="slider-img">
                 </div>
                 
+                <!-- Slide 03 -->
                 <div class="slide" data-title="Hivernacle — Interior C" data-desc="Arqtistic [ES]">
-                  <img src="img/SIGNES_05-Interior C.jpg" alt="Hivernacle Interior C">
+                  <img src="img/SIGNES_05-Interior C.jpg" alt="Hivernacle Interior C" class="slider-img">
                 </div>
               </div>
 
+              <!-- CONTROLES LATERALES (Zonas interactivas del 50%) -->
               <div class="overlay-controls left-control" id="prev-zone" title="Previous Image">
                 <svg class="arrow-svg" viewBox="0 0 24 24">
                   <path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
@@ -75,6 +76,7 @@
                 </svg>
               </div>
 
+              <!-- CAJÓN DE TEXTO ESCRITORIO: Auto-alineado matemáticamente -->
               <div id="desktop-canvas-meta" class="meta-container">
                 <div class="meta-text-group">
                   <div class="image-title"><strong class="dyn-title">Hivernacle — Exterior</strong></div>
@@ -84,6 +86,7 @@
 
             </div>
 
+            <!-- EXCLUSIVO MÓVIL: Marquesina baja independiente -->
             <div class="meta-container" id="mobile-gallery-meta">
               <div class="meta-text-group">
                 <div class="image-title"><strong class="dyn-title">Hivernacle — Exterior</strong></div>
@@ -96,10 +99,11 @@
           </div>
         </section>
 
+        <!-- VISTA B: CONTACT & ABOUT -->
         <section id="page-contact" class="page-section">
           <div class="contact-wrapper">
             <div class="about-box">
-              <p>Founded by Luis Signes, SIGNES.STUDIO is a comunication studio operating at the intersection of architecture, precise spatial 3D visualization, and brand narrative. Based in Valencia and working with architectural firms across the world.</p>
+              <p>Founded by Luis Signes, SIGNES.STUDIO is an independent visual research practice operating at the intersection of architecture, precise spatial 3D visualization, and brand narrative. Based in Valencia and working with architectural firms across the world.</p>
             </div>
             
             <div class="info-grid">
@@ -142,7 +146,28 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentIdx = 0;
   let isTransitioning = false;
 
-  // Sincronización de textos global (Sidebar + Canvas)
+  // FUNCIÓN CRÍTICA: Calcula dónde termina la imagen real para alinear el texto abajo
+  function alignMetaToImage() {
+    if (window.innerWidth <= 768) return; // En móvil no aplica esta lógica
+    
+    const activeSlide = slides[currentIdx];
+    const img = activeSlide.querySelector('img');
+    
+    if (img && img.complete) {
+      // Obtenemos las dimensiones y la posición de la imagen dentro de su marco
+      const imgWidth = img.clientWidth;
+      const slideshowWidth = document.getElementById('slideshow').clientWidth;
+      
+      // Calculamos el espacio vacío izquierdo para aplicar el desfase exacto
+      const leftOffset = (slideshowWidth - imgWidth) / 2;
+      
+      if (desktopCanvasMeta) {
+        desktopCanvasMeta.style.left = `${leftOffset}px`;
+        desktopCanvasMeta.style.width = `${imgWidth}px`;
+      }
+    }
+  }
+
   function updateSlideshow(nextIdx) {
     slides[currentIdx].classList.remove('active');
     slides[nextIdx].classList.add('active');
@@ -154,6 +179,9 @@ document.addEventListener('DOMContentLoaded', () => {
     dynDescs.forEach(el => el.textContent = descText);
     
     currentIdx = nextIdx;
+    
+    // Forzamos la alineación al cambiar de slide
+    setTimeout(alignMetaToImage, 50);
   }
 
   function nextSlide() {
@@ -166,7 +194,16 @@ document.addEventListener('DOMContentLoaded', () => {
     updateSlideshow(prev);
   }
 
-  // Interacciones nativas fijadas
+  // Alineación en eventos de carga y redimensión
+  window.addEventListener('resize', alignMetaToImage);
+  document.querySelectorAll('.slider-img').forEach(img => {
+    img.addEventListener('load', alignMetaToImage);
+  });
+  
+  // Ejecución inicial preventiva
+  setTimeout(alignMetaToImage, 300);
+
+  // Interacciones fijadas
   document.getElementById('next-zone').addEventListener('click', nextSlide);
   document.getElementById('prev-zone').addEventListener('click', prevSlide);
 
@@ -203,6 +240,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if(desktopCanvasMeta) desktopCanvasMeta.style.display = 'block';
       if(mobileGalleryMeta) mobileGalleryMeta.style.display = 'flex';
       if(mobileCopyright) mobileCopyright.style.display = 'block';
+      setTimeout(alignMetaToImage, 50);
     } else {
       pageContact.classList.add('active');
       pageWork.classList.remove('active');
