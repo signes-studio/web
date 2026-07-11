@@ -1,5 +1,5 @@
 /* ==========================================================================
-   SIGNES.STUDIO — Definitive Editorial Grid Layout (PC Air Fixed)
+   SIGNES.STUDIO — Pure Grid Architecture Layout System
    ========================================================================== */
 
 :root {
@@ -88,7 +88,9 @@ a { color: inherit; text-decoration: none; }
   color: var(--ink-muted);
 }
 
-.mobile-copyright { display: none; }
+.mobile-copyright { 
+  display: none !important; /* Totalmente fulminado e invisible en escritorio */
+}
 
 /* ---------- MAIN RIGHT CANVAS ---------- */
 #pageWrapper {
@@ -112,23 +114,21 @@ a { color: inherit; text-decoration: none; }
   pointer-events: auto;
 }
 
-/* --- WORK / GALLERY CANVAS --- */
+/* --- WORK / GALLERY CANVAS (RESTAURADO EXACTO A TU CAPTURA) --- */
 #galleryWrapper {
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start; 
-  /* PASO A: El colchón perimetral definitivo en PC */
-  padding: 6rem 5rem 7rem 4rem; 
+  align-items: center;
+  padding: 3.5rem 4rem 3.5rem 4rem; 
 }
 
 #slideshowWrapper {
   position: relative;
   width: 100%;
-  /* PASO B: Recortamos la altura máxima del visor para garantizar que brote el aire */
-  height: calc(100% - 60px); 
+  height: calc(100% - 60px); /* Deja espacio exacto abajo para tu texto alineado */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -157,17 +157,17 @@ a { color: inherit; text-decoration: none; }
 .slide img {
   max-width: 100%;
   max-height: 100%;
-  object-fit: contain; 
+  object-fit: contain; /* Proporciones originales idénticas a la captura */
   display: block;
 }
 
-/* PASO C: La marquesina dinámica e independiente abajo del todo */
-#gallery-meta-block {
-  position: relative;
-  width: 100%;
+/* CAJÓN DE TEXTO DESKTOP: Descolgado y alineado dinámicamente */
+#desktop-canvas-meta {
+  position: absolute;
+  bottom: -45px;
+  left: 0;
   display: flex;
   justify-content: flex-start;
-  padding-top: 1.5rem;
   z-index: 50;
 }
 
@@ -175,7 +175,7 @@ a { color: inherit; text-decoration: none; }
 .image-title { font-size: 11px; text-transform: uppercase; margin-bottom: 0.1rem; }
 .image-desc { color: var(--ink-muted); }
 
-/* CONTROLES LATERALES (Zonas interactivas transparentes del 50% de la pantalla) */
+/* CONTROLES LATERALES (Zonas del 50% con flechas minimalistas) */
 .overlay-controls {
   position: absolute;
   top: 0; bottom: 0;
@@ -213,7 +213,7 @@ a { color: inherit; text-decoration: none; }
 .sub-links a:first-child { margin-left: 0; }
 
 /* ==========================================================================
-   VERSION RESPONSIVE MÓVIL PERFECCIONADA
+   VERSION RESPONSIVE MÓVIL
    ========================================================================== */
 
 @media (max-width: 768px) {
@@ -266,7 +266,7 @@ a { color: inherit; text-decoration: none; }
   .overlay-controls { opacity: 0.65; }
   .arrow-svg { width: 24px; height: 24px; margin: 0 0.8rem; }
 
-  #gallery-meta-block {
+  #mobile-gallery-meta {
     display: flex !important;
     flex-direction: row;
     justify-content: space-between; 
@@ -276,7 +276,7 @@ a { color: inherit; text-decoration: none; }
   }
 
   .mobile-copyright {
-    display: block;
+    display: block !important;
     margin-top: 2rem;
     font-size: 10px;
     color: var(--ink-muted);
