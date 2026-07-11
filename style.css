@@ -1,23 +1,17 @@
 /* ==========================================================================
-   SIGNES.STUDIO — Strict Architectural Grid Layout System
-   Quiet-luxury editorial style inspired by classic architecture portfolios.
+   SIGNES.STUDIO — Definitve Integrated Split System
    ========================================================================== */
 
 :root {
-  --bg: #F4F4F4;        /* Gray-white gallery canvas */
-  --ink: #000000;       /* Deep solid technical black */
-  --ink-muted: #777777; /* Muted technical gray for labels and metadata */
+  --bg: #F4F4F4;        
+  --ink: #000000;       
+  --ink-muted: #777777; 
   --line: #EAEAEA;
-  --sidebar-w: 260px;   /* Fixed sidebar metrics */
+  --sidebar-w: 260px;   
   --font-base: 'Archivo', sans-serif;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-
-html, body {
-  width: 100%;
-  height: 100%;
-}
 
 body {
   background-color: var(--bg);
@@ -26,7 +20,7 @@ body {
   font-size: 11px; 
   letter-spacing: 0.06em;
   line-height: 1.5;
-  overflow: hidden; /* Prevents vertical body jumping on fixed canvas desktop */
+  overflow: hidden; 
   -webkit-font-smoothing: antialiased;
 }
 
@@ -44,10 +38,7 @@ a { color: inherit; text-decoration: none; }
   height: 100%;
 }
 
-/* ==========================================================================
-   DESKTOP STYLES: FIXED LEFT SIDEBAR
-   ========================================================================== */
-
+/* ---------- DESKTOP SIDEBAR ---------- */
 #header {
   width: var(--sidebar-w);
   height: 100%;
@@ -56,7 +47,6 @@ a { color: inherit; text-decoration: none; }
   flex-direction: column;
   justify-content: space-between; 
   flex-shrink: 0;
-  border-right: 1px solid transparent; 
   z-index: 100;
 }
 
@@ -85,60 +75,16 @@ a { color: inherit; text-decoration: none; }
 .main-nav li a { color: var(--ink-muted); transition: color 0.2s ease; }
 .main-nav li.active-link a, .main-nav li a:hover { color: var(--ink); }
 
-/* Bottom group layout within fixed sidebar */
-#header-bottom-group {
-  display: flex;
-  flex-direction: column;
-  height: 100%; 
-  justify-content: flex-end;
-  margin-top: 4rem; 
-}
-
-/* Metadata box coupled into the left sidebar bottom */
-#sidebar-meta-box {
-  display: none;
-  text-align: left;
-  margin-bottom: auto; /* Pushes the copyright down, leaving a fine blank space gap */
-  padding-bottom: 3.5rem; 
-}
-#sidebar-meta-box.visible {
-  display: block; 
-}
-
-#sidebar-meta-box .image-title {
-  font-size: 11px;
-  text-transform: uppercase;
-  margin-bottom: 0.1rem;
-}
-#sidebar-meta-box .image-desc {
-  color: var(--ink-muted);
-  margin-bottom: 0.9rem;
-}
-
-.gallery-controls {
-  text-transform: uppercase;
-  color: var(--ink-muted);
-  font-size: 11px;
-}
-.gallery-controls .control {
-  color: var(--ink);
-  cursor: pointer;
-  font-weight: 500;
-}
-.gallery-controls .control:hover {
-  text-decoration: underline;
-}
-
 .header-copyright {
   font-size: 10px;
   color: var(--ink-muted);
-  margin-top: 1.5rem;
 }
 
-/* ==========================================================================
-   DESKTOP STYLES: MAIN CONTENT FLOW (RIGHT CANVAS)
-   ========================================================================== */
+.mobile-copyright {
+  display: none; /* Oculto en escritorio */
+}
 
+/* ---------- MAIN RIGHT CANVAS ---------- */
 #pageWrapper {
   flex-grow: 1;
   height: 100%;
@@ -160,20 +106,21 @@ a { color: inherit; text-decoration: none; }
   pointer-events: auto;
 }
 
-/* --- WORK SECTION: FULL CONTEXT SLIDER --- */
+/* --- TRABAJO / GALLERY CANVAS --- */
 #galleryWrapper {
   width: 100%;
   height: 100%;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
+  align-items: flex-start; /* Alineación limpia izquierda */
   padding: 3.5rem 4rem 3.5rem 2rem;
 }
 
 #slideshowWrapper {
   position: relative;
   width: 100%;
-  height: 100%;
+  height: calc(100% - 60px); 
   display: flex;
   align-items: center;
   justify-content: center;
@@ -202,7 +149,6 @@ a { color: inherit; text-decoration: none; }
   object-fit: contain; 
 }
 
-/* Invisible overlay tap shortcuts over imagery */
 .overlay-controls {
   position: absolute;
   top: 0; bottom: 0;
@@ -213,7 +159,25 @@ a { color: inherit; text-decoration: none; }
 .left-control { left: 0; }
 .right-control { right: 0; }
 
-/* --- CONTACT SECTION --- */
+/* Caja de metadatos en Escritorio (abajo a la izquierda del canvas) */
+.meta-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-top: 1.5rem;
+  z-index: 50;
+}
+
+.meta-text-group { text-align: left; }
+.image-title { font-size: 11px; text-transform: uppercase; margin-bottom: 0.1rem; }
+.image-desc { color: var(--ink-muted); }
+
+.gallery-controls { text-transform: uppercase; color: var(--ink-muted); font-size: 11px; }
+.gallery-controls .control { color: var(--ink); cursor: pointer; font-weight: 500; }
+.gallery-controls .control:hover { text-decoration: underline; }
+
+/* --- SECCIÓN CONTACTO --- */
 .contact-wrapper {
   width: 100%;
   max-width: 680px;
@@ -247,60 +211,50 @@ a { color: inherit; text-decoration: none; }
   font-size: 12px;
   margin-bottom: 0.3rem;
 }
-.info-block .info-link:hover {
-  text-decoration: underline;
-}
-
+.info-block .info-link:hover { text-decoration: underline; }
 .sub-links a { margin-right: 0.5rem; margin-left: 0.5rem; }
 .sub-links a:first-child { margin-left: 0; }
 
 /* ==========================================================================
-   RESPONSIVE OVERRIDES: MOBILE FLUID AXIS (AS PER REVISIONS)
+   VERSION RESPONSIVE MÓVIL PERFECCIONADA (SEGÚN CROQUIS)
    ========================================================================== */
 
 @media (max-width: 768px) {
   body { 
-    overflow-y: auto; /* Natural scrolling allowed for text content bounds */
+    overflow-y: auto; 
   }
 
   #canvas { 
     flex-direction: column; 
   }
 
-  /* --- HEADER BREAKDOWN --- */
+  /* Cabecera superior limpia */
   #header { 
     width: 100%; 
     height: auto; 
-    padding: 2.5rem 1.5rem 1.5rem 1.5rem; 
+    padding: 2.5rem 1.5rem 1rem 1.5rem; 
     display: block;
   }
 
-  #logo .tagline {
-    white-space: normal; 
-  }
-
-  /* Navigation labels horizontal distribution */
   .main-nav {
-    margin-top: 1.5rem;
+    margin-top: 1.2rem;
   }
   .main-nav ul {
     display: flex;
-    gap: 1.5rem; 
+    gap: 1.5rem; /* Menú horizontal WORK CONTACT */
   }
   .main-nav li {
     margin-bottom: 0;
   }
 
-  /* Hide sidebar fixed copyright on header stack to avoid clutter */
-  #headerBlocks {
-    display: none; 
+  #sidebar-desktop-bottom {
+    display: none; /* Ocultamos el copyright del menú lateral */
   }
 
-  /* --- VIEWPORTS TRACKING --- */
   #pageWrapper { 
     position: relative; 
-    height: auto; 
-    min-height: auto;
+    height: auto;
+    width: 100%;
   }
 
   .page-section { 
@@ -314,40 +268,31 @@ a { color: inherit; text-decoration: none; }
     display: block;
   }
 
-  /* --- MOBILE WORK VIEW PORTFOLIO --- */
+  /* Ajuste de márgenes del Slider */
   #galleryWrapper { 
-    padding: 0 1.5rem 3rem 1.5rem; 
+    padding: 1rem 1.5rem 3rem 1.5rem; 
     height: auto; 
     display: block;
   }
 
-  /* Image slots right beneath the navigation matrix */
   #slideshowWrapper { 
     height: auto; 
-    aspect-ratio: 3 / 2; 
-    margin-bottom: 1rem;
+    aspect-ratio: 4 / 3; /* Marco estable para la foto */
+    margin-bottom: 1.2rem;
   }
 
-  #header-bottom-group {
-    margin-top: 0;
-    display: block;
-    height: auto;
-  }
-
-  /* Symmetrical splitting beneath the render frame */
-  #sidebar-meta-box.visible {
+  /* NUEVA MAQUETACIÓN INFERIOR EN MÓVIL (Bajo la imagen) */
+  .meta-container {
     display: flex !important;
-    flex-direction: row; 
-    justify-content: space-between; /* Project text left / Controls right */
+    flex-direction: row;
+    justify-content: space-between; /* Distribuye textos a la izq y mandos a la derecha */
     align-items: flex-start;
     width: 100%;
-    margin-bottom: 0;
-    padding-bottom: 0;
+    padding-top: 0;
   }
 
-  .slide-meta-wrapper {
-    margin-bottom: 0;
-    max-width: 60%;
+  .meta-text-group {
+    max-width: 65%;
   }
 
   .gallery-controls {
@@ -355,18 +300,18 @@ a { color: inherit; text-decoration: none; }
     white-space: nowrap;
   }
 
-  /* Footnote copyright rendering underneath control row */
-  .header-copyright { 
+  /* Copyright posicionado abajo del todo en la marquesina móvil */
+  .mobile-copyright {
     display: block;
-    margin-top: 2rem; 
+    margin-top: 2rem;
     font-size: 10px;
     color: var(--ink-muted);
+    text-align: left;
   }
 
-  /* --- MOBILE CONTACT GRID VIEW --- */
+  /* Secciones de contacto en pestaña independiente */
   .contact-wrapper { 
     padding: 2rem 1.5rem 4rem 1.5rem; 
-    width: 100%;
   }
 
   .about-box { 

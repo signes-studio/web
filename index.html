@@ -9,13 +9,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=1.1">
+<link rel="stylesheet" href="style.css?v=1.2">
 </head>
 <body id="collection-signes">
 
   <div id="canvasWrapper">
     <div id="canvas">
       
+      <!-- HEADER / SIDEBAR AREA -->
       <header id="header">
         <div id="header-top-group">
           <div id="logo">
@@ -33,52 +34,66 @@
           </nav>
         </div>
 
-        <div id="header-bottom-group">
-          
-          <div id="sidebar-meta-box" class="visible">
-            <div class="image-title"><strong id="meta-title">Hivernacle — Exterior</strong></div>
-            <div class="image-desc"><p id="meta-desc">Arqtistic [ES]</p></div>
-            
-            <div id="simpleControls" class="gallery-controls">
-              <span class="control prev-slide" id="ctrl-prev">PREV</span> / 
-              <span class="control next-slide" id="ctrl-next">NEXT</span>
-            </div>
-          </div>
-
+        <!-- En escritorio este bloque se queda al fondo de la barra lateral -->
+        <div id="sidebar-desktop-bottom">
           <p class="header-copyright">© All images by SIGNES.STUDIO</p>
         </div>
       </header>
 
+      <!-- MAIN WRAPPER -->
       <div id="pageWrapper" role="main">
         
+        <!-- VISTA A: WORK (SLIDER HORIZONTAL) -->
         <section id="page-work" class="page-section active">
           <div id="galleryWrapper">
             <div id="slideshowWrapper">
               
               <div id="slideshow" class="slideshow">
+                <!-- Slide 01 -->
                 <div class="slide active" data-title="Hivernacle — Exterior" data-desc="Arqtistic [ES]">
                   <img src="img/SIGNES_01-Exterior.jpg" alt="Hivernacle Exterior">
                 </div>
                 
+                <!-- Slide 02 -->
                 <div class="slide" data-title="Hivernacle — Interior B" data-desc="Arqtistic [ES]">
                   <img src="img/SIGNES_03-Interior B.jpg" alt="Hivernacle Interior B">
                 </div>
                 
+                <!-- Slide 03 -->
                 <div class="slide" data-title="Hivernacle — Interior C" data-desc="Arqtistic [ES]">
                   <img src="img/SIGNES_05-Interior C.jpg" alt="Hivernacle Interior C">
                 </div>
               </div>
 
+              <!-- Click zones directly over image -->
               <div class="overlay-controls left-control" id="prev-zone"></div>
               <div class="overlay-controls right-control" id="next-zone"></div>
             </div>
+
+            <!-- NUEVA UBICACIÓN: El bloque de metadatos se despliega debajo de la imagen -->
+            <div class="meta-container" id="gallery-meta-block">
+              <div class="meta-text-group">
+                <div class="image-title"><strong id="meta-title">Hivernacle — Exterior</strong></div>
+                <div class="image-desc"><p id="meta-desc">Arqtistic [ES]</p></div>
+              </div>
+              
+              <div id="simpleControls" class="gallery-controls">
+                <span class="control prev-slide" id="ctrl-prev">PREV</span> / 
+                <span class="control next-slide" id="ctrl-next">NEXT</span>
+              </div>
+            </div>
+            
+            <!-- Copyright específico para la vista móvil debajo de los mandos -->
+            <p class="mobile-copyright">© All images by SIGNES.STUDIO</p>
+
           </div>
         </section>
 
+        <!-- VISTA B: CONTACT & ABOUT -->
         <section id="page-contact" class="page-section">
           <div class="contact-wrapper">
             <div class="about-box">
-              <p>Founded by Luis Signes, SIGNES.STUDIO is an independent visual research practice operating at the intersection of architecture, precise spatial 3D visualization, and brand narrative. Based in Valencia and working with architectural firms across the world.</p>
+              <p>Founded by Luis Signes, SIGNES.STUDIO is an independent visual research practice operating at the intersection of architecture, precise spatial 3D visualization, and brand narrative[cite: 1]. Based in Valencia and working with architectural firms across the world[cite: 1].</p>
             </div>
             
             <div class="info-grid">
@@ -114,12 +129,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const pageContact = document.getElementById('page-contact');
   const navWorkLi = document.getElementById('nav-work-li');
   const navContactLi = document.getElementById('nav-contact-li');
-  const sidebarMetaBox = document.getElementById('sidebar-meta-box');
+  const galleryMetaBlock = document.getElementById('gallery-meta-block');
+  const mobileCopyright = document.querySelector('.mobile-copyright');
   
   let currentIdx = 0;
   let isTransitioning = false;
 
-  // 1. Slider nativo (Clicks + Rueda + Flechas)
   function updateSlideshow(nextIdx) {
     slides[currentIdx].classList.remove('active');
     slides[nextIdx].classList.add('active');
@@ -140,13 +155,11 @@ document.addEventListener('DOMContentLoaded', () => {
     updateSlideshow(prev);
   }
 
-  // Eventos de clic vinculados
   document.getElementById('ctrl-next').addEventListener('click', (e) => { e.preventDefault(); nextSlide(); });
   document.getElementById('ctrl-prev').addEventListener('click', (e) => { e.preventDefault(); prevSlide(); });
   document.getElementById('next-zone').addEventListener('click', nextSlide);
   document.getElementById('prev-zone').addEventListener('click', prevSlide);
 
-  // Evento por teclado (Flechas direccionales)
   document.addEventListener('keydown', (e) => {
     if (pageWork.classList.contains('active')) {
       if (e.key === 'ArrowRight') nextSlide();
@@ -154,7 +167,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Evento rueda del ratón y deslizamiento horizontal/vertical en Trackpads/Touchpads
   document.addEventListener('wheel', (e) => {
     if (pageWork.classList.contains('active')) {
       e.preventDefault(); 
@@ -167,30 +179,37 @@ document.addEventListener('DOMContentLoaded', () => {
         prevSlide();
       }
 
-      setTimeout(() => { isTransitioning = false; }, 500); // Cooldown fluido de 500ms
+      setTimeout(() => { isTransitioning = false; }, 500); 
     }
   }, { passive: false });
 
-  // 2. Control e intercambio de vistas (Pestañas)
   function showPage(page) {
     if (page === 'work') {
       pageWork.classList.add('active');
       pageContact.classList.remove('active');
       navWorkLi.classList.add('active-link');
       navContactLi.classList.remove('active-link');
-      sidebarMetaBox.classList.add('visible'); // Muestra los textos en Work
+      galleryMetaBlock.style.display = 'flex';
+      if(mobileCopyright) mobileCopyright.style.display = 'block';
     } else {
       pageContact.classList.add('active');
       pageWork.classList.remove('active');
       navContactLi.classList.add('active-link');
       navWorkLi.classList.remove('active-link');
-      sidebarMetaBox.classList.remove('visible'); // Oculta los textos en Contact
+      galleryMetaBlock.style.display = 'none';
+      if(mobileCopyright) mobileCopyright.style.display = 'none';
     }
   }
 
   document.getElementById('nav-work').addEventListener('click', (e) => { e.preventDefault(); showPage('work'); });
   document.getElementById('go-home').addEventListener('click', (e) => { e.preventDefault(); showPage('work'); });
   document.getElementById('nav-contact').addEventListener('click', (e) => { e.preventDefault(); showPage('contact'); });
+
+  document.addEventListener('contextmenu', (e) => e.preventDefault());
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'F12') e.preventDefault();
+    if (e.ctrlKey && e.key.toLowerCase() === 'u') e.preventDefault();
+  });
 });
 </script>
 </body>
