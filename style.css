@@ -242,17 +242,130 @@ a { color: inherit; text-decoration: none; }
 .sub-links a { margin-right: 0.5rem; margin-left: 0.5rem; }
 .sub-links a:first-child { margin-left: 0; }
 
-/* Responsive Móvil */
+/* ==========================================================================
+   STRICT RESPONSIVE MOBILE NAVIGATION & CANVAS (CALCADO DE LA CAPTURA)
+   ========================================================================== */
+
 @media (max-width: 768px) {
-  body { overflow: auto; }
-  #canvas { flex-direction: column; }
-  #header { width: 100%; height: auto; padding: 2rem; }
-  #header-bottom-group { margin-top: 2rem; }
-  #sidebar-meta-box { margin-bottom: 1rem; padding-bottom: 0; }
-  #pageWrapper { position: relative; height: auto; min-height: 400px; }
-  .page-section { position: relative; opacity: 1; pointer-events: auto; display: block; }
-  #galleryWrapper { padding: 2rem; height: auto; }
-  #slideshowWrapper { height: 350px; }
-  .contact-wrapper { padding: 2rem; }
-  .info-grid { grid-template-columns: 1fr; }
+  body { 
+    overflow-y: auto; /* Permite el scroll natural si el texto de contacto lo requiere */
+  }
+
+  #canvas { 
+    flex-direction: column; 
+  }
+
+  /* --- BARRA SUPERIOR (HEADER) --- */
+  #header { 
+    width: 100%; 
+    height: auto; 
+    padding: 2.5rem 1.5rem 1.5rem 1.5rem; 
+    display: block;
+  }
+
+  #logo .tagline {
+    white-space: normal; /* Permite que el lema respire si la pantalla es muy estrecha */
+  }
+
+  /* Pestañas WORK y CONTACT juntas una al lado de la otra */
+  .main-nav {
+    margin-top: 1.5rem;
+  }
+  .main-nav ul {
+    display: flex;
+    gap: 1.5rem; /* Separación horizontal limpia entre las dos palabras */
+  }
+  .main-nav li {
+    margin-bottom: 0;
+  }
+
+  /* Ocultamos el copyright estático del header para evitar duplicidades molestas */
+  #headerBlocks {
+    display: none; 
+  }
+
+  /* --- CONTENEDOR DERECHO DE PÁGINAS --- */
+  #pageWrapper { 
+    position: relative; 
+    height: auto; 
+    min-height: auto;
+  }
+
+  .page-section { 
+    position: relative; 
+    opacity: 1; 
+    pointer-events: auto; 
+    display: none; /* Dejamos que el JS controle cuál se muestra */
+    width: 100%;
+  }
+  .page-section.active {
+    display: block;
+  }
+
+  /* --- VISTA DE TRABAJO (SLIDER MÓVIL) --- */
+  #galleryWrapper { 
+    padding: 0 1.5rem 3rem 1.5rem; 
+    height: auto; 
+    display: block;
+  }
+
+  /* Imagen desplegada justo debajo del menú */
+  #slideshowWrapper { 
+    height: auto; 
+    aspect-ratio: 3 / 2; /* Encaje perfecto para tus renders horizontales */
+    margin-bottom: 1rem;
+  }
+
+  /* Forzamos que la caja inferior se estructure en una sola línea repartida */
+  #header-bottom-group {
+    margin-top: 0;
+    display: block;
+    height: auto;
+  }
+
+  #sidebar-meta-box.visible {
+    display: flex !important;
+    flex-direction: row; /* Fuerza el alineamiento horizontal */
+    justify-content: space-between; /* Texto a la izquierda, mandos a la derecha */
+    align-items: flex-start;
+    width: 100%;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  /* Nombre del proyecto y autor abajo a la izquierda */
+  .slide-meta-wrapper {
+    margin-bottom: 0;
+    max-width: 60%;
+  }
+
+  /* PREV / NEXT alineados abajo a la derecha */
+  .gallery-controls {
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  /* El Copyright se renderiza debajo de la línea de control como pie definitivo */
+  .header-copyright { 
+    display: block;
+    margin-top: 2rem; 
+    font-size: 10px;
+    color: var(--ink-muted);
+  }
+
+  /* --- VISTA DE CONTACTO MÓVIL --- */
+  .contact-wrapper { 
+    padding: 2rem 1.5rem 4rem 1.5rem; 
+    width: 100%;
+  }
+
+  .about-box { 
+    font-size: 13px; 
+    margin-bottom: 2.5rem; 
+  }
+
+  .info-grid { 
+    grid-template-columns: 1fr; /* Apilado vertical limpio para consultas y redes */
+    gap: 2rem; 
+  }
 }
