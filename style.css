@@ -55,8 +55,18 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
-#logo .wordmark .bold { font-weight: 500; }
-#logo .wordmark .light { font-weight: 300; color: var(--ink); }
+/* Forzamos el peso medio al texto bold, incluso dentro del enlace */
+#logo .wordmark .bold,
+#logo a .bold { 
+  font-weight: 500; 
+}
+
+/* Fuerza el peso tipográfico fino al .STUDIO dentro del enlace */
+#logo .wordmark .light, 
+#logo a .light { 
+  font-weight: 300; 
+  color: var(--ink); 
+}
 
 #logo .tagline {
   font-size: 8.5px;
