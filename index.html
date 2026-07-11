@@ -9,14 +9,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=1.3">
+<link rel="stylesheet" href="style.css?v=1.4">
 </head>
 <body id="collection-signes">
 
   <div id="canvasWrapper">
     <div id="canvas">
       
-      <!-- HEADER / SIDEBAR AREA -->
       <header id="header">
         <div id="header-top-group">
           <div id="logo">
@@ -35,53 +34,60 @@
         </div>
 
         <div id="sidebar-desktop-bottom">
+          <div id="desktop-sidebar-meta" class="meta-container">
+            <div class="meta-text-group">
+              <div class="image-title"><strong class="dyn-title">Hivernacle — Exterior</strong></div>
+              <div class="image-desc"><p class="dyn-desc">Arqtistic [ES]</p></div>
+            </div>
+          </div>
           <p class="header-copyright">© All images by SIGNES.STUDIO</p>
         </div>
       </header>
 
-      <!-- MAIN WRAPPER -->
       <div id="pageWrapper" role="main">
         
-        <!-- VISTA A: WORK (SLIDER HORIZONTAL) -->
         <section id="page-work" class="page-section active">
           <div id="galleryWrapper">
             <div id="slideshowWrapper">
               
               <div id="slideshow" class="slideshow">
-                <!-- Slide 01 -->
                 <div class="slide active" data-title="Hivernacle — Exterior" data-desc="Arqtistic [ES]">
                   <img src="img/SIGNES_01-Exterior.jpg" alt="Hivernacle Exterior">
                 </div>
                 
-                <!-- Slide 02 -->
                 <div class="slide" data-title="Hivernacle — Interior B" data-desc="Arqtistic [ES]">
                   <img src="img/SIGNES_03-Interior B.jpg" alt="Hivernacle Interior B">
                 </div>
                 
-                <!-- Slide 03 -->
                 <div class="slide" data-title="Hivernacle — Interior C" data-desc="Arqtistic [ES]">
                   <img src="img/SIGNES_05-Interior C.jpg" alt="Hivernacle Interior C">
                 </div>
               </div>
 
-              <!-- CONTROLES LATERALES: Zonas de click con flechas minimalistas SVG -->
               <div class="overlay-controls left-control" id="prev-zone" title="Previous Image">
                 <svg class="arrow-svg" viewBox="0 0 24 24">
-                  <path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </div>
               <div class="overlay-controls right-control" id="next-zone" title="Next Image">
                 <svg class="arrow-svg" viewBox="0 0 24 24">
-                  <path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </div>
+
+              <div id="desktop-canvas-meta" class="meta-container">
+                <div class="meta-text-group">
+                  <div class="image-title"><strong class="dyn-title">Hivernacle — Exterior</strong></div>
+                  <div class="image-desc"><p class="dyn-desc">Arqtistic [ES]</p></div>
+                </div>
+              </div>
+
             </div>
 
-            <!-- Meta layout bottom alignment (Solo textos del proyecto) -->
-            <div class="meta-container" id="gallery-meta-block">
+            <div class="meta-container" id="mobile-gallery-meta">
               <div class="meta-text-group">
-                <div class="image-title"><strong id="meta-title">Hivernacle — Exterior</strong></div>
-                <div class="image-desc"><p id="meta-desc">Arqtistic [ES]</p></div>
+                <div class="image-title"><strong class="dyn-title">Hivernacle — Exterior</strong></div>
+                <div class="image-desc"><p class="dyn-desc">Arqtistic [ES]</p></div>
               </div>
             </div>
             
@@ -90,11 +96,10 @@
           </div>
         </section>
 
-        <!-- VISTA B: CONTACT & ABOUT -->
         <section id="page-contact" class="page-section">
           <div class="contact-wrapper">
             <div class="about-box">
-              <p>Founded by Luis Signes, SIGNES.STUDIO is an independent visual research practice operating at the intersection of architecture, precise spatial 3D visualization, and brand narrative[cite: 1]. Based in Valencia and working with architectural firms across the world[cite: 1].</p>
+              <p>Founded by Luis Signes, SIGNES.STUDIO is an independent visual research practice operating at the intersection of architecture, precise spatial 3D visualization, and brand narrative. Based in Valencia and working with architectural firms across the world.</p>
             </div>
             
             <div class="info-grid">
@@ -124,24 +129,29 @@
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   const slides = document.querySelectorAll('.slide');
-  const metaTitle = document.getElementById('meta-title');
-  const metaDesc = document.getElementById('meta-desc');
+  const dynTitles = document.querySelectorAll('.dyn-title');
+  const dynDescs = document.querySelectorAll('.dyn-desc');
   const pageWork = document.getElementById('page-work');
   const pageContact = document.getElementById('page-contact');
   const navWorkLi = document.getElementById('nav-work-li');
   const navContactLi = document.getElementById('nav-contact-li');
-  const galleryMetaBlock = document.getElementById('gallery-meta-block');
+  const mobileGalleryMeta = document.getElementById('mobile-gallery-meta');
+  const desktopCanvasMeta = document.getElementById('desktop-canvas-meta');
   const mobileCopyright = document.querySelector('.mobile-copyright');
   
   let currentIdx = 0;
   let isTransitioning = false;
 
+  // Sincronización de textos global (Sidebar + Canvas)
   function updateSlideshow(nextIdx) {
     slides[currentIdx].classList.remove('active');
     slides[nextIdx].classList.add('active');
     
-    metaTitle.textContent = slides[nextIdx].getAttribute('data-title');
-    metaDesc.textContent = slides[nextIdx].getAttribute('data-desc');
+    const titleText = slides[nextIdx].getAttribute('data-title');
+    const descText = slides[nextIdx].getAttribute('data-desc');
+
+    dynTitles.forEach(el => el.textContent = titleText);
+    dynDescs.forEach(el => el.textContent = descText);
     
     currentIdx = nextIdx;
   }
@@ -156,11 +166,10 @@ document.addEventListener('DOMContentLoaded', () => {
     updateSlideshow(prev);
   }
 
-  // Clics directos vinculados a las zonas laterales (con las flechas)
+  // Interacciones nativas fijadas
   document.getElementById('next-zone').addEventListener('click', nextSlide);
   document.getElementById('prev-zone').addEventListener('click', prevSlide);
 
-  // Teclado
   document.addEventListener('keydown', (e) => {
     if (pageWork.classList.contains('active')) {
       if (e.key === 'ArrowRight') nextSlide();
@@ -168,7 +177,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Ratón / Rueda / Touchpad
   document.addEventListener('wheel', (e) => {
     if (pageWork.classList.contains('active')) {
       e.preventDefault(); 
@@ -192,14 +200,16 @@ document.addEventListener('DOMContentLoaded', () => {
       pageContact.classList.remove('active');
       navWorkLi.classList.add('active-link');
       navContactLi.classList.remove('active-link');
-      galleryMetaBlock.style.display = 'flex';
+      if(desktopCanvasMeta) desktopCanvasMeta.style.display = 'block';
+      if(mobileGalleryMeta) mobileGalleryMeta.style.display = 'flex';
       if(mobileCopyright) mobileCopyright.style.display = 'block';
     } else {
       pageContact.classList.add('active');
       pageWork.classList.remove('active');
       navContactLi.classList.add('active-link');
       navWorkLi.classList.remove('active-link');
-      galleryMetaBlock.style.display = 'none';
+      if(desktopCanvasMeta) desktopCanvasMeta.style.display = 'none';
+      if(mobileGalleryMeta) mobileGalleryMeta.style.display = 'none';
       if(mobileCopyright) mobileCopyright.style.display = 'none';
     }
   }

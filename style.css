@@ -1,5 +1,5 @@
 /* ==========================================================================
-   SIGNES.STUDIO — Sidebar Bottom Alignment Layout System (Final Geometry Fix)
+   SIGNES.STUDIO — Sidebar Bottom Alignment Layout System (Perfect Alignment)
    ========================================================================== */
 
 :root {
@@ -75,7 +75,7 @@ a { color: inherit; text-decoration: none; }
 .main-nav li a { color: var(--ink-muted); transition: color 0.2s ease; }
 .main-nav li.active-link a, .main-nav li a:hover { color: var(--ink); }
 
-#header-bottom-group {
+#sidebar-desktop-bottom {
   display: flex;
   flex-direction: column;
   height: 100%; 
@@ -83,38 +83,9 @@ a { color: inherit; text-decoration: none; }
   margin-top: 4rem; 
 }
 
-#sidebar-meta-box {
-  display: none;
-  text-align: left;
-  margin-bottom: auto; 
-  padding-bottom: 3.5rem; 
-}
-#sidebar-meta-box.visible {
-  display: block; 
-}
-
-#sidebar-meta-box .image-title {
-  font-size: 11px;
-  text-transform: uppercase;
-  margin-bottom: 0.1rem;
-}
-#sidebar-meta-box .image-desc {
-  color: var(--ink-muted);
-  margin-bottom: 0.9rem;
-}
-
-.gallery-controls {
-  text-transform: uppercase;
-  color: var(--ink-muted);
-  font-size: 11px;
-}
-.gallery-controls .control {
-  color: var(--ink);
-  cursor: pointer;
-  font-weight: 500;
-}
-.gallery-controls .control:hover {
-  text-decoration: underline;
+/* Caja de seguridad por si prefieres acoplarla a la izquierda */
+#desktop-sidebar-meta {
+  display: none !important; /* Desactivado por defecto para priorizar la alineación con la imagen */
 }
 
 .header-copyright {
@@ -124,6 +95,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 .mobile-copyright { display: none; }
+#mobile-gallery-meta { display: none !important; }
 
 /* ---------- MAIN RIGHT CANVAS ---------- */
 #pageWrapper {
@@ -154,8 +126,8 @@ a { color: inherit; text-decoration: none; }
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start; 
-  padding: 3.5rem 4rem 3.5rem 2rem;
+  align-items: center; 
+  padding: 3.5rem 4rem 3.5rem 4rem;
 }
 
 #slideshowWrapper {
@@ -163,6 +135,7 @@ a { color: inherit; text-decoration: none; }
   width: 100%;
   height: calc(100% - 60px); 
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
@@ -178,7 +151,6 @@ a { color: inherit; text-decoration: none; }
 
 .slide {
   position: absolute;
-  /* Hacemos que el contenedor mida estrictamente lo que mida la imagen escalada */
   max-width: 100%;
   max-height: 100%;
   width: auto;
@@ -193,59 +165,51 @@ a { color: inherit; text-decoration: none; }
 
 .slide img {
   max-width: 100%;
-  max-height: 100vh;
+  max-height: 100%;
   object-fit: contain; 
   display: block;
 }
 
-/* CRÍTICO: Las zonas de control se acoplan estrictamente al 50% de la imagen real */
+/* Las zonas de control se quedan ancladas al 50% exacto de la foto calculada */
 .overlay-controls {
   position: absolute;
   top: 0; 
   bottom: 0;
-  width: 50%; /* Ocupa exactamente la mitad de la foto */
+  width: 50%; 
   cursor: pointer;
   z-index: 10;
   display: flex;
   align-items: center;
   color: var(--ink);
-  opacity: 0.3; /* Intensidad base elegante */
+  opacity: 0.15; 
   transition: opacity 0.2s ease;
 }
+.left-control { left: 0; justify-content: flex-start; }
+.right-control { right: 0; justify-content: flex-end; }
+.overlay-controls:hover { opacity: 1; }
 
-/* Mitad izquierda */
-.left-control { 
-  left: 0; 
-  justify-content: flex-start; 
-}
-/* Mitad derecha */
-.right-control { 
-  right: 0; 
-  justify-content: flex-end; 
-}
-
-/* Al pasar el ratón por encima de su mitad correspondiente, la flecha se vuelve 100% intensa */
-.overlay-controls:hover {
-  opacity: 1;
-}
-
-/* Flechas minimalistas vectoriales con mayor grosor de trazo */
 .arrow-svg {
   width: 32px;
   height: 32px;
-  margin: 0 1.5rem; /* Separación prudencial del borde de la foto */
+  margin: 0 1.5rem; 
 }
 
-/* Meta container */
+/* EL SECRETO: Caja elástica de metadatos acoplada al ancho dinámico de la foto en PC */
+#desktop-canvas-meta {
+  width: 100%;
+  max-width: 100%;
+  position: absolute;
+  bottom: -45px; /* Lo sitúa perfectamente descolgado debajo de la imagen */
+  left: 0;
+  display: flex;
+  justify-content: flex-start;
+  z-index: 50;
+  padding-left: 0.2rem; /* Sutil ajuste de alineación óptica */
+}
+
 .meta-container {
   width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  padding-top: 1.5rem;
-  z-index: 50;
 }
-
 .meta-text-group { text-align: left; }
 .image-title { font-size: 11px; text-transform: uppercase; margin-bottom: 0.1rem; }
 .image-desc { color: var(--ink-muted); }
@@ -293,13 +257,8 @@ a { color: inherit; text-decoration: none; }
    ========================================================================== */
 
 @media (max-width: 768px) {
-  body { 
-    overflow-y: auto; 
-  }
-
-  #canvas { 
-    flex-direction: column; 
-  }
+  body { overflow-y: auto; }
+  #canvas { flex-direction: column; }
 
   #header { 
     width: 100%; 
@@ -313,6 +272,7 @@ a { color: inherit; text-decoration: none; }
   .main-nav li { margin-bottom: 0; }
 
   #sidebar-desktop-bottom { display: none; }
+  #desktop-canvas-meta { display: none !important; } /* Apagamos la lógica de PC */
 
   #pageWrapper { 
     position: relative; 
@@ -344,18 +304,11 @@ a { color: inherit; text-decoration: none; }
     justify-content: center;
   }
 
-  /* En móviles forzamos mayor intensidad nativa para que destaquen al instante */
-  .overlay-controls {
-    opacity: 0.65;
-  }
-  
-  .arrow-svg {
-    width: 24px;
-    height: 24px;
-    margin: 0 0.8rem; /* Flechas más pegadas en pantallas táctiles pequeña */
-  }
+  .overlay-controls { opacity: 0.65; }
+  .arrow-svg { width: 24px; height: 24px; margin: 0 0.8rem; }
 
-  .meta-container {
+  /* En móviles se mantiene repartida en los extremos de la pantalla completa abajo */
+  #mobile-gallery-meta {
     display: flex !important;
     flex-direction: row;
     justify-content: space-between; 
