@@ -266,19 +266,22 @@ a { color: inherit; text-decoration: none; }
 
   #mobile-gallery-meta {
     display: flex !important;
-    flex-direction: row;
-    justify-content: space-between; 
+    flex-direction: column; /* Cambiado a columna para que el autor vaya debajo del título */
+    justify-content: flex-start; 
     align-items: flex-start;
     width: 100%;
-    padding-top: 0;
+    padding-top: 0.5rem;
+    gap: 0.2rem; /* Espacio limpio entre el título y el autor */
   }
 
   .mobile-copyright {
     display: block !important;
-    margin-top: 2rem;
+    margin-top: 4rem; /* Empuja el copyright hacia abajo para dar aire editorial */
     font-size: 10px;
     color: var(--ink-muted);
     text-align: left;
+    position: relative; /* Nos aseguramos de que no flote de forma absoluta */
+    clear: both;
   }
 
   .contact-wrapper { padding: 2rem 1.5rem 4rem 1.5rem; }
