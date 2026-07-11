@@ -5,73 +5,91 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
     <title>SIGNES.STUDIO — Review Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500&display=swap" rel="stylesheet">
+    
     <style>
-        /* Estética General Warm Minimalism / Japandi */
+        /* Estética Unificada: SIGNES.STUDIO Warm Minimalism System */
+        :root {
+            --bg: #F4F4F4;        
+            --ink: #000000;       
+            --ink-muted: #777777; 
+            --line: #EAEAEA;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: #fbfaf7;
-            color: #1a1a1a;
+            font-family: 'Archivo', sans-serif;
+            background-color: var(--bg);
+            color: var(--ink);
             margin: 0;
             padding: 60px 20px;
+            letter-spacing: 0.06em;
             -webkit-font-smoothing: antialiased;
         }
         .container { max-width: 1000px; margin: 0 auto; }
         
         header { 
             margin-bottom: 60px; 
-            border-bottom: 1px solid #e6e3dc; 
+            border-bottom: 1px solid var(--line); 
             padding-bottom: 24px; 
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
         }
         .header-main { flex: 1; }
+        
+        /* Ajuste de logo para calcar la web principal */
         .logo { 
             font-size: 13px; 
             text-transform: uppercase; 
-            letter-spacing: 0.15em; 
-            font-weight: 600; 
-            color: #1a1a1a;
+            letter-spacing: 0.08em; 
+            color: var(--ink);
         }
+        .logo .bold { font-weight: 500; }
+        .logo .light { font-weight: 300; }
+
         .project-title { 
-            font-size: 26px; 
+            font-size: 24px; 
             font-weight: 300; 
-            letter-spacing: -0.01em; 
+            letter-spacing: 0.02em; 
             margin: 16px 0 6px 0; 
             text-transform: uppercase; 
         }
         .client-name { 
-            font-size: 13px; 
-            color: #706e68; 
+            font-size: 11px; 
+            color: var(--ink-muted); 
             font-weight: 300; 
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
         }
 
-        /* Selector de idioma */
+        /* Selector de idioma minimalista */
         .lang-switch {
             display: flex;
             gap: 6px;
             margin-top: 2px;
         }
         .lang-btn {
-            font-size: 11px;
+            font-family: 'Archivo', sans-serif;
+            font-size: 10px;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            color: #a09e96;
+            color: var(--ink-muted);
             background: none;
-            border: 1px solid #e6e3dc;
+            border: 1px solid var(--line);
             padding: 4px 9px;
-            border-radius: 3px;
+            border-radius: 0px; /* Bordes rectos para mantener el rigor geométrico */
             cursor: pointer;
-            font-weight: 500;
+            font-weight: 400;
             transition: color 0.2s ease, border-color 0.2s ease;
         }
-        .lang-btn:hover { color: #1a1a1a; border-color: #c4a47c; }
-        .lang-btn.active { color: #1a1a1a; border-color: #1a1a1a; }
+        .lang-btn:hover, .lang-btn.active { color: var(--ink); border-color: var(--ink); }
         
         /* Secciones y Grid de Renders */
         .fase-section { margin-bottom: 60px; }
         .fase-header {
-            border-bottom: 1px solid #e6e3dc; 
+            border-bottom: 1px solid var(--line); 
             padding-bottom: 8px; 
             margin-bottom: 28px; 
             display: flex;
@@ -80,39 +98,41 @@
             gap: 16px;
         }
         .fase-title { 
-            font-size: 13px; 
+            font-size: 11px; 
             font-weight: 500; 
             text-transform: uppercase; 
             letter-spacing: 0.08em; 
-            color: #8c887e; 
+            color: var(--ink-muted); 
             margin: 0;
         }
         .download-all-btn {
-            font-size: 11px;
+            font-family: 'Archivo', sans-serif;
+            font-size: 10px;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            color: #706e68;
+            color: var(--ink);
             background: none;
-            border: 1px solid #e6e3dc;
-            padding: 5px 10px;
-            border-radius: 3px;
+            border: 1px solid var(--line);
+            padding: 5px 12px;
+            border-radius: 0px;
             cursor: pointer;
             font-weight: 500;
             white-space: nowrap;
             transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
         }
-        .download-all-btn:hover:not(:disabled) { color: #ffffff; background: #1a1a1a; border-color: #1a1a1a; }
-        .download-all-btn:disabled { opacity: 0.5; cursor: default; }
+        .download-all-btn:hover:not(:disabled) { color: var(--bg); background: var(--ink); border-color: var(--ink); }
+        .download-all-btn:disabled { opacity: 0.4; cursor: default; }
+        
         .grid { 
             display: grid; 
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
             gap: 28px; 
         }
         
-        /* Tarjeta del Render */
+        /* Tarjeta del Render estilo Galería */
         .image-card { 
             background: #ffffff; 
-            border: 1px solid #e6e3dc; 
+            border: 1px solid var(--line); 
             padding: 12px; 
             position: relative;
             cursor: zoom-in; 
@@ -120,16 +140,16 @@
         }
         .image-card:hover { 
             transform: translateY(-2px); 
-            box-shadow: 0 6px 16px rgba(0,0,0,0.02); 
+            box-shadow: 0 6px 20px rgba(0,0,0,0.03); 
         }
         .image-card img { width: 100%; height: 210px; object-fit: cover; display: block; }
         .image-caption { 
-            font-size: 12px; 
-            color: #4a4a4a; 
+            font-size: 11px; 
+            color: var(--ink); 
             margin-top: 12px; 
-            text-align: center; 
-            font-weight: 300; 
-            text-transform: capitalize; 
+            text-align: left; /* Alineado a la izquierda como en el porfolio */
+            font-weight: 400; 
+            text-transform: uppercase; 
         }
         
         /* Botón de descarga directa sobre la miniatura */
@@ -137,8 +157,8 @@
             position: absolute;
             top: 22px;
             right: 22px;
-            background: rgba(251, 250, 247, 0.95);
-            border: 1px solid #e6e3dc;
+            background: rgba(244, 244, 244, 0.95);
+            border: 1px solid var(--line);
             width: 34px;
             height: 34px;
             display: flex;
@@ -147,20 +167,20 @@
             border-radius: 50%;
             cursor: pointer;
             text-decoration: none;
-            color: #1a1a1a;
-            font-size: 15px;
+            color: var(--ink);
+            font-size: 14px;
             opacity: 0;
             transition: opacity 0.2s ease, background 0.2s ease, color 0.2s ease;
             z-index: 10;
         }
         .image-card:hover .thumb-download { opacity: 1; }
-        .thumb-download:hover { background: #1a1a1a; color: #ffffff; border-color: #1a1a1a; }
+        .thumb-download:hover { background: var(--ink); color: var(--bg); border-color: var(--ink); }
 
         /* Visor Flotante / Lightbox Superpuesto */
         .lightbox {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(251, 250, 247, 0.98);
+            background: rgba(244, 244, 244, 0.98);
             z-index: 1000;
             display: flex;
             align-items: center;
@@ -186,33 +206,28 @@
             transition: transform 0.15s ease-out;
             transform-origin: center center;
         }
-        .lightbox-wrapper.zoomed {
-            cursor: zoom-out;
-        }
-        .lightbox-wrapper.zoomed img {
-            transform: scale(2);
-        }
+        .lightbox-wrapper.zoomed { cursor: zoom-out; }
+        .lightbox-wrapper.zoomed img { transform: scale(2); }
 
-        /* Controles de Navegación */
         .lightbox-close {
             position: absolute;
             top: 35px; right: 40px;
             font-size: 32px; font-weight: 200;
-            cursor: pointer; color: #706e68;
+            cursor: pointer; color: var(--ink-muted);
             background: none; border: none;
             z-index: 1010;
         }
-        .lightbox-close:hover { color: #1a1a1a; }
+        .lightbox-close:hover { color: var(--ink); }
 
         .nav-btn {
             position: absolute;
             top: 50%; transform: translateY(-50%);
             background: none; border: none;
-            font-size: 36px; font-weight: 100; color: #706e68;
+            font-size: 36px; font-weight: 100; color: var(--ink-muted);
             cursor: pointer; padding: 20px; z-index: 1010;
             transition: color 0.2s ease;
         }
-        .nav-btn:hover { color: #1a1a1a; }
+        .nav-btn:hover { color: var(--ink); }
         .nav-prev { left: 20px; }
         .nav-next { right: 20px; }
 
@@ -226,24 +241,25 @@
             align-items: center;
             background: #ffffff;
             padding: 12px 28px;
-            border: 1px solid #e6e3dc;
-            border-radius: 4px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+            border: 1px solid var(--line);
+            border-radius: 0px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.01);
             z-index: 1010;
         }
-        .lightbox-caption { font-size: 13px; font-weight: 300; color: #1a1a1a; text-transform: capitalize; }
+        .lightbox-caption { font-size: 11px; font-weight: 400; color: var(--ink); text-transform: uppercase; }
         .lightbox-download {
-            color: #1a1a1a;
+            font-family: 'Archivo', sans-serif;
+            color: var(--ink);
             text-decoration: none;
-            font-size: 13px;
+            font-size: 11px;
             font-weight: 500;
-            border-left: 1px solid #e6e3dc;
+            border-left: 1px solid var(--line);
             padding-left: 18px;
-            letter-spacing: 0.02em;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
         }
         .lightbox-download:hover { opacity: 0.5; }
 
-        /* Contenedor del Widget Turnstile (Estilo Japandi discreto) */
         .security-wrapper {
             display: flex;
             flex-direction: column;
@@ -251,466 +267,30 @@
             justify-content: center;
             padding: 140px 20px;
         }
-        #turnstile-widget {
-            margin-top: 24px;
-        }
+        #turnstile-widget { margin-top: 24px; }
 
-        /* Texto Legal Pie de Página */
         footer {
             margin-top: 100px;
-            border-top: 1px solid #e6e3dc;
+            border-top: 1px solid var(--line);
             padding-top: 30px;
             text-align: center;
         }
         .legal-notice {
-            max-width: 600px;
+            max-width: 680px;
             margin: 0 auto;
-            font-size: 11px;
+            font-size: 10px;
             line-height: 1.6;
-            color: #a09e96;
+            color: var(--ink-muted);
             font-weight: 300;
-            letter-spacing: 0.01em;
+            letter-spacing: 0.02em;
         }
 
-        .status-msg { text-align: center; padding: 120px 20px; font-weight: 300; color: #706e68; font-size: 14px; letter-spacing: 0.02em; }
+        .status-msg { text-align: center; padding: 120px 20px; font-weight: 300; color: var(--ink-muted); font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; }
 
         @media (max-width: 560px) {
-            header { flex-direction: column; gap: 16px; }
+            header { flex-direction: column; gap: 20px; align-items: flex-start; }
+            .lang-switch { margin-top: 0; }
         }
     </style>
-    <!-- Script Oficial de Cloudflare Turnstile -->
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
-<body>
-
-<div class="container" id="app">
-    <!-- Estado Inicial: Verificación de Seguridad Invisible -->
-    <div class="security-wrapper">
-        <div class="status-msg" id="sec-msg">Verifying secure connection...</div>
-        <!-- Contenedor del Widget (Aparecerá solo si Cloudflare sospecha del tráfico) -->
-        <div id="turnstile-widget" class="cf-turnstile" data-sitekey="0x4AAAAAADzPcFSUMS9BwYBI" data-callback="onTurnstileSuccess"></div>
-    </div>
-</div>
-
-<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
-    <button class="lightbox-close" onclick="forceCloseLightbox()">&times;</button>
-    
-    <button class="nav-btn nav-prev" onclick="navigateImage(-1, event)">&#8249;</button>
-    <button class="nav-btn nav-next" onclick="navigateImage(1, event)">&#8250;</button>
-    
-    <div class="lightbox-wrapper" id="lightboxWrapper" onclick="toggleZoom(event)" onmousemove="panZoom(event)">
-        <img id="lightboxImg" src="" alt="Amplified view">
-    </div>
-    
-    <div class="lightbox-actions">
-        <span class="lightbox-caption" id="lightboxCaption"></span>
-        <a class="lightbox-download" id="lightboxDownload" href="#" onclick="forceDownload(this.href, this.getAttribute('download'), event)"></a>
-    </div>
-</div>
-
-<!-- Librería JSZip integrada al final para compilar descargas masivas -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<script>
-    const BUCKET_URL = "https://share.signes.studio";
-
-    const STRINGS = {
-        en: {
-            htmlLang: 'en',
-            pageTitle: 'SIGNES.STUDIO — Review Portal',
-            opening: 'Opening confidential review space...',
-            verifying: 'Verifying secure connection...',
-            invalidLink: 'Error 404: Invalid link.',
-            accessDenied: 'Access denied or project ID does not exist in the vault.',
-            noImages: 'No images found in this space.',
-            amplifiedView: 'Amplified view',
-            downloadImage: 'Download Image ↓',
-            downloadRender: 'Download render',
-            downloadAll: 'Download All',
-            preparingZip: 'Preparing…',
-            zipProgress: (n, total) => `Downloading ${n}/${total}…`,
-            zipError: 'Some images failed to download. Please try again.',
-            legalNotice: 'Confidentiality Notice: Access to this link and the contained graphic material is strictly private and exclusive to the client. Its distribution or leakage to third parties is entirely prohibited. To optimize performance and ensure project privacy, all information within this space will be permanently deleted 15 days after project closure and final delivery.',
-            fases: {
-                rev1: '01. First Draft — Volumetrics & Materiality',
-                rev2: '02. Second Draft — Lighting & Framing',
-                rev3: '03. Third Draft — Details & Final Adjustments',
-                signes: '04. Final Delivery'
-            }
-        },
-        es: {
-            htmlLang: 'es',
-            pageTitle: 'SIGNES.STUDIO — Portal de Revisión',
-            opening: 'Abriendo espacio de revisión confidencial...',
-            verifying: 'Verificando conexión segura...',
-            invalidLink: 'Error 404: Enlace no válido.',
-            accessDenied: 'Acceso denegado o el ID del proyecto no existe en el búnker de archivos.',
-            noImages: 'No se han encontrado imágenes en este espacio.',
-            amplifiedView: 'Vista ampliada',
-            downloadImage: 'Descargar Imagen ↓',
-            downloadRender: 'Descargar render',
-            downloadAll: 'Descargar Todo',
-            preparingZip: 'Preparando…',
-            zipProgress: (n, total) => `Descargando ${n}/${total}…`,
-            zipError: 'Algunas imágenes no se han podido descargar. Inténtalo de nuevo.',
-            legalNotice: 'Aviso de confidencialidad: El acceso a este enlace y a la documentación gráfica contenida es strictly privado y exclusivo para el cliente. Queda totalmente prohibida su distribución o filtración a terceros. Con el fin de optimizar el rendimiento y garantizar la privacidad del encargo, toda la información de este espacio será eliminada permanentemente transcurridos 15 días desde el cierre y entrega del proyecto.',
-            fases: {
-                rev1: '01. Primera Revisión — Volumetrías y Materialidad',
-                rev2: '02. Segunda Revisión — Iluminación y Encuadres',
-                rev3: '03. Tercera Revisión — Detalles y Ajustes Finales',
-                signes: '04. Entrega Final'
-            }
-        },
-        ca: {
-            htmlLang: 'ca',
-            pageTitle: 'SIGNES.STUDIO — Portal de Revisió',
-            opening: 'Obrint espai de revisió confidencial...',
-            verifying: 'Verificant connexió segura...',
-            invalidLink: 'Error 404: Enllaç no vàlid.',
-            accessDenied: "Accés denegat o l'ID del projecte no existeix al búnquer d'arxius.",
-            noImages: "No s'han trobat imatges en aquest espai.",
-            amplifiedView: 'Vista ampliada',
-            downloadImage: 'Descarregar Imatge ↓',
-            downloadRender: 'Descarregar render',
-            downloadAll: 'Descarregar Tot',
-            preparingZip: 'Preparant…',
-            zipProgress: (n, total) => `Descarregant ${n}/${total}…`,
-            zipError: 'Algunes imatges no s\'han pogut descarregar. Torna-ho a provar.',
-            legalNotice: "Avís de confidencialitat: L'accés a aquest enllaç i a la documentació gràfica continguda és estrictament privat i exclusiu per al client. Queda toalment prohibida la seua distribució o filtració a tercers. Amb la finalitat d'optimitzar el rendiment i garantir la privacitat de l'encàrrec, tota la informació d'aquest espai serà eliminada permanentment transcorreguts 15 dies des del tancament i lliurament del projecte.",
-            fases: {
-                rev1: '01. Primera Revisió — Volumetries i Materialitat',
-                rev2: '02. Segona Revisió — Il·luminació i Enquadraments',
-                rev3: '03. Tercera Revisió — Detalls i Ajustos Finals',
-                signes: '04. Lliurament Final'
-            }
-        }
-    };
-
-    const SUPPORTED_LANGS = Object.keys(STRINGS);
-    const DEFAULT_LANG = 'en';
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const projectId = urlParams.get('id');
-    const appContainer = document.getElementById('app');
-
-    function detectLang() {
-        const urlLang = urlParams.get('lang');
-        if (urlLang && SUPPORTED_LANGS.includes(urlLang)) return urlLang;
-        const saved = localStorage.getItem('signes_lang');
-        if (saved && SUPPORTED_LANGS.includes(saved)) return saved;
-        const browserLang = (navigator.language || '').slice(0, 2).toLowerCase();
-        if (SUPPORTED_LANGS.includes(browserLang)) return browserLang;
-        return DEFAULT_LANG;
-    }
-
-    let currentLang = detectLang();
-    let T = STRINGS[currentLang];
-    let manifestData = null;
-
-    // Ajustar texto del cargador inicial de seguridad
-    document.getElementById('sec-msg').innerText = T.verifying;
-    document.title = T.pageTitle;
-
-    /* Callback de Turnstile */
-    function onTurnstileSuccess(token) {
-        if (!projectId) {
-            appContainer.innerHTML = `<div class="status-msg">${T.invalidLink}</div>`;
-            return;
-        }
-        document.getElementById('sec-msg').innerText = T.opening;
-        fetchManifest();
-    }
-
-    function fetchManifest() {
-        fetch(`${BUCKET_URL}/${projectId}/manifest.json`)
-            .then(response => {
-                if (!response.ok) throw new Error();
-                return response.json();
-            })
-            .then(data => {
-                manifestData = data;
-                buildGallery(data);
-                applyStaticStrings();
-            })
-            .catch(() => {
-                appContainer.innerHTML = `<div class="status-msg">${T.accessDenied}</div>`;
-            });
-    }
-
-    function applyStaticStrings() {
-        document.documentElement.lang = T.htmlLang;
-        document.title = T.pageTitle;
-        const lbImg = document.getElementById('lightboxImg');
-        if(lbImg) lbImg.alt = T.amplifiedView;
-        const lbDown = document.getElementById('lightboxDownload');
-        if(lbDown) lbDown.innerText = T.downloadImage;
-    }
-
-    function switchLang(lang) {
-        if (lang === currentLang) return;
-        currentLang = lang;
-        T = STRINGS[currentLang];
-        localStorage.setItem('signes_lang', lang);
-        applyStaticStrings();
-
-        if (manifestData) {
-            buildGallery(manifestData);
-        } else if (!projectId) {
-            appContainer.innerHTML = `<div class="status-msg">${T.invalidLink}</div>`;
-        }
-    }
-
-    function langSwitchHtml() {
-        return `
-            <div class="lang-switch">
-                ${SUPPORTED_LANGS.map(l => `
-                    <button class="lang-btn ${l === currentLang ? 'active' : ''}" onclick="switchLang('${l}')">${l}</button>
-                `).join('')}
-            </div>
-        `;
-    }
-
-    function buildGallery(data) {
-        dataStructure = { rev1: [], rev2: [], rev3: [], signes: [] };
-
-        data.imagenes.forEach(fileName => {
-            const lowerName = fileName.toLowerCase();
-            if (lowerName.startsWith('rev1_')) dataStructure.rev1.push(fileName);
-            else if (lowerName.startsWith('rev2_')) dataStructure.rev2.push(fileName);
-            else if (lowerName.startsWith('rev3_')) dataStructure.rev3.push(fileName);
-            else if (lowerName.startsWith('signes_')) dataStructure.signes.push(fileName);
-        });
-
-        let html = `
-            <header>
-                <div class="header-main">
-                    <div class="logo">Signes.Studio</div>
-                    <h1 class="project-title">${data.proyecto}</h1>
-                    <div class="client-name">${data.cliente}</div>
-                </div>
-                ${langSwitchHtml()}
-            </header>
-        `;
-
-        let hasContent = false;
-        globalActiveImages = [];
-
-        for (const [faseKey, group] of Object.entries(dataStructure)) {
-            if (group.length === 0) continue;
-            hasContent = true;
-            group.sort();
-
-            html += `
-                <section class="fase-section">
-                    <div class="fase-header">
-                        <h2 class="fase-title">${T.fases[faseKey]}</h2>
-                        <button class="download-all-btn" id="zipBtn-${faseKey}" onclick="downloadAllInSection('${faseKey}')">${T.downloadAll}</button>
-                    </div>
-                    <div class="grid">
-            `;
-
-            group.forEach(img => {
-                const imgUrl = `${BUCKET_URL}/${projectId}/${img}`;
-                let cleanCaption = img.replace(/^rev\d+_/i, '').replace(/^SIGNES_/i, '').replace(/\.[^/.]+$/, '').replace(/^[0-9]+[-_]/, '').replace(/[-_]/g, ' ');
-
-                globalActiveImages.push({ url: imgUrl, caption: cleanCaption, filename: img });
-                const currentGlobalIndex = globalActiveImages.length - 1;
-
-                // URL OPTIMIZADA: Cloudflare procesa el render original de R2 y sirve un WebP minúsculo de 450px para el grid
-                const thumbnailUrl = `${BUCKET_URL}/cdn-cgi/image/width=450,quality=80,format=auto/${projectId}/${img}`;
-
-                html += `
-                    <div class="image-card" onclick="openLightbox(${currentGlobalIndex})">
-                        <a href="#" class="thumb-download" title="${T.downloadRender}" onclick="forceDownload('${imgUrl}', '${img}', event);">↓</a>
-                        <img src="${thumbnailUrl}" alt="${img}" loading="lazy">
-                        <div class="image-caption">${cleanCaption}</div>
-                    </div>
-                `;
-            });
-
-            html += `</div></section>`;
-        }
-
-        html += `
-            <footer>
-                <div class="legal-notice">
-                    ${T.legalNotice}
-                </div>
-            </footer>
-        `;
-
-        appContainer.innerHTML = hasContent ? html : `<div class="status-msg">${T.noImages}</div>`;
-    }
-
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightboxImg');
-    const lightboxCaption = document.getElementById('lightboxCaption');
-    const lightboxDownload = document.getElementById('lightboxDownload');
-    const lightboxWrapper = document.getElementById('lightboxWrapper');
-
-    function openLightbox(index) {
-        currentImageIndex = index;
-        const currentData = globalActiveImages[currentImageIndex];
-        
-        lightboxImg.src = currentData.url;
-        lightboxCaption.innerText = currentData.caption;
-        lightboxDownload.href = currentData.url;
-        lightboxDownload.setAttribute('download', currentData.filename);
-        
-        resetZoom();
-        lightbox.classList.add('active');
-    }
-
-    function toggleZoom(event) {
-        event.stopPropagation();
-        if (lightboxWrapper.classList.contains('zoomed')) {
-            resetZoom();
-        } else {
-            lightboxWrapper.classList.add('zoomed');
-            panZoom(event);
-        }
-    }
-
-    function panZoom(event) {
-        if (!lightboxWrapper.classList.contains('zoomed')) return;
-        const rect = lightboxWrapper.getBoundingClientRect();
-        const x = ((event.clientX - rect.left) / rect.width) * 100;
-        const y = ((event.clientY - rect.top) / rect.height) * 100;
-        lightboxImg.style.transformOrigin = `${x}% ${y}%`;
-    }
-
-    function resetZoom() {
-        lightboxWrapper.classList.remove('zoomed');
-        lightboxImg.style.transformOrigin = 'center center';
-    }
-
-    function navigateImage(direction, event) {
-        event.stopPropagation();
-        currentImageIndex += direction;
-        
-        if (currentImageIndex >= globalActiveImages.length) currentImageIndex = 0;
-        if (currentImageIndex < 0) currentImageIndex = globalActiveImages.length - 1;
-        
-        openLightbox(currentImageIndex);
-    }
-
-    function closeLightbox(event) {
-        if (event.target.id === 'lightbox' || event.target.id === 'lightboxWrapper') {
-            forceCloseLightbox();
-        }
-    }
-
-    function forceCloseLightbox() {
-        lightbox.classList.remove('active');
-        resetZoom();
-    }
-
-    function forceDownload(fileUrl, fileName, event) {
-        if (event) {
-            event.preventDefault();
-            event.stopPropagation();
-        }
-        const cleanUrl = `${fileUrl.split('?')[0]}?nocache=${new Date().getTime()}`;
-
-        fetch(cleanUrl, {
-            method: 'GET',
-            mode: 'cors',
-            credentials: 'omit'
-        })
-        .then(response => {
-            if (!response.ok) throw new Error();
-            return response.blob();
-        })
-        .then(blob => {
-            const blobUrl = URL.createObjectURL(blob);
-            const tempLink = document.createElement("a");
-            tempLink.href = blobUrl;
-            tempLink.download = fileName;
-            document.body.appendChild(tempLink);
-            tempLink.click();
-            document.body.removeChild(tempLink);
-            URL.revokeObjectURL(blobUrl);
-        })
-        .catch(() => {
-            window.open(fileUrl, '_blank');
-        });
-    }
-
-    /* Tu Motor de Descarga Masiva por Lotes Optimizado */
-    function downloadAllInSection(faseKey) {
-        const files = dataStructure[faseKey];
-        if (!files || files.length === 0) return;
-
-        const btn = document.getElementById(`zipBtn-${faseKey}`);
-        const originalLabel = btn.innerText;
-        btn.disabled = true;
-        btn.innerText = T.preparingZip;
-
-        const zip = new JSZip();
-        let completed = 0;
-
-        const fetchOne = (fileName) => {
-            const imgUrl = `${BUCKET_URL}/${projectId}/${fileName}`;
-            const cleanUrl = `${imgUrl}?nocache=${new Date().getTime()}`;
-            return fetch(cleanUrl, { method: 'GET', mode: 'cors', credentials: 'omit' })
-                .then(response => {
-                    if (!response.ok) throw new Error(`Failed: ${fileName}`);
-                    return response.blob();
-                })
-                .then(blob => {
-                    zip.file(fileName, blob);
-                    completed++;
-                    btn.innerText = T.zipProgress(completed, files.length);
-                });
-        };
-
-        const BATCH_SIZE = 4;
-        let results = [];
-
-        function runBatch(startIndex) {
-            const batch = files.slice(startIndex, startIndex + BATCH_SIZE);
-            if (batch.length === 0) return Promise.resolve();
-            return Promise.allSettled(batch.map(fetchOne))
-                .then(batchResults => {
-                    results = results.concat(batchResults);
-                    return runBatch(startIndex + BATCH_SIZE);
-                });
-        }
-
-        runBatch(0).then(() => {
-            const failed = results.filter(r => r.status === 'rejected').length;
-
-            return zip.generateAsync({ type: 'blob' }).then(zipBlob => {
-                const projectName = (manifestData && manifestData.proyecto) ? manifestData.proyecto : 'signes';
-                const safeName = projectName.replace(/[^a-z0-9_\-]+/gi, '_');
-                const zipFileName = `${safeName}_${faseKey}.zip`;
-
-                const blobUrl = URL.createObjectURL(zipBlob);
-                const tempLink = document.createElement('a');
-                tempLink.href = blobUrl;
-                tempLink.download = zipFileName;
-                document.body.appendChild(tempLink);
-                tempLink.click();
-                document.body.removeChild(tempLink);
-                URL.revokeObjectURL(blobUrl);
-
-                if (failed > 0) alert(T.zipError);
-            });
-        })
-        .catch(() => {
-            alert(T.zipError);
-        })
-        .finally(() => {
-            btn.disabled = false;
-            btn.innerText = originalLabel;
-        });
-    }
-
-    document.addEventListener('keydown', (e) => {
-        if (!lightbox.classList.contains('active')) return;
-        if (e.key === 'Escape') forceCloseLightbox();
-        if (e.key === 'ArrowRight') navigateImage(1, e);
-        if (e.key === 'ArrowLeft') navigateImage(-1, e);
-    });
-</script>
-</body>
-</html>
