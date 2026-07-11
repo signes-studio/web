@@ -1,5 +1,5 @@
 /* ==========================================================================
-   SIGNES.STUDIO — Sidebar Bottom Alignment Layout System
+   SIGNES.STUDIO — Sidebar Bottom Alignment Layout System (Final Geometry Fix)
    ========================================================================== */
 
 :root {
@@ -75,14 +75,55 @@ a { color: inherit; text-decoration: none; }
 .main-nav li a { color: var(--ink-muted); transition: color 0.2s ease; }
 .main-nav li.active-link a, .main-nav li a:hover { color: var(--ink); }
 
+#header-bottom-group {
+  display: flex;
+  flex-direction: column;
+  height: 100%; 
+  justify-content: flex-end;
+  margin-top: 4rem; 
+}
+
+#sidebar-meta-box {
+  display: none;
+  text-align: left;
+  margin-bottom: auto; 
+  padding-bottom: 3.5rem; 
+}
+#sidebar-meta-box.visible {
+  display: block; 
+}
+
+#sidebar-meta-box .image-title {
+  font-size: 11px;
+  text-transform: uppercase;
+  margin-bottom: 0.1rem;
+}
+#sidebar-meta-box .image-desc {
+  color: var(--ink-muted);
+  margin-bottom: 0.9rem;
+}
+
+.gallery-controls {
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  font-size: 11px;
+}
+.gallery-controls .control {
+  color: var(--ink);
+  cursor: pointer;
+  font-weight: 500;
+}
+.gallery-controls .control:hover {
+  text-decoration: underline;
+}
+
 .header-copyright {
   font-size: 10px;
   color: var(--ink-muted);
+  margin-top: 1.5rem;
 }
 
-.mobile-copyright {
-  display: none; 
-}
+.mobile-copyright { display: none; }
 
 /* ---------- MAIN RIGHT CANVAS ---------- */
 #pageWrapper {
@@ -106,7 +147,7 @@ a { color: inherit; text-decoration: none; }
   pointer-events: auto;
 }
 
-/* --- TRABAJO / GALLERY CANVAS --- */
+/* --- WORK / GALLERY CANVAS --- */
 #galleryWrapper {
   width: 100%;
   height: 100%;
@@ -130,11 +171,18 @@ a { color: inherit; text-decoration: none; }
   width: 100%;
   height: 100%;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .slide {
   position: absolute;
-  inset: 0;
+  /* Hacemos que el contenedor mida estrictamente lo que mida la imagen escalada */
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
   opacity: 0;
   transition: opacity 0.4s ease-in-out;
   display: flex;
@@ -145,38 +193,50 @@ a { color: inherit; text-decoration: none; }
 
 .slide img {
   max-width: 100%;
-  max-height: 100%;
+  max-height: 100vh;
   object-fit: contain; 
+  display: block;
 }
 
-/* Zonas de control lateral fijas con animación sutil al hover */
+/* CRÍTICO: Las zonas de control se acoplan estrictamente al 50% de la imagen real */
 .overlay-controls {
   position: absolute;
-  top: 0; bottom: 0;
-  width: 15%; /* Reducido para que actúe en los laterales de la imagen de forma elegante */
+  top: 0; 
+  bottom: 0;
+  width: 50%; /* Ocupa exactamente la mitad de la foto */
   cursor: pointer;
-  z-index: 5;
+  z-index: 10;
   display: flex;
   align-items: center;
-  color: var(--ink-muted);
-  opacity: 0.2;
-  transition: opacity 0.3s ease, color 0.3s ease;
+  color: var(--ink);
+  opacity: 0.3; /* Intensidad base elegante */
+  transition: opacity 0.2s ease;
 }
-.left-control { left: 0; justify-content: flex-start; }
-.right-control { right: 0; justify-content: flex-end; }
 
+/* Mitad izquierda */
+.left-control { 
+  left: 0; 
+  justify-content: flex-start; 
+}
+/* Mitad derecha */
+.right-control { 
+  right: 0; 
+  justify-content: flex-end; 
+}
+
+/* Al pasar el ratón por encima de su mitad correspondiente, la flecha se vuelve 100% intensa */
 .overlay-controls:hover {
   opacity: 1;
-  color: var(--ink);
 }
 
-/* Tamaño de las flechas lineales minimalistas */
+/* Flechas minimalistas vectoriales con mayor grosor de trazo */
 .arrow-svg {
-  width: 24px;
-  height: 24px;
+  width: 32px;
+  height: 32px;
+  margin: 0 1.5rem; /* Separación prudencial del borde de la foto */
 }
 
-/* Contenedor de metadatos */
+/* Meta container */
 .meta-container {
   width: 100%;
   display: flex;
@@ -279,16 +339,20 @@ a { color: inherit; text-decoration: none; }
     height: auto; 
     aspect-ratio: 4 / 3; 
     margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  /* En móviles ampliamos la zona táctil de las flechas y las hacemos un poco más visibles */
+  /* En móviles forzamos mayor intensidad nativa para que destaquen al instante */
   .overlay-controls {
-    width: 20%;
-    opacity: 0.4;
+    opacity: 0.65;
   }
+  
   .arrow-svg {
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
+    margin: 0 0.8rem; /* Flechas más pegadas en pantallas táctiles pequeña */
   }
 
   .meta-container {
