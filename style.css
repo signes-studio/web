@@ -1,17 +1,23 @@
 /* ==========================================================================
-   SIGNES.STUDIO — Sidebar Bottom Alignment Layout System (Final Air Fix)
+   SIGNES.STUDIO — Strict Architectural Grid Layout System
+   Quiet-luxury editorial style inspired by classic architecture portfolios.
    ========================================================================== */
 
 :root {
-  --bg: #F4F4F4;        
-  --ink: #000000;       
-  --ink-muted: #777777; 
+  --bg: #F4F4F4;        /* Gray-white gallery canvas */
+  --ink: #000000;       /* Deep solid technical black */
+  --ink-muted: #777777; /* Muted technical gray for labels and metadata */
   --line: #EAEAEA;
-  --sidebar-w: 260px;   
+  --sidebar-w: 260px;   /* Fixed sidebar metrics */
   --font-base: 'Archivo', sans-serif;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  width: 100%;
+  height: 100%;
+}
 
 body {
   background-color: var(--bg);
@@ -20,7 +26,7 @@ body {
   font-size: 11px; 
   letter-spacing: 0.06em;
   line-height: 1.5;
-  overflow: hidden; 
+  overflow: hidden; /* Prevents vertical body jumping on fixed canvas desktop */
   -webkit-font-smoothing: antialiased;
 }
 
@@ -38,7 +44,10 @@ a { color: inherit; text-decoration: none; }
   height: 100%;
 }
 
-/* ---------- COLUMNA LATERAL FIJA ---------- */
+/* ==========================================================================
+   DESKTOP STYLES: FIXED LEFT SIDEBAR
+   ========================================================================== */
+
 #header {
   width: var(--sidebar-w);
   height: 100%;
@@ -76,22 +85,21 @@ a { color: inherit; text-decoration: none; }
 .main-nav li a { color: var(--ink-muted); transition: color 0.2s ease; }
 .main-nav li.active-link a, .main-nav li a:hover { color: var(--ink); }
 
-/* Contenedor inferior flex de la barra lateral */
+/* Bottom group layout within fixed sidebar */
 #header-bottom-group {
   display: flex;
   flex-direction: column;
-  height: 100%; /* Permite la distribución del espacio vacío */
+  height: 100%; 
   justify-content: flex-end;
-  margin-top: 4rem; /* Margen de seguridad con la navegación */
+  margin-top: 4rem; 
 }
 
-/* Caja de metadatos acoplada abajo a la izquierda */
+/* Metadata box coupled into the left sidebar bottom */
 #sidebar-meta-box {
   display: none;
   text-align: left;
-  /* El secreto del espacio vacío: empuja el copyright al fondo absoluto */
-  margin-bottom: auto; 
-  padding-bottom: 3.5rem; /* Asegura un colchón mínimo de aire visual */
+  margin-bottom: auto; /* Pushes the copyright down, leaving a fine blank space gap */
+  padding-bottom: 3.5rem; 
 }
 #sidebar-meta-box.visible {
   display: block; 
@@ -127,7 +135,10 @@ a { color: inherit; text-decoration: none; }
   margin-top: 1.5rem;
 }
 
-/* ---------- CONTENEDOR DE CONTENIDO DERECHO ---------- */
+/* ==========================================================================
+   DESKTOP STYLES: MAIN CONTENT FLOW (RIGHT CANVAS)
+   ========================================================================== */
+
 #pageWrapper {
   flex-grow: 1;
   height: 100%;
@@ -149,7 +160,7 @@ a { color: inherit; text-decoration: none; }
   pointer-events: auto;
 }
 
-/* ---------- AREA DEL PORTAFOLIO ---------- */
+/* --- WORK SECTION: FULL CONTEXT SLIDER --- */
 #galleryWrapper {
   width: 100%;
   height: 100%;
@@ -191,6 +202,7 @@ a { color: inherit; text-decoration: none; }
   object-fit: contain; 
 }
 
+/* Invisible overlay tap shortcuts over imagery */
 .overlay-controls {
   position: absolute;
   top: 0; bottom: 0;
@@ -201,7 +213,7 @@ a { color: inherit; text-decoration: none; }
 .left-control { left: 0; }
 .right-control { right: 0; }
 
-/* ---------- VISTA CONTACTO ---------- */
+/* --- CONTACT SECTION --- */
 .contact-wrapper {
   width: 100%;
   max-width: 680px;
@@ -243,19 +255,19 @@ a { color: inherit; text-decoration: none; }
 .sub-links a:first-child { margin-left: 0; }
 
 /* ==========================================================================
-   STRICT RESPONSIVE MOBILE NAVIGATION & CANVAS (CALCADO DE LA CAPTURA)
+   RESPONSIVE OVERRIDES: MOBILE FLUID AXIS (AS PER REVISIONS)
    ========================================================================== */
 
 @media (max-width: 768px) {
   body { 
-    overflow-y: auto; /* Permite el scroll natural si el texto de contacto lo requiere */
+    overflow-y: auto; /* Natural scrolling allowed for text content bounds */
   }
 
   #canvas { 
     flex-direction: column; 
   }
 
-  /* --- BARRA SUPERIOR (HEADER) --- */
+  /* --- HEADER BREAKDOWN --- */
   #header { 
     width: 100%; 
     height: auto; 
@@ -264,27 +276,27 @@ a { color: inherit; text-decoration: none; }
   }
 
   #logo .tagline {
-    white-space: normal; /* Permite que el lema respire si la pantalla es muy estrecha */
+    white-space: normal; 
   }
 
-  /* Pestañas WORK y CONTACT juntas una al lado de la otra */
+  /* Navigation labels horizontal distribution */
   .main-nav {
     margin-top: 1.5rem;
   }
   .main-nav ul {
     display: flex;
-    gap: 1.5rem; /* Separación horizontal limpia entre las dos palabras */
+    gap: 1.5rem; 
   }
   .main-nav li {
     margin-bottom: 0;
   }
 
-  /* Ocultamos el copyright estático del header para evitar duplicidades molestas */
+  /* Hide sidebar fixed copyright on header stack to avoid clutter */
   #headerBlocks {
     display: none; 
   }
 
-  /* --- CONTENEDOR DERECHO DE PÁGINAS --- */
+  /* --- VIEWPORTS TRACKING --- */
   #pageWrapper { 
     position: relative; 
     height: auto; 
@@ -295,57 +307,55 @@ a { color: inherit; text-decoration: none; }
     position: relative; 
     opacity: 1; 
     pointer-events: auto; 
-    display: none; /* Dejamos que el JS controle cuál se muestra */
+    display: none; 
     width: 100%;
   }
   .page-section.active {
     display: block;
   }
 
-  /* --- VISTA DE TRABAJO (SLIDER MÓVIL) --- */
+  /* --- MOBILE WORK VIEW PORTFOLIO --- */
   #galleryWrapper { 
     padding: 0 1.5rem 3rem 1.5rem; 
     height: auto; 
     display: block;
   }
 
-  /* Imagen desplegada justo debajo del menú */
+  /* Image slots right beneath the navigation matrix */
   #slideshowWrapper { 
     height: auto; 
-    aspect-ratio: 3 / 2; /* Encaje perfecto para tus renders horizontales */
+    aspect-ratio: 3 / 2; 
     margin-bottom: 1rem;
   }
 
-  /* Forzamos que la caja inferior se estructure en una sola línea repartida */
   #header-bottom-group {
     margin-top: 0;
     display: block;
     height: auto;
   }
 
+  /* Symmetrical splitting beneath the render frame */
   #sidebar-meta-box.visible {
     display: flex !important;
-    flex-direction: row; /* Fuerza el alineamiento horizontal */
-    justify-content: space-between; /* Texto a la izquierda, mandos a la derecha */
+    flex-direction: row; 
+    justify-content: space-between; /* Project text left / Controls right */
     align-items: flex-start;
     width: 100%;
     margin-bottom: 0;
     padding-bottom: 0;
   }
 
-  /* Nombre del proyecto y autor abajo a la izquierda */
   .slide-meta-wrapper {
     margin-bottom: 0;
     max-width: 60%;
   }
 
-  /* PREV / NEXT alineados abajo a la derecha */
   .gallery-controls {
     text-align: right;
     white-space: nowrap;
   }
 
-  /* El Copyright se renderiza debajo de la línea de control como pie definitivo */
+  /* Footnote copyright rendering underneath control row */
   .header-copyright { 
     display: block;
     margin-top: 2rem; 
@@ -353,7 +363,7 @@ a { color: inherit; text-decoration: none; }
     color: var(--ink-muted);
   }
 
-  /* --- VISTA DE CONTACTO MÓVIL --- */
+  /* --- MOBILE CONTACT GRID VIEW --- */
   .contact-wrapper { 
     padding: 2rem 1.5rem 4rem 1.5rem; 
     width: 100%;
@@ -365,7 +375,7 @@ a { color: inherit; text-decoration: none; }
   }
 
   .info-grid { 
-    grid-template-columns: 1fr; /* Apilado vertical limpio para consultas y redes */
+    grid-template-columns: 1fr; 
     gap: 2rem; 
   }
 }
