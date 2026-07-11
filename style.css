@@ -266,12 +266,12 @@ a { color: inherit; text-decoration: none; }
 
   #mobile-gallery-meta {
     display: flex !important;
-    flex-direction: column; /* Cambiado a columna para que el autor vaya debajo del título */
+    flex-direction: column; 
     justify-content: flex-start; 
-    align-items: flex-start;
+    align-items: flex-start; /* ESTA LÍNEA: Fuerza a que todo se alinee a la izquierda */
     width: 100%;
     padding-top: 0.5rem;
-    gap: 0.2rem; /* Espacio limpio entre el título y el autor */
+    gap: 0.2rem; 
   }
 
   .mobile-copyright {
