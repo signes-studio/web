@@ -1,5 +1,5 @@
 /* ==========================================================================
-   SIGNES.STUDIO — Pure Editorial Grid System (Restored Version)
+   SIGNES.STUDIO — Pure Editorial Grid System
    ========================================================================== */
 
 :root {
@@ -112,7 +112,7 @@ a { color: inherit; text-decoration: none; }
   pointer-events: auto;
 }
 
-/* --- WORK / GALLERY CANVAS (RESTAURADO) --- */
+/* --- WORK / GALLERY CANVAS (RESTAURADO A LA CAPTURA) --- */
 #galleryWrapper {
   width: 100%;
   height: 100%;
@@ -120,8 +120,7 @@ a { color: inherit; text-decoration: none; }
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* El colchón original que daba los aires exactos a tu render */
-  padding: 5rem 6rem 6rem 5rem; 
+  padding: 3.5rem 4rem 3.5rem 4rem; 
 }
 
 #slideshowWrapper {
@@ -156,7 +155,7 @@ a { color: inherit; text-decoration: none; }
 .slide img {
   max-width: 100%;
   max-height: 100%;
-  object-fit: contain; /* Encaje original impecable */
+  object-fit: contain; 
   display: block;
 }
 
@@ -174,7 +173,7 @@ a { color: inherit; text-decoration: none; }
 .image-title { font-size: 11px; text-transform: uppercase; margin-bottom: 0.1rem; }
 .image-desc { color: var(--ink-muted); }
 
-/* CONTROLES LATERALES (Zonas interactivas transparentes del 50%) */
+/* CONTROLES LATERALES */
 .overlay-controls {
   position: absolute;
   top: 0; bottom: 0;
