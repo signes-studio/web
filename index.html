@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SIGNES.STUDIO — Visual Research for Architecture</title>
-<meta name="description" content="SIGNES.STUDIO is a comunication studio specializing in architectural visualization and external visual direction. Based in Valencia, working with architecture firms worldwide.">
+<meta name="description" content="SIGNES.STUDIO is an independent visual research practice specializing in architectural visualization and external visual direction. Based in Valencia, working with architecture firms worldwide.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://signes.studio/">
 
@@ -23,7 +23,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=1.7">
+<link rel="stylesheet" href="style.css?v=1.8">
 
 <script type="application/ld+json">
 {
@@ -214,23 +214,38 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentIdx = 0;
   let isTransitioning = false;
 
+  // CORRECCIÓN RADICAL: Mide la posición espacial visual exacta que calcula object-fit contain
   function alignMetaToImage() {
-    if (window.innerWidth <= 768) return;
+    if (window.innerWidth <= 768) return; 
     
     const activeSlide = slides[currentIdx];
-    const img = activeSlide.querySelector('img');
+    const img = activeSlide.querySelector('.slider-img');
     
     if (img) {
-      const slideshowWidth = document.getElementById('slideshow').clientWidth;
-      const slideshowHeight = document.getElementById('slideshow').clientHeight;
+      const slideshow = document.getElementById('slideshow');
+      const slideshowWidth = slideshow.clientWidth;
+      const slideshowHeight = slideshow.clientHeight;
       
-      // Corregido: Si object-fit contain está escalando la imagen, usamos sus dimensiones reales en pantalla
-      const imgWidth = img.getBoundingClientRect().width || img.clientWidth;
+      // Calculamos las proporciones basándonos en los píxeles reales nativos de tus renders
+      const naturalW = img.naturalWidth || 1920;
+      const naturalH = img.naturalHeight || 1280;
+      const imgRatio = naturalW / naturalH;
+      const containerRatio = slideshowWidth / slideshowHeight;
       
-      if (imgWidth > 0 && desktopCanvasMeta) {
-        const leftOffset = (slideshowWidth - imgWidth) / 2;
+      let finalImgWidth = slideshowWidth;
+      
+      // Replicamos el algoritmo de renderizado de la imagen en el canvas
+      if (containerRatio > imgRatio) {
+        finalImgWidth = slideshowHeight * imgRatio;
+      } else {
+        finalImgWidth = slideshowWidth;
+      }
+      
+      // Aplicamos el desfase exacto para que el texto parta desde el borde izquierdo de la foto
+      if (desktopCanvasMeta && finalImgWidth > 0) {
+        const leftOffset = (slideshowWidth - finalImgWidth) / 2;
         desktopCanvasMeta.style.left = `${leftOffset}px`;
-        desktopCanvasMeta.style.width = `${imgWidth}px`;
+        desktopCanvasMeta.style.width = `${finalImgWidth}px`;
       }
     }
   }
@@ -247,7 +262,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     currentIdx = nextIdx;
     
-    setTimeout(alignMetaToImage, 80);
+    // Ejecución rápida para evitar saltos ópticos
+    alignMetaToImage();
+    setTimeout(alignMetaToImage, 50);
   }
 
   function nextSlide() {
@@ -261,10 +278,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   window.addEventListener('resize', alignMetaToImage);
-  
-  // Asegurar el disparo táctil una vez cargue el DOM y las imágenes pesadas
   window.addEventListener('load', alignMetaToImage);
   
+  // Si la imagen ya está en memoria caché, alineamos directamente
   document.querySelectorAll('.slider-img').forEach(img => {
     if (img.complete) {
       alignMetaToImage();
@@ -305,10 +321,10 @@ document.addEventListener('DOMContentLoaded', () => {
       pageContact.classList.remove('active');
       navWorkLi.classList.add('active-link');
       navContactLi.classList.remove('active-link');
-      if(desktopCanvasMeta) desktopCanvasMeta.style.display = 'block';
+      if(desktopCanvasMeta) desktopCanvasMeta.style.display = 'flex';
       if(mobileGalleryMeta) mobileGalleryMeta.style.display = 'flex';
       if(mobileCopyright) mobileCopyright.style.display = 'block';
-      setTimeout(alignMetaToImage, 80);
+      setTimeout(alignMetaToImage, 50);
       if (updateHistory) history.pushState({ page: 'work' }, '', '#work');
       document.title = 'SIGNES.STUDIO — Visual Research for Architecture';
     } else {
