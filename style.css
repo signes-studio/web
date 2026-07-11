@@ -1,5 +1,5 @@
 /* ==========================================================================
-   SIGNES.STUDIO — Sidebar Bottom Alignment Layout System (Perfect Alignment)
+   SIGNES.STUDIO — Sidebar Bottom Alignment Layout System (Image Bounds Fix)
    ========================================================================== */
 
 :root {
@@ -83,15 +83,9 @@ a { color: inherit; text-decoration: none; }
   margin-top: 4rem; 
 }
 
-/* Caja de seguridad por si prefieres acoplarla a la izquierda */
-#desktop-sidebar-meta {
-  display: none !important; /* Desactivado por defecto para priorizar la alineación con la imagen */
-}
-
 .header-copyright {
   font-size: 10px;
   color: var(--ink-muted);
-  margin-top: 1.5rem;
 }
 
 .mobile-copyright { display: none; }
@@ -135,7 +129,6 @@ a { color: inherit; text-decoration: none; }
   width: 100%;
   height: calc(100% - 60px); 
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
@@ -149,12 +142,10 @@ a { color: inherit; text-decoration: none; }
   justify-content: center;
 }
 
+/* REESTABLECIDO: Volvemos al comportamiento original de las imágenes */
 .slide {
   position: absolute;
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
+  inset: 0;
   opacity: 0;
   transition: opacity 0.4s ease-in-out;
   display: flex;
@@ -166,18 +157,17 @@ a { color: inherit; text-decoration: none; }
 .slide img {
   max-width: 100%;
   max-height: 100%;
-  object-fit: contain; 
+  object-fit: contain; /* Proporciones 100% respetadas y sin deformaciones */
   display: block;
 }
 
-/* Las zonas de control se quedan ancladas al 50% exacto de la foto calculada */
+/* Zonas de control lateral fijas (50% izquierdo y derecho de la pantalla del canvas) */
 .overlay-controls {
   position: absolute;
-  top: 0; 
-  bottom: 0;
+  top: 0; bottom: 0;
   width: 50%; 
   cursor: pointer;
-  z-index: 10;
+  z-index: 5;
   display: flex;
   align-items: center;
   color: var(--ink);
@@ -194,17 +184,16 @@ a { color: inherit; text-decoration: none; }
   margin: 0 1.5rem; 
 }
 
-/* EL SECRETO: Caja elástica de metadatos acoplada al ancho dinámico de la foto en PC */
+/* SOLUCIÓN ALINEACIÓN TEXTO: Se acopla de forma elástica al borde de la imagen activa abajo */
 #desktop-canvas-meta {
   width: 100%;
-  max-width: 100%;
   position: absolute;
-  bottom: -45px; /* Lo sitúa perfectamente descolgado debajo de la imagen */
+  bottom: -35px; /* Descolgado sutilmente debajo del marco de la foto */
   left: 0;
   display: flex;
   justify-content: flex-start;
   z-index: 50;
-  padding-left: 0.2rem; /* Sutil ajuste de alineación óptica */
+  padding-left: 0.2rem; 
 }
 
 .meta-container {
@@ -253,7 +242,7 @@ a { color: inherit; text-decoration: none; }
 .sub-links a:first-child { margin-left: 0; }
 
 /* ==========================================================================
-   VERSION RESPONSIVE MÓVIL PERFECCIONADA
+   VERSION RESPONSIVE MÓVIL (Mantiene intacto el esquema de la captura)
    ========================================================================== */
 
 @media (max-width: 768px) {
@@ -272,7 +261,7 @@ a { color: inherit; text-decoration: none; }
   .main-nav li { margin-bottom: 0; }
 
   #sidebar-desktop-bottom { display: none; }
-  #desktop-canvas-meta { display: none !important; } /* Apagamos la lógica de PC */
+  #desktop-canvas-meta { display: none !important; } 
 
   #pageWrapper { 
     position: relative; 
@@ -307,7 +296,6 @@ a { color: inherit; text-decoration: none; }
   .overlay-controls { opacity: 0.65; }
   .arrow-svg { width: 24px; height: 24px; margin: 0 0.8rem; }
 
-  /* En móviles se mantiene repartida en los extremos de la pantalla completa abajo */
   #mobile-gallery-meta {
     display: flex !important;
     flex-direction: row;
