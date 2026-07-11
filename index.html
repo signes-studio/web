@@ -8,6 +8,7 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Importamos Archivo con el peso 300 (light) para el .STUDIO -->
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -16,56 +17,60 @@
   <div id="canvasWrapper">
     <div id="canvas">
       
+      <!-- HEADER / SIDEBAR AREA -->
       <header id="header">
-        <div id="logo">
-          <h1 class="logo site-title">
-            <a href="#" id="go-home">SIGNES.STUDIO</a>
-          </h1>
-          <p class="tagline">Visual Research for Architecture</p>
+        <div id="header-top-group">
+          <div id="logo">
+            <h1 class="logo site-title">
+              <a href="#" id="go-home"><span class="bold">SIGNES</span><span class="light">.STUDIO</span></a>
+            </h1>
+            <p class="tagline">Visual Research for Architecture</p>
+          </div>
+
+          <nav id="mainNavigation" class="main-nav">
+            <ul>
+              <li class="active-link"><a href="#" id="nav-work">Work</a></li>
+              <li><a href="#" id="nav-contact">Contact</a></li>
+            </ul>
+          </nav>
         </div>
 
-        <nav id="mainNavigation" class="main-nav">
-          <ul>
-            <li class="active-link"><a href="#" id="nav-work">Work</a></li>
-            <li><a href="#" id="nav-contact">Contact</a></li>
-          </ul>
-        </nav>
-
         <div id="headerBlocks">
-          <div class="lang-selector">
-            <button id="btn-en" class="lang-btn active">EN</button>
-            <button id="btn-de" class="lang-btn">DE</button>
-          </div>
           <p class="header-copyright">© All images by SIGNES.STUDIO</p>
         </div>
       </header>
 
+      <!-- MAIN WRAPPER -->
       <div id="pageWrapper" role="main">
         
+        <!-- VISTA A: WORK (SLIDER HORIZONTAL) -->
         <section id="page-work" class="page-section active">
           <div id="galleryWrapper">
             <div id="slideshowWrapper">
               
               <div id="slideshow" class="slideshow">
-                
-                <div class="slide active" data-index="1" data-title="Casa Turia — Exterior" data-desc="Architectural Visualization [2026]">
+                <!-- Slide 01 -->
+                <div class="slide active" data-title="Casa Turia — Exterior" data-desc="Architectural Visualization [2026]">
                   <img src="img/SIGNES_01-Exterior.jpg" alt="Casa Turia Exterior">
                 </div>
                 
-                <div class="slide" data-index="2" data-title="Casa Turia — Atmosphere B" data-desc="Kitchen & Dining Spatial Dialogue [2026]">
+                <!-- Slide 02 -->
+                <div class="slide" data-title="Casa Turia — Atmosphere B" data-desc="Kitchen & Dining Spatial Dialogue [2026]">
                   <img src="img/SIGNES_03-Interior B.jpg" alt="Casa Turia Interior B">
                 </div>
                 
-                <div class="slide" data-index="3" data-title="Casa Turia — Sequence C" data-desc="Living Space & Patio Integration [2026]">
+                <!-- Slide 03 -->
+                <div class="slide" data-title="Casa Turia — Sequence C" data-desc="Living Space & Patio Integration [2026]">
                   <img src="img/SIGNES_05-Interior C.jpg" alt="Casa Turia Interior C">
                 </div>
-                
               </div>
 
+              <!-- Click zones directly over image -->
               <div class="overlay-controls left-control" id="prev-zone"></div>
               <div class="overlay-controls right-control" id="next-zone"></div>
             </div>
 
+            <!-- Meta layout bottom alignment -->
             <div class="meta">
               <div id="imageData">
                 <div class="slide-meta-wrapper">
@@ -83,14 +88,11 @@
           </div>
         </section>
 
+        <!-- VISTA B: CONTACT & ABOUT (ENGLISH ONLY) -->
         <section id="page-contact" class="page-section">
           <div class="contact-wrapper">
             <div class="about-box">
-              <p class="data-lang"
-                 data-en="Founded by Luis Alberto Signes Sacristán, SIGNES.STUDIO is an independent visual research practice operating at the intersection of architecture, precise spatial 3D visualization, and brand narrative. Based in Valencia and working with architectural firms across the DACH region and Central Europe."
-                 data-de="Gegründet von Luis Alberto Signes Sacristán, ist SIGNES.STUDIO ein unabhängiges Studio für visuelle Recherche an der Schnittstelle von Architektur, präziser CGI-Visualisierung und Markenidentität. Ansässig in Valencia und tätig für Architekturbüros in der DACH-Region und Mitteleuropa.">
-                Founded by Luis Alberto Signes Sacristán, SIGNES.STUDIO is an independent visual research practice operating at the intersection of architecture, precise spatial 3D visualization, and brand narrative. Based in Valencia and working with architectural firms across the DACH region and Central Europe.
-              </p>
+              <p>Founded by Luis Alberto Signes Sacristán, SIGNES.STUDIO is an independent visual research practice operating at the intersection of architecture, precise spatial 3D visualization, and brand narrative[cite: 1]. Based in Valencia and working with architectural firms across the DACH region and Central Europe[cite: 1].</p>
             </div>
             
             <div class="info-grid">
@@ -119,17 +121,17 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  // 1. Lógica del Slider
+  // 1. Slider Engine
   const slides = document.querySelectorAll('.slide');
   const metaTitle = document.getElementById('meta-title');
   const metaDesc = document.getElementById('meta-desc');
   let currentIdx = 0;
+  let isTransitioning = false;
 
   function updateSlideshow(nextIdx) {
     slides[currentIdx].classList.remove('active');
     slides[nextIdx].classList.add('active');
     
-    // Cambiar textos dinámicos abajo a la izquierda
     metaTitle.textContent = slides[nextIdx].getAttribute('data-title');
     metaDesc.textContent = slides[nextIdx].getAttribute('data-desc');
     
@@ -146,13 +148,37 @@ document.addEventListener('DOMContentLoaded', () => {
     updateSlideshow(prev);
   }
 
-  // Eventos de navegación del slider
+  // Click Controls
   document.getElementById('ctrl-next').addEventListener('click', nextSlide);
   document.getElementById('ctrl-prev').addEventListener('click', prevSlide);
   document.getElementById('next-zone').addEventListener('click', nextSlide);
   document.getElementById('prev-zone').addEventListener('click', prevSlide);
 
-  // 2. Lógica de Pestañas (Work vs Contact)
+  // Keyboard Controls (Arrows)
+  document.addEventListener('keydown', (e) => {
+    if (pageWork.classList.contains('active')) {
+      if (e.key === 'ArrowRight') nextSlide();
+      if (e.key === 'ArrowLeft') prevSlide();
+    }
+  });
+
+  // Mouse Wheel / Touchpad Curation (Debounced to prevent hyper-scroll skipping)
+  document.addEventListener('wheel', (e) => {
+    if (pageWork.classList.contains('active')) {
+      e.preventDefault(); // Stop native viewport scrolling
+      if (isTransitioning) return;
+
+      isTransitioning = true;
+      if (e.deltaY > 0 || e.deltaX > 0) {
+        nextSlide();
+      } else {
+        prevSlide();
+      }
+
+      setTimeout(() => { isTransitioning = false; }, 800); // 800ms cooldown threshold
+    }, { passive: false });
+
+  // 2. Tab Navigation
   const navWork = document.getElementById('nav-work');
   const navContact = document.getElementById('nav-contact');
   const pageWork = document.getElementById('page-work');
@@ -177,35 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
   goHome.addEventListener('click', (e) => { e.preventDefault(); showPage('work'); });
   navContact.addEventListener('click', (e) => { e.preventDefault(); showPage('contact'); });
 
-  // 3. Sistema Automatizado de Idiomas (EN/DE)
-  const langElements = document.querySelectorAll('.data-lang');
-  const btnEn = document.getElementById('btn-en');
-  const btnDe = document.getElementById('btn-de');
-
-  function setLanguage(lang) {
-    langElements.forEach(el => {
-      if (el.dataset[lang]) el.textContent = el.dataset[lang];
-    });
-    if (lang === 'de') {
-      btnDe.classList.add('active');
-      btnEn.classList.remove('active');
-    } else {
-      btnEn.classList.add('active');
-      btnDe.classList.remove('active');
-    }
-  }
-
-  const userLang = navigator.language || navigator.userLanguage;
-  if (userLang.startsWith('de')) {
-    setLanguage('de');
-  } else {
-    setLanguage('en');
-  }
-
-  btnEn.addEventListener('click', () => setLanguage('en'));
-  btnDe.addEventListener('click', () => setLanguage('de'));
-
-  // 4. Medidas disuasorias anti-copia
+  // 3. Security Defaults
   document.addEventListener('contextmenu', (e) => e.preventDefault());
   document.addEventListener('keydown', (e) => {
     if (e.key === 'F12') e.preventDefault();
