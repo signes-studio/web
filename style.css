@@ -1,5 +1,5 @@
 /* ==========================================================================
-   SIGNES.STUDIO — Definitve Integrated Split System
+   SIGNES.STUDIO — Sidebar Bottom Alignment Layout System
    ========================================================================== */
 
 :root {
@@ -81,7 +81,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 .mobile-copyright {
-  display: none; /* Oculto en escritorio */
+  display: none; 
 }
 
 /* ---------- MAIN RIGHT CANVAS ---------- */
@@ -113,7 +113,7 @@ a { color: inherit; text-decoration: none; }
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start; /* Alineación limpia izquierda */
+  align-items: flex-start; 
   padding: 3.5rem 4rem 3.5rem 2rem;
 }
 
@@ -149,17 +149,34 @@ a { color: inherit; text-decoration: none; }
   object-fit: contain; 
 }
 
+/* Zonas de control lateral fijas con animación sutil al hover */
 .overlay-controls {
   position: absolute;
   top: 0; bottom: 0;
-  width: 50%;
+  width: 15%; /* Reducido para que actúe en los laterales de la imagen de forma elegante */
   cursor: pointer;
   z-index: 5;
+  display: flex;
+  align-items: center;
+  color: var(--ink-muted);
+  opacity: 0.2;
+  transition: opacity 0.3s ease, color 0.3s ease;
 }
-.left-control { left: 0; }
-.right-control { right: 0; }
+.left-control { left: 0; justify-content: flex-start; }
+.right-control { right: 0; justify-content: flex-end; }
 
-/* Caja de metadatos en Escritorio (abajo a la izquierda del canvas) */
+.overlay-controls:hover {
+  opacity: 1;
+  color: var(--ink);
+}
+
+/* Tamaño de las flechas lineales minimalistas */
+.arrow-svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Contenedor de metadatos */
 .meta-container {
   width: 100%;
   display: flex;
@@ -172,10 +189,6 @@ a { color: inherit; text-decoration: none; }
 .meta-text-group { text-align: left; }
 .image-title { font-size: 11px; text-transform: uppercase; margin-bottom: 0.1rem; }
 .image-desc { color: var(--ink-muted); }
-
-.gallery-controls { text-transform: uppercase; color: var(--ink-muted); font-size: 11px; }
-.gallery-controls .control { color: var(--ink); cursor: pointer; font-weight: 500; }
-.gallery-controls .control:hover { text-decoration: underline; }
 
 /* --- SECCIÓN CONTACTO --- */
 .contact-wrapper {
@@ -216,7 +229,7 @@ a { color: inherit; text-decoration: none; }
 .sub-links a:first-child { margin-left: 0; }
 
 /* ==========================================================================
-   VERSION RESPONSIVE MÓVIL PERFECCIONADA (SEGÚN CROQUIS)
+   VERSION RESPONSIVE MÓVIL PERFECCIONADA
    ========================================================================== */
 
 @media (max-width: 768px) {
@@ -228,7 +241,6 @@ a { color: inherit; text-decoration: none; }
     flex-direction: column; 
   }
 
-  /* Cabecera superior limpia */
   #header { 
     width: 100%; 
     height: auto; 
@@ -236,20 +248,11 @@ a { color: inherit; text-decoration: none; }
     display: block;
   }
 
-  .main-nav {
-    margin-top: 1.2rem;
-  }
-  .main-nav ul {
-    display: flex;
-    gap: 1.5rem; /* Menú horizontal WORK CONTACT */
-  }
-  .main-nav li {
-    margin-bottom: 0;
-  }
+  .main-nav { margin-top: 1.2rem; }
+  .main-nav ul { display: flex; gap: 1.5rem; }
+  .main-nav li { margin-bottom: 0; }
 
-  #sidebar-desktop-bottom {
-    display: none; /* Ocultamos el copyright del menú lateral */
-  }
+  #sidebar-desktop-bottom { display: none; }
 
   #pageWrapper { 
     position: relative; 
@@ -264,11 +267,8 @@ a { color: inherit; text-decoration: none; }
     display: none; 
     width: 100%;
   }
-  .page-section.active {
-    display: block;
-  }
+  .page-section.active { display: block; }
 
-  /* Ajuste de márgenes del Slider */
   #galleryWrapper { 
     padding: 1rem 1.5rem 3rem 1.5rem; 
     height: auto; 
@@ -277,30 +277,31 @@ a { color: inherit; text-decoration: none; }
 
   #slideshowWrapper { 
     height: auto; 
-    aspect-ratio: 4 / 3; /* Marco estable para la foto */
+    aspect-ratio: 4 / 3; 
     margin-bottom: 1.2rem;
   }
 
-  /* NUEVA MAQUETACIÓN INFERIOR EN MÓVIL (Bajo la imagen) */
+  /* En móviles ampliamos la zona táctil de las flechas y las hacemos un poco más visibles */
+  .overlay-controls {
+    width: 20%;
+    opacity: 0.4;
+  }
+  .arrow-svg {
+    width: 20px;
+    height: 20px;
+  }
+
   .meta-container {
     display: flex !important;
     flex-direction: row;
-    justify-content: space-between; /* Distribuye textos a la izq y mandos a la derecha */
+    justify-content: space-between; 
     align-items: flex-start;
     width: 100%;
     padding-top: 0;
   }
 
-  .meta-text-group {
-    max-width: 65%;
-  }
+  .meta-text-group { max-width: 100%; }
 
-  .gallery-controls {
-    text-align: right;
-    white-space: nowrap;
-  }
-
-  /* Copyright posicionado abajo del todo en la marquesina móvil */
   .mobile-copyright {
     display: block;
     margin-top: 2rem;
@@ -309,18 +310,7 @@ a { color: inherit; text-decoration: none; }
     text-align: left;
   }
 
-  /* Secciones de contacto en pestaña independiente */
-  .contact-wrapper { 
-    padding: 2rem 1.5rem 4rem 1.5rem; 
-  }
-
-  .about-box { 
-    font-size: 13px; 
-    margin-bottom: 2.5rem; 
-  }
-
-  .info-grid { 
-    grid-template-columns: 1fr; 
-    gap: 2rem; 
-  }
+  .contact-wrapper { padding: 2rem 1.5rem 4rem 1.5rem; }
+  .about-box { font-size: 13px; margin-bottom: 2.5rem; }
+  .info-grid { grid-template-columns: 1fr; gap: 2rem; }
 }
