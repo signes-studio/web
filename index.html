@@ -18,7 +18,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=2.1">
+<link rel="stylesheet" href="style.css?v=2.2">
 
 <script type="application/ld+json">
 {
@@ -80,24 +80,25 @@
             <div id="slideshowWrapper">
               
               <div id="slideshow" class="slideshow" role="region" aria-roledescription="carousel" aria-label="Project images">
+                
                 <div class="slide active" data-title="Hivernacle — Exterior" data-desc="Arqtistic [ES]">
                   <picture>
                     <source type="image/webp" srcset="img/SIGNES_01-Exterior-640.webp 640w, img/SIGNES_01-Exterior-1200.webp 1200w, img/SIGNES_01-Exterior-1920.webp 1920w, img/SIGNES_01-Exterior-2560.webp 2560w" sizes="(max-width: 768px) 100vw, 90vw">
-                    <img src="img/SIGNES_01-Exterior-1200.jpg" srcset="img/SIGNES_01-Exterior-640.jpg 640w, img/SIGNES_01-Exterior-1200.jpg 1200w, img/SIGNES_01-Exterior-1920.jpg 1920w, img/SIGNES_01-Exterior-2560.jpg 2560w" sizes="(max-width: 768px) 100vw, 90vw" alt="Hivernacle exterior" class="slider-img" loading="eager" fetchpriority="high" decoding="async">
+                    <img src="img/SIGNES_01-Exterior-1200.jpg" srcset="img/SIGNES_01-Exterior-640.jpg 640w, img/SIGNES_01-Exterior-1200.jpg 1200w, img/SIGNES_01-Exterior-1920.jpg 1920w, img/SIGNES_01-Exterior-2560.jpg 2560w" sizes="(max-width: 768px) 100vw, 90vw" alt="Hivernacle greenhouse exterior architectural visualization" class="slider-img" loading="eager" fetchpriority="high" decoding="async">
                   </picture>
                 </div>
                 
                 <div class="slide" data-title="Hivernacle — Interior B" data-desc="Arqtistic [ES]">
                   <picture>
                     <source type="image/webp" srcset="img/SIGNES_03-Interior-B-640.webp 640w, img/SIGNES_03-Interior-B-1200.webp 1200w, img/SIGNES_03-Interior-B-1920.webp 1920w, img/SIGNES_03-Interior-B-2560.webp 2560w" sizes="(max-width: 768px) 100vw, 90vw">
-                    <img src="img/SIGNES_03-Interior-B-1200.jpg" srcset="img/SIGNES_03-Interior-B-640.jpg 640w, img/SIGNES_03-Interior-B-1200.jpg 1200w, img/SIGNES_03-Interior-B-1920.jpg 1920w, img/SIGNES_03-Interior-B-2560.jpg 2560w" sizes="(max-width: 768px) 100vw, 90vw" alt="Hivernacle interior B" class="slider-img" loading="lazy" decoding="async">
+                    <img src="img/SIGNES_03-Interior-B-1200.jpg" srcset="img/SIGNES_03-Interior-B-640.jpg 640w, img/SIGNES_03-Interior-B-1200.jpg 1200w, img/SIGNES_03-Interior-B-1920.jpg 1920w, img/SIGNES_03-Interior-B-2560.jpg 2560w" sizes="(max-width: 768px) 100vw, 90vw" alt="Hivernacle greenhouse interior B visualization" class="slider-img" loading="lazy" decoding="async">
                   </picture>
                 </div>
                 
                 <div class="slide" data-title="Hivernacle — Interior C" data-desc="Arqtistic [ES]">
                   <picture>
                     <source type="image/webp" srcset="img/SIGNES_05-Interior-C-640.webp 640w, img/SIGNES_05-Interior-C-1200.webp 1200w, img/SIGNES_05-Interior-C-1920.webp 1920w, img/SIGNES_05-Interior-C-2560.webp 2560w" sizes="(max-width: 768px) 100vw, 90vw">
-                    <img src="img/SIGNES_05-Interior-C-1200.jpg" srcset="img/SIGNES_05-Interior-C-640.jpg 640w, img/SIGNES_05-Interior-C-1200.jpg 1200w, img/SIGNES_05-Interior-C-1920.jpg 1920w, img/SIGNES_05-Interior-C-2560.jpg 2560w" sizes="(max-width: 768px) 100vw, 90vw" alt="Hivernacle interior C" class="slider-img" loading="lazy" decoding="async">
+                    <img src="img/SIGNES_05-Interior-C-1200.jpg" srcset="img/SIGNES_05-Interior-C-640.jpg 640w, img/SIGNES_05-Interior-C-1200.jpg 1200w, img/SIGNES_05-Interior-C-1920.jpg 1920w, img/SIGNES_05-Interior-C-2560.jpg 2560w" sizes="(max-width: 768px) 100vw, 90vw" alt="Hivernacle greenhouse interior C visualization" class="slider-img" loading="lazy" decoding="async">
                   </picture>
                 </div>
               </div>
@@ -177,7 +178,6 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentIdx = 0;
   let isTransitioning = false;
 
-  // ESTA FUNCIÓN ALINEA EL TEXTO AL BORDE IZQUIERDO DE LA FOTO NATURAL
   function alignMetaToImage() {
     if (window.innerWidth <= 768) return;
     
