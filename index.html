@@ -8,7 +8,6 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!-- Importamos Archivo con el peso 300 (light) para el .STUDIO -->
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -29,8 +28,8 @@
 
           <nav id="mainNavigation" class="main-nav">
             <ul>
-              <li class="active-link"><a href="#" id="nav-work">Work</a></li>
-              <li><a href="#" id="nav-contact">Contact</a></li>
+              <li id="nav-work-li" class="active-link"><a href="#" id="nav-work">Work</a></li>
+              <li id="nav-contact-li"><a href="#" id="nav-contact">Contact</a></li>
             </ul>
           </nav>
         </div>
@@ -70,7 +69,7 @@
               <div class="overlay-controls right-control" id="next-zone"></div>
             </div>
 
-            <!-- Meta layout bottom alignment -->
+            <!-- Meta layout bottom alignment (Todo abajo a la izquierda) -->
             <div class="meta">
               <div id="imageData">
                 <div class="slide-meta-wrapper">
@@ -88,7 +87,7 @@
           </div>
         </section>
 
-        <!-- VISTA B: CONTACT & ABOUT (ENGLISH ONLY) -->
+        <!-- VISTA B: CONTACT & ABOUT -->
         <section id="page-contact" class="page-section">
           <div class="contact-wrapper">
             <div class="about-box">
@@ -121,13 +120,19 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  // 1. Slider Engine
+  // Selectores principales
   const slides = document.querySelectorAll('.slide');
   const metaTitle = document.getElementById('meta-title');
   const metaDesc = document.getElementById('meta-desc');
+  const pageWork = document.getElementById('page-work');
+  const pageContact = document.getElementById('page-contact');
+  const navWorkLi = document.getElementById('nav-work-li');
+  const navContactLi = document.getElementById('nav-contact-li');
+  
   let currentIdx = 0;
   let isTransitioning = false;
 
+  // 1. Lógica interna del Slider
   function updateSlideshow(nextIdx) {
     slides[currentIdx].classList.remove('active');
     slides[nextIdx].classList.add('active');
@@ -148,13 +153,13 @@ document.addEventListener('DOMContentLoaded', () => {
     updateSlideshow(prev);
   }
 
-  // Click Controls
-  document.getElementById('ctrl-next').addEventListener('click', nextSlide);
-  document.getElementById('ctrl-prev').addEventListener('click', prevSlide);
+  // Clics en texto e imagen (Zonas activas libres)
+  document.getElementById('ctrl-next').addEventListener('click', (e) => { e.stopPropagation(); nextSlide(); });
+  document.getElementById('ctrl-prev').addEventListener('click', (e) => { e.stopPropagation(); prevSlide(); });
   document.getElementById('next-zone').addEventListener('click', nextSlide);
   document.getElementById('prev-zone').addEventListener('click', prevSlide);
 
-  // Keyboard Controls (Arrows)
+  // Navegación por flechas del teclado
   document.addEventListener('keydown', (e) => {
     if (pageWork.classList.contains('active')) {
       if (e.key === 'ArrowRight') nextSlide();
@@ -162,48 +167,44 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Mouse Wheel / Touchpad Curation (Debounced to prevent hyper-scroll skipping)
+  // Navegación por rueda del ratón / scroll horizontal y vertical del touchpad
   document.addEventListener('wheel', (e) => {
     if (pageWork.classList.contains('active')) {
-      e.preventDefault(); // Stop native viewport scrolling
+      e.preventDefault(); 
       if (isTransitioning) return;
 
       isTransitioning = true;
+      // Captura tanto movimiento vertical como scroll de deslizamiento lateral (deltaX)
       if (e.deltaY > 0 || e.deltaX > 0) {
         nextSlide();
       } else {
         prevSlide();
       }
 
-      setTimeout(() => { isTransitioning = false; }, 800); // 800ms cooldown threshold
-    }, { passive: false });
+      setTimeout(() => { isTransitioning = false; }, 600); 
+    }
+  }, { passive: false });
 
-  // 2. Tab Navigation
-  const navWork = document.getElementById('nav-work');
-  const navContact = document.getElementById('nav-contact');
-  const pageWork = document.getElementById('page-work');
-  const pageContact = document.getElementById('page-contact');
-  const goHome = document.getElementById('go-home');
-
+  // 2. Control de pestañas nativas fijas
   function showPage(page) {
     if (page === 'work') {
       pageWork.classList.add('active');
       pageContact.classList.remove('active');
-      navWork.parentElement.classList.add('active-link');
-      navContact.parentElement.classList.remove('active-link');
+      navWorkLi.classList.add('active-link');
+      navContactLi.classList.remove('active-link');
     } else {
       pageContact.classList.add('active');
       pageWork.classList.remove('active');
-      navContact.parentElement.classList.add('active-link');
-      navWork.parentElement.classList.remove('active-link');
+      navContactLi.classList.add('active-link');
+      navWorkLi.classList.remove('active-link');
     }
   }
 
-  navWork.addEventListener('click', (e) => { e.preventDefault(); showPage('work'); });
-  goHome.addEventListener('click', (e) => { e.preventDefault(); showPage('work'); });
-  navContact.addEventListener('click', (e) => { e.preventDefault(); showPage('contact'); });
+  document.getElementById('nav-work').addEventListener('click', (e) => { e.preventDefault(); showPage('work'); });
+  document.getElementById('go-home').addEventListener('click', (e) => { e.preventDefault(); showPage('work'); });
+  document.getElementById('nav-contact').addEventListener('click', (e) => { e.preventDefault(); showPage('contact'); });
 
-  // 3. Security Defaults
+  // 3. Protección básica anti-copia
   document.addEventListener('contextmenu', (e) => e.preventDefault());
   document.addEventListener('keydown', (e) => {
     if (e.key === 'F12') e.preventDefault();
