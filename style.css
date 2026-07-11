@@ -1,5 +1,5 @@
 /* ==========================================================================
-   SIGNES.STUDIO — Strict Architectural Monospace Grid Layout (Final Fix)
+   SIGNES.STUDIO — Sidebar Bottom Alignment Layout System
    ========================================================================== */
 
 :root {
@@ -38,16 +38,17 @@ a { color: inherit; text-decoration: none; }
   height: 100%;
 }
 
-/* ---------- LEFT SIDEBAR COLUMN ---------- */
+/* ---------- COLUMNA LATERAL FIJA ---------- */
 #header {
   width: var(--sidebar-w);
   height: 100%;
   padding: 3.5rem 0 3.5rem 3.5rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-between; /* Distribuye el grupo superior y el inferior */
   flex-shrink: 0;
-  z-index: 100; /* Se mantiene accesible para clics de menú */
+  border-right: 1px solid transparent; /* Mantiene limpio el margen */
+  z-index: 100;
 }
 
 #logo .wordmark {
@@ -70,20 +71,43 @@ a { color: inherit; text-decoration: none; }
 .main-nav {
   margin-top: 2rem;
 }
-.main-nav ul {
-  list-style: none;
+.main-nav ul { list-style: none; }
+.main-nav li { margin-bottom: 0.5rem; text-transform: uppercase; font-size: 11px; }
+.main-nav li a { color: var(--ink-muted); transition: color 0.2s ease; }
+.main-nav li.active-link a, .main-nav li a:hover { color: var(--ink); }
+
+/* Caja de metadatos acoplada abajo a la izquierda de la barra lateral */
+#sidebar-meta-box {
+  display: none;
+  margin-bottom: 2rem;
+  text-align: left;
 }
-.main-nav li {
-  margin-bottom: 0.5rem;
+#sidebar-meta-box.visible {
+  display: block; /* Solo se dibuja cuando la pestaña Work está activa */
+}
+
+#sidebar-meta-box .image-title {
+  font-size: 11px;
   text-transform: uppercase;
+  margin-bottom: 0.1rem;
+}
+#sidebar-meta-box .image-desc {
+  color: var(--ink-muted);
+  margin-bottom: 0.8rem;
+}
+
+.gallery-controls {
+  text-transform: uppercase;
+  color: var(--ink-muted);
   font-size: 11px;
 }
-.main-nav li a {
-  color: var(--ink-muted);
-  transition: color 0.2s ease;
-}
-.main-nav li.active-link a, .main-nav li a:hover {
+.gallery-controls .control {
   color: var(--ink);
+  cursor: pointer;
+  font-weight: 500;
+}
+.gallery-controls .control:hover {
+  text-decoration: underline;
 }
 
 .header-copyright {
@@ -91,7 +115,7 @@ a { color: inherit; text-decoration: none; }
   color: var(--ink-muted);
 }
 
-/* ---------- RIGHT FLOW VIEWS ---------- */
+/* ---------- CONTENEDOR DE CONTENIDO DERECHO ---------- */
 #pageWrapper {
   flex-grow: 1;
   height: 100%;
@@ -113,21 +137,20 @@ a { color: inherit; text-decoration: none; }
   pointer-events: auto;
 }
 
-/* ---------- WORK VIEW (SLIDER HORIZONTAL) ---------- */
+/* ---------- AREA DEL PORTAFOLIO ---------- */
 #galleryWrapper {
   width: 100%;
   height: 100%;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   padding: 3.5rem 4rem 3.5rem 2rem;
 }
 
 #slideshowWrapper {
   position: relative;
   width: 100%;
-  height: calc(100% - 100px); /* Ajustado para dar espacio a la nueva marquesina inferior */
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -156,58 +179,18 @@ a { color: inherit; text-decoration: none; }
   object-fit: contain; 
 }
 
-/* Capas invisibles sobre la foto con z-index controlado para no pisar el menú ni los controles inferiores */
+/* Capas de paso lateral (Cero conflicto con botones ya que están en otra sección) */
 .overlay-controls {
   position: absolute;
   top: 0; bottom: 0;
   width: 50%;
   cursor: pointer;
-  z-index: 5; 
+  z-index: 5;
 }
 .left-control { left: 0; }
 .right-control { right: 0; }
 
-/* RESTRUCTURACIÓN COMPLETA: Todo abajo a la izquierda */
-.meta {
-  width: 100%;
-  display: flex;
-  flex-direction: column; /* Apila los bloques verticalmente */
-  align-items: flex-start; /* Todo alineado al extremo izquierdo */
-  justify-content: flex-end;
-  padding-top: 1.5rem;
-  z-index: 50; /* Por encima de las capas del slider para que los clics funcionen siempre */
-}
-
-.slide-meta-wrapper {
-  text-align: left;
-  margin-bottom: 0.8rem; /* Separación sutil entre el título y los botones */
-}
-.image-title {
-  font-size: 11px;
-  text-transform: uppercase;
-  margin-bottom: 0.1rem;
-}
-.image-desc {
-  color: var(--ink-muted);
-}
-
-/* Botones PREV / NEXT posicionados abajo a la izquierda */
-.gallery-controls {
-  text-transform: uppercase;
-  color: var(--ink-muted);
-  font-size: 11px;
-  letter-spacing: 0.05em;
-}
-.gallery-controls .control {
-  color: var(--ink);
-  cursor: pointer;
-  font-weight: 500;
-}
-.gallery-controls .control:hover {
-  text-decoration: underline;
-}
-
-/* ---------- CONTACT VIEW ---------- */
+/* ---------- VISTA CONTACTO ---------- */
 .contact-wrapper {
   width: 100%;
   max-width: 680px;
@@ -248,11 +231,12 @@ a { color: inherit; text-decoration: none; }
 .sub-links a { margin-right: 0.5rem; margin-left: 0.5rem; }
 .sub-links a:first-child { margin-left: 0; }
 
-/* Responsive móvil */
+/* Responsive Móvil */
 @media (max-width: 768px) {
   body { overflow: auto; }
   #canvas { flex-direction: column; }
   #header { width: 100%; height: auto; padding: 2rem; }
+  #sidebar-meta-box { margin-bottom: 1rem; }
   #pageWrapper { position: relative; height: auto; min-height: 400px; }
   .page-section { position: relative; opacity: 1; pointer-events: auto; display: block; }
   #galleryWrapper { padding: 2rem; height: auto; }
