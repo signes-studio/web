@@ -208,11 +208,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function nextSlide() {
+    // Calcula el total de slides reales que haya en el HTML automáticamente
     let next = (currentIdx + 1) % slides.length;
     updateSlideshow(next);
   }
 
   function prevSlide() {
+    // Evita el atasco en el cambio de sentido calculando el total dinámicamente
     let prev = (currentIdx - 1 + slides.length) % slides.length;
     updateSlideshow(prev);
   }
