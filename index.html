@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=1.2">
+<link rel="stylesheet" href="style.css?v=1.3">
 </head>
 <body id="collection-signes">
 
@@ -34,7 +34,6 @@
           </nav>
         </div>
 
-        <!-- En escritorio este bloque se queda al fondo de la barra lateral -->
         <div id="sidebar-desktop-bottom">
           <p class="header-copyright">© All images by SIGNES.STUDIO</p>
         </div>
@@ -65,25 +64,27 @@
                 </div>
               </div>
 
-              <!-- Click zones directly over image -->
-              <div class="overlay-controls left-control" id="prev-zone"></div>
-              <div class="overlay-controls right-control" id="next-zone"></div>
+              <!-- CONTROLES LATERALES: Zonas de click con flechas minimalistas SVG -->
+              <div class="overlay-controls left-control" id="prev-zone" title="Previous Image">
+                <svg class="arrow-svg" viewBox="0 0 24 24">
+                  <path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="overlay-controls right-control" id="next-zone" title="Next Image">
+                <svg class="arrow-svg" viewBox="0 0 24 24">
+                  <path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
             </div>
 
-            <!-- NUEVA UBICACIÓN: El bloque de metadatos se despliega debajo de la imagen -->
+            <!-- Meta layout bottom alignment (Solo textos del proyecto) -->
             <div class="meta-container" id="gallery-meta-block">
               <div class="meta-text-group">
                 <div class="image-title"><strong id="meta-title">Hivernacle — Exterior</strong></div>
                 <div class="image-desc"><p id="meta-desc">Arqtistic [ES]</p></div>
               </div>
-              
-              <div id="simpleControls" class="gallery-controls">
-                <span class="control prev-slide" id="ctrl-prev">PREV</span> / 
-                <span class="control next-slide" id="ctrl-next">NEXT</span>
-              </div>
             </div>
             
-            <!-- Copyright específico para la vista móvil debajo de los mandos -->
             <p class="mobile-copyright">© All images by SIGNES.STUDIO</p>
 
           </div>
@@ -155,11 +156,11 @@ document.addEventListener('DOMContentLoaded', () => {
     updateSlideshow(prev);
   }
 
-  document.getElementById('ctrl-next').addEventListener('click', (e) => { e.preventDefault(); nextSlide(); });
-  document.getElementById('ctrl-prev').addEventListener('click', (e) => { e.preventDefault(); prevSlide(); });
+  // Clics directos vinculados a las zonas laterales (con las flechas)
   document.getElementById('next-zone').addEventListener('click', nextSlide);
   document.getElementById('prev-zone').addEventListener('click', prevSlide);
 
+  // Teclado
   document.addEventListener('keydown', (e) => {
     if (pageWork.classList.contains('active')) {
       if (e.key === 'ArrowRight') nextSlide();
@@ -167,6 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // Ratón / Rueda / Touchpad
   document.addEventListener('wheel', (e) => {
     if (pageWork.classList.contains('active')) {
       e.preventDefault(); 
@@ -183,6 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }, { passive: false });
 
+  // Pestañas
   function showPage(page) {
     if (page === 'work') {
       pageWork.classList.add('active');
