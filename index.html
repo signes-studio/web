@@ -16,7 +16,6 @@
   <div id="canvasWrapper">
     <div id="canvas">
       
-      <!-- HEADER / SIDEBAR AREA -->
       <header id="header">
         <div id="header-top-group">
           <div id="logo">
@@ -34,64 +33,52 @@
           </nav>
         </div>
 
-        <div id="headerBlocks">
+        <div id="header-bottom-group">
+          
+          <div id="sidebar-meta-box" class="visible">
+            <div class="image-title"><strong id="meta-title">Hivernacle — Exterior</strong></div>
+            <div class="image-desc"><p id="meta-desc">Arqtistic [ES]</p></div>
+            
+            <div id="simpleControls" class="gallery-controls">
+              <span class="control prev-slide" id="ctrl-prev">PREV</span> / 
+              <span class="control next-slide" id="ctrl-next">NEXT</span>
+            </div>
+          </div>
+
           <p class="header-copyright">© All images by SIGNES.STUDIO</p>
         </div>
       </header>
 
-      <!-- MAIN WRAPPER -->
       <div id="pageWrapper" role="main">
         
-        <!-- VISTA A: WORK (SLIDER HORIZONTAL) -->
         <section id="page-work" class="page-section active">
           <div id="galleryWrapper">
             <div id="slideshowWrapper">
               
               <div id="slideshow" class="slideshow">
-                <!-- Slide 01 -->
                 <div class="slide active" data-title="Hivernacle — Exterior" data-desc="Arqtistic [ES]">
                   <img src="img/SIGNES_01-Exterior.jpg" alt="Hivernacle Exterior">
                 </div>
                 
-                <!-- Slide 02 -->
                 <div class="slide" data-title="Hivernacle — Interior B" data-desc="Arqtistic [ES]">
                   <img src="img/SIGNES_03-Interior B.jpg" alt="Hivernacle Interior B">
                 </div>
                 
-                <!-- Slide 03 -->
                 <div class="slide" data-title="Hivernacle — Interior C" data-desc="Arqtistic [ES]">
                   <img src="img/SIGNES_05-Interior C.jpg" alt="Hivernacle Interior C">
                 </div>
               </div>
 
-              <!-- Click zones directly over image -->
               <div class="overlay-controls left-control" id="prev-zone"></div>
               <div class="overlay-controls right-control" id="next-zone"></div>
             </div>
-
-            <!-- Meta layout bottom alignment (Todo abajo a la izquierda) -->
-            <div class="meta">
-              <div id="imageData">
-                <div class="slide-meta-wrapper">
-                  <div class="image-title"><strong id="meta-title">Hivernacle — Exterior</strong></div>
-                  <div class="image-desc"><p id="meta-desc">Arqtistic [ES]</p></div>
-                </div>
-              </div>
-              
-              <div id="simpleControls" class="gallery-controls">
-                <span class="control prev-slide" id="ctrl-prev">PREV</span> / 
-                <span class="control next-slide" id="ctrl-next">NEXT</span>
-              </div>
-            </div>
-
           </div>
         </section>
 
-        <!-- VISTA B: CONTACT & ABOUT -->
         <section id="page-contact" class="page-section">
           <div class="contact-wrapper">
             <div class="about-box">
-              <p>Founded by Luis Signes, SIGNES.STUDIO is an independent visual research practice operating at the intersection of architecture, precise spatial 3D visualization, and brand narrative[cite: 1]. Based in Valencia and working with architectural firms across the world[cite: 1].</p>
+              <p>Founded by Luis Signes, SIGNES.STUDIO is an independent visual research practice operating at the intersection of architecture, precise spatial 3D visualization, and brand narrative. Based in Valencia and working with architectural firms across the world.</p>
             </div>
             
             <div class="info-grid">
@@ -120,7 +107,6 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  // Selectores principales
   const slides = document.querySelectorAll('.slide');
   const metaTitle = document.getElementById('meta-title');
   const metaDesc = document.getElementById('meta-desc');
@@ -128,11 +114,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const pageContact = document.getElementById('page-contact');
   const navWorkLi = document.getElementById('nav-work-li');
   const navContactLi = document.getElementById('nav-contact-li');
+  const sidebarMetaBox = document.getElementById('sidebar-meta-box');
   
   let currentIdx = 0;
   let isTransitioning = false;
 
-  // 1. Lógica interna del Slider
+  // 1. Slider nativo (Clicks + Rueda + Flechas)
   function updateSlideshow(nextIdx) {
     slides[currentIdx].classList.remove('active');
     slides[nextIdx].classList.add('active');
@@ -153,13 +140,13 @@ document.addEventListener('DOMContentLoaded', () => {
     updateSlideshow(prev);
   }
 
-  // Clics en texto e imagen (Zonas activas libres)
-  document.getElementById('ctrl-next').addEventListener('click', (e) => { e.stopPropagation(); nextSlide(); });
-  document.getElementById('ctrl-prev').addEventListener('click', (e) => { e.stopPropagation(); prevSlide(); });
+  // Eventos de clic vinculados
+  document.getElementById('ctrl-next').addEventListener('click', (e) => { e.preventDefault(); nextSlide(); });
+  document.getElementById('ctrl-prev').addEventListener('click', (e) => { e.preventDefault(); prevSlide(); });
   document.getElementById('next-zone').addEventListener('click', nextSlide);
   document.getElementById('prev-zone').addEventListener('click', prevSlide);
 
-  // Navegación por flechas del teclado
+  // Evento por teclado (Flechas direccionales)
   document.addEventListener('keydown', (e) => {
     if (pageWork.classList.contains('active')) {
       if (e.key === 'ArrowRight') nextSlide();
@@ -167,49 +154,43 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Navegación por rueda del ratón / scroll horizontal y vertical del touchpad
+  // Evento rueda del ratón y deslizamiento horizontal/vertical en Trackpads/Touchpads
   document.addEventListener('wheel', (e) => {
     if (pageWork.classList.contains('active')) {
       e.preventDefault(); 
       if (isTransitioning) return;
 
       isTransitioning = true;
-      // Captura tanto movimiento vertical como scroll de deslizamiento lateral (deltaX)
       if (e.deltaY > 0 || e.deltaX > 0) {
         nextSlide();
       } else {
         prevSlide();
       }
 
-      setTimeout(() => { isTransitioning = false; }, 600); 
+      setTimeout(() => { isTransitioning = false; }, 500); // Cooldown fluido de 500ms
     }
   }, { passive: false });
 
-  // 2. Control de pestañas nativas fijas
+  // 2. Control e intercambio de vistas (Pestañas)
   function showPage(page) {
     if (page === 'work') {
       pageWork.classList.add('active');
       pageContact.classList.remove('active');
       navWorkLi.classList.add('active-link');
       navContactLi.classList.remove('active-link');
+      sidebarMetaBox.classList.add('visible'); // Muestra los textos en Work
     } else {
       pageContact.classList.add('active');
       pageWork.classList.remove('active');
       navContactLi.classList.add('active-link');
       navWorkLi.classList.remove('active-link');
+      sidebarMetaBox.classList.remove('visible'); // Oculta los textos en Contact
     }
   }
 
   document.getElementById('nav-work').addEventListener('click', (e) => { e.preventDefault(); showPage('work'); });
   document.getElementById('go-home').addEventListener('click', (e) => { e.preventDefault(); showPage('work'); });
   document.getElementById('nav-contact').addEventListener('click', (e) => { e.preventDefault(); showPage('contact'); });
-
-  // 3. Protección básica anti-copia
-  document.addEventListener('contextmenu', (e) => e.preventDefault());
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'F12') e.preventDefault();
-    if (e.ctrlKey && e.key.toLowerCase() === 'u') e.preventDefault();
-  });
 });
 </script>
 </body>
