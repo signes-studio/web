@@ -1,5 +1,5 @@
 /* ==========================================================================
-   SIGNES.STUDIO — Strict Architectural Monospace Grid Layout
+   SIGNES.STUDIO — Strict Architectural Monospace Grid Layout (Final Fix)
    ========================================================================== */
 
 :root {
@@ -47,7 +47,7 @@ a { color: inherit; text-decoration: none; }
   flex-direction: column;
   justify-content: space-between;
   flex-shrink: 0;
-  z-index: 110; /* Asegura que el menú quede siempre por encima de clics fortuitos */
+  z-index: 100; /* Se mantiene accesible para clics de menú */
 }
 
 #logo .wordmark {
@@ -113,7 +113,7 @@ a { color: inherit; text-decoration: none; }
   pointer-events: auto;
 }
 
-/* ---------- WORK VIEW (SLIDER) ---------- */
+/* ---------- WORK VIEW (SLIDER HORIZONTAL) ---------- */
 #galleryWrapper {
   width: 100%;
   height: 100%;
@@ -127,7 +127,7 @@ a { color: inherit; text-decoration: none; }
 #slideshowWrapper {
   position: relative;
   width: 100%;
-  height: calc(100% - 70px); /* Espacio óptimo para la nueva estructura inferior */
+  height: calc(100% - 100px); /* Ajustado para dar espacio a la nueva marquesina inferior */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -156,31 +156,31 @@ a { color: inherit; text-decoration: none; }
   object-fit: contain; 
 }
 
-/* Capas de clic invisibles rebajadas en z-index para no pisar los textos interactivos */
+/* Capas invisibles sobre la foto con z-index controlado para no pisar el menú ni los controles inferiores */
 .overlay-controls {
   position: absolute;
   top: 0; bottom: 0;
   width: 50%;
   cursor: pointer;
-  z-index: 5;
+  z-index: 5; 
 }
 .left-control { left: 0; }
 .right-control { right: 0; }
 
-/* Nueva estructura inferior (Alineado a la izquierda) */
+/* RESTRUCTURACIÓN COMPLETA: Todo abajo a la izquierda */
 .meta {
   width: 100%;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  flex-direction: column; /* Apila los bloques verticalmente */
+  align-items: flex-start; /* Todo alineado al extremo izquierdo */
   justify-content: flex-end;
   padding-top: 1.5rem;
-  z-index: 20; /* Eleva la interactividad por encima del slider */
+  z-index: 50; /* Por encima de las capas del slider para que los clics funcionen siempre */
 }
 
 .slide-meta-wrapper {
   text-align: left;
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.8rem; /* Separación sutil entre el título y los botones */
 }
 .image-title {
   font-size: 11px;
@@ -191,14 +191,17 @@ a { color: inherit; text-decoration: none; }
   color: var(--ink-muted);
 }
 
+/* Botones PREV / NEXT posicionados abajo a la izquierda */
 .gallery-controls {
   text-transform: uppercase;
   color: var(--ink-muted);
   font-size: 11px;
+  letter-spacing: 0.05em;
 }
 .gallery-controls .control {
   color: var(--ink);
   cursor: pointer;
+  font-weight: 500;
 }
 .gallery-controls .control:hover {
   text-decoration: underline;
@@ -245,7 +248,7 @@ a { color: inherit; text-decoration: none; }
 .sub-links a { margin-right: 0.5rem; margin-left: 0.5rem; }
 .sub-links a:first-child { margin-left: 0; }
 
-/* Responsive */
+/* Responsive móvil */
 @media (max-width: 768px) {
   body { overflow: auto; }
   #canvas { flex-direction: column; }
