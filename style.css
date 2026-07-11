@@ -1,15 +1,14 @@
 /* ==========================================================================
-   SIGNES.STUDIO — Absolute Minimalism Architecture System
-   Fina maquetación inspirada en porfolios de arquitectura suizos y alemanes.
+   SIGNES.STUDIO — Fixed Canvas Monospace System (Squarespace Lookalike)
    ========================================================================== */
 
 :root {
-  --bg: #F9F9F9;        /* Blanco roto de galería, limpísimo */
-  --ink: #111111;       /* Negro absoluto técnico */
-  --ink-muted: #777777; /* Gris técnico para etiquetas y metadatos */
-  --line: #E2E2E2;      /* Hairline rules ultrafinas */
-  --sidebar-w: 320px;   /* Ancho fijo de la columna de datos */
-  --font-mono: 'Archivo', sans-serif; 
+  --bg: #F4F4F4;        /* Fondo gris claro/blanco roto técnico */
+  --ink: #000000;       /* Texto negro puro y tenso */
+  --ink-muted: #777777; /* Metadatos grises fijados */
+  --line: #EAEAEA;
+  --sidebar-w: 240px;   /* Ancho compacto calcado de la columna lateral */
+  --font-base: 'Archivo', sans-serif;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -17,246 +16,262 @@
 body {
   background-color: var(--bg);
   color: var(--ink);
-  font-family: var(--font-mono);
-  font-size: 13px; /* Tipografía pequeña, tensa y elegante */
-  letter-spacing: 0.03em;
-  line-height: 1.6;
+  font-family: var(--font-base);
+  font-size: 11px; /* Tipografía diminuta y refinada */
+  letter-spacing: 0.06em;
+  line-height: 1.5;
+  overflow: hidden; /* Evita que la pantalla se mueva verticalmente */
   -webkit-font-smoothing: antialiased;
 }
 
-/* ---------- Master Split Layout ---------- */
-.layout-wrapper {
-  display: flex;
-  min-height: 100vh;
+a { color: inherit; text-decoration: none; }
+
+/* ---------- Estructura del Canvas Fijo ---------- */
+#canvasWrapper {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
 }
 
-/* ---------- LEFT COLUMN (Fixed Sidebar) ---------- */
-.sidebar {
+#canvas {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------- Cabecera Fija (Columna Izquierda) ---------- */
+#header {
   width: var(--sidebar-w);
-  position: fixed;
-  top: 0; left: 0; bottom: 0;
-  padding: 3.5rem 2.5rem;
-  border-right: 1px solid var(--line);
+  height: 100%;
+  padding: 3rem 0 3rem 3rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background-color: var(--bg);
-  z-index: 10;
+  flex-shrink: 0;
+  z-index: 100;
 }
 
-.sidebar .wordmark {
+#logo .wordmark {
   font-weight: 500;
-  font-size: 14px;
-  letter-spacing: 0.08em;
+  font-size: 13px;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
-.sidebar .tagline {
-  font-size: 11px;
+#logo .tagline {
+  font-size: 9px;
   color: var(--ink-muted);
-  margin-top: 0.3rem;
+  margin-top: 0.2rem;
+  text-transform: uppercase;
 }
 
-/* Language Swapping UI */
-.lang-selector {
+/* Menú Estilo Squarespace */
+.main-nav ul {
+  list-style: none;
+}
+.main-nav li {
+  margin-bottom: 0.6rem;
+  text-transform: uppercase;
+  font-size: 11px;
+}
+.main-nav li a {
+  color: var(--ink-muted);
+  transition: color 0.2s ease;
+}
+.main-nav li.active-link a, .main-nav li a:hover {
+  color: var(--ink);
+}
+
+#headerBlocks .lang-selector {
   display: flex;
-  gap: 1rem;
+  gap: 0.6rem;
+  margin-bottom: 1.5rem;
 }
 .lang-btn {
   background: none;
   border: none;
   font-family: inherit;
-  font-size: 11px;
+  font-size: 10px;
   color: var(--ink-muted);
   cursor: pointer;
   padding: 0;
-  transition: color 0.2s ease;
 }
-.lang-btn.active, .lang-btn:hover {
+.lang-btn.active {
   color: var(--ink);
   font-weight: 500;
 }
-
-.contact-block {
-  margin-bottom: 2rem;
-}
-.contact-block .label {
-  display: block;
+.header-copyright {
   font-size: 10px;
-  text-transform: uppercase;
-  color: var(--ink-muted);
-  letter-spacing: 0.08em;
-  margin-bottom: 0.4rem;
-}
-.contact-block .contact-link {
-  display: block;
-  color: var(--ink);
-  margin-bottom: 0.2rem;
-}
-.contact-block .contact-link:hover {
-  text-decoration: underline;
-}
-
-.social-links a {
-  margin-right: 0.8rem;
-}
-.social-links a:hover {
   color: var(--ink-muted);
 }
 
-.sidebar .copyright {
-  font-size: 11px;
-  color: var(--ink-muted);
-  line-height: 1.4;
-}
-
-/* ---------- RIGHT COLUMN (Scrollable Stream) ---------- */
-.main-content {
-  margin-left: var(--sidebar-w);
+/* ---------- Contenedor Derecho Dinámico ---------- */
+#pageWrapper {
   flex-grow: 1;
-  padding: 3.5rem 4rem;
-  max-width: 1100px; /* Controla que las imágenes no se deformen en pantallas gigantes */
-}
-
-/* Intro Section */
-.intro-section {
-  padding: 4rem 0 8rem 0;
-  max-width: 720px;
-}
-.intro-section .statement {
-  font-size: 22px;
-  font-weight: 300;
-  line-height: 1.4;
-  letter-spacing: -0.01em;
-  color: var(--ink);
-}
-
-/* Portfolio Item Layout */
-.portfolio-stream {
-  display: flex;
-  flex-direction: column;
-  gap: 6rem; /* Distancia aérea entre imágenes */
-}
-
-.stream-item {
-  width: 100%;
-}
-
-.image-wrapper {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 9; /* Formato cinematográfico limpio para renders */
-  background-color: #EEE;
-  overflow: hidden;
-}
-
-.image-wrapper img {
-  width: 100%;
   height: 100%;
-  object-fit: cover;
-  transition: opacity 0.4s ease;
+  position: relative;
 }
 
-/* Overlay discreto al hacer hover */
-.placeholder-overlay {
+.page-section {
   position: absolute;
   inset: 0;
-  background-color: rgba(249, 249, 249, 0.9);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 11px;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--ink);
-  opacity: 0;
-  transition: opacity 0.3s ease;
+}
+.page-section.active {
+  opacity: 1;
+  pointer-events: auto;
 }
 
-.stream-item:hover .placeholder-overlay {
+/* ---------- VISTA A: El Slider Horizontal ---------- */
+#galleryWrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem 4rem 4rem 2rem;
+}
+
+#slideshowWrapper {
+  position: relative;
+  width: 100%;
+  height: calc(100% - 60px); /* Deja espacio exacto para los metadatos de abajo */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slideshow {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+/* Las fotos se encajan verticalmente emulando la maquetación "Fit" de Squarespace */
+.slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.slide.active {
   opacity: 1;
 }
 
-.item-meta {
+.slide img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain; /* Encaje perfecto sin recortes */
+}
+
+/* Zonas de control por click invisible sobre la foto */
+.overlay-controls {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  cursor: pointer;
+  z-index: 10;
+}
+.left-control { left: 0; }
+.right-control { right: 0; }
+
+/* Barra inferior del Slider (Metadatos + Mandos) */
+.meta {
+  width: 100%;
   display: flex;
   justify-content: space-between;
-  margin-top: 0.8rem;
+  align-items: flex-end;
+  padding-top: 1.5rem;
+}
+
+.slide-meta-wrapper {
+  text-align: left;
+}
+.image-title {
   font-size: 11px;
+  text-transform: uppercase;
+  margin-bottom: 0.2rem;
 }
-.item-meta .project-name {
-  font-weight: 500;
-}
-.item-meta .project-spec {
+.image-desc {
   color: var(--ink-muted);
 }
 
-/* ---------- About & Capabilities Grid ---------- */
-.about-section {
-  margin-top: 10rem;
-  padding-top: 5rem;
-  border-top: 1px solid var(--line);
-  padding-bottom: 5rem;
-}
-
-.about-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-}
-
-.about-description {
-  font-size: 15px;
-  line-height: 1.5;
-  font-weight: 300;
-  color: var(--ink);
-}
-
-.capabilities-list {
-  display: flex;
-  flex-direction: column;
-  gap: 2.5rem;
-}
-
-.cap-block .cap-label {
-  display: block;
-  font-size: 10px;
+.gallery-controls {
   text-transform: uppercase;
   color: var(--ink-muted);
-  letter-spacing: 0.05em;
+}
+.gallery-controls .control {
+  color: var(--ink);
+  cursor: pointer;
+}
+.gallery-controls .control:hover {
+  text-decoration: underline;
+}
+
+/* ---------- VISTA B: Contact / About Layout ---------- */
+.contact-wrapper {
+  width: 100%;
+  max-width: 680px;
+  padding: 0 4rem;
+  text-align: left;
+}
+
+.about-box {
+  font-size: 14px;
+  line-height: 1.6;
+  font-weight: 300;
+  margin-bottom: 3.5rem;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.info-block .info-label {
+  display: block;
+  font-size: 9px;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  letter-spacing: 0.08em;
   margin-bottom: 0.5rem;
 }
 
-.cap-block p {
-  font-size: 13px;
-  color: var(--ink-muted);
-  line-height: 1.6;
+.info-block .info-link {
+  display: block;
+  font-size: 12px;
+  margin-bottom: 0.3rem;
+}
+.info-block .info-link:hover {
+  text-decoration: underline;
 }
 
-/* ---------- Responsive Adaptation ---------- */
-@media (max-width: 900px) {
-  .layout-wrapper {
-    flex-direction: column;
-  }
-  .sidebar {
-    position: relative;
-    width: 100%;
-    border-right: none;
-    border-bottom: 1px solid var(--line);
-    padding: 2.5rem 2rem;
-    height: auto;
-  }
-  .sidebar-middle {
-    margin: 1.5rem 0;
-  }
-  .main-content {
-    margin-left: 0;
-    padding: 2.5rem 2rem;
-  }
-  .intro-section {
-    padding: 2rem 0 4rem 0;
-  }
-  .about-grid {
-    grid-template-columns: 1fr;
-    gap: 3rem;
-  }
+.sub-links a {
+  margin-right: 0.5rem;
+  margin-left: 0.5rem;
+}
+.sub-links a:first-child { margin-left: 0; }
+
+/* ---------- Adaptación móvil simple ---------- */
+@media (max-width: 768px) {
+  body { overflow: auto; }
+  #canvas { flex-direction: column; }
+  #header { width: 100%; height: auto; padding: 2rem; }
+  #pageWrapper { position: relative; height: auto; min-height: 400px; }
+  .page-section { position: relative; opacity: 1; pointer-events: auto; display: block; }
+  #galleryWrapper { padding: 2rem; height: auto; }
+  #slideshowWrapper { height: 350px; }
+  .contact-wrapper { padding: 2rem; }
+  .info-grid { grid-template-columns: 1fr; }
 }
