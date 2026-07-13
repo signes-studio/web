@@ -8,7 +8,7 @@
     <!-- Importación de la tipografía oficial para mantener consistencia de marca -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@100;400;500&family=Manrope:wght@300;400;500&display=swap" rel="stylesheet">
     
     <style>
         /* Estética Unificada: SIGNES.STUDIO Warm Minimalism System */
@@ -20,7 +20,7 @@
         }
 
         body {
-            font-family: 'Archivo', sans-serif;
+            font-family: 'Manrope', sans-serif;
             background-color: var(--bg);
             color: var(--ink);
             margin: 0;
@@ -42,13 +42,14 @@
         
         /* Ajuste de logo para calcar la web principal */
         .logo { 
-            font-size: 13px; 
+            font-family: 'Oswald', sans-serif;
+            font-size: 15px; 
             text-transform: uppercase; 
-            letter-spacing: 0.08em; 
+            letter-spacing: 0.06em; 
             color: var(--ink);
         }
-        .logo .bold { font-weight: 500; }
-        .logo .light { font-weight: 300; }
+        .logo .bold { font-weight: 400; }
+        .logo .light { font-weight: 100; }
 
         .project-title { 
             font-size: 24px; 
@@ -72,7 +73,7 @@
             margin-top: 2px;
         }
         .lang-btn {
-            font-family: 'Archivo', sans-serif;
+            font-family: 'Manrope', sans-serif;
             font-size: 10px;
             text-transform: uppercase;
             letter-spacing: 0.05em;
@@ -107,7 +108,7 @@
             margin: 0;
         }
         .download-all-btn {
-            font-family: 'Archivo', sans-serif;
+            font-family: 'Manrope', sans-serif;
             font-size: 10px;
             text-transform: uppercase;
             letter-spacing: 0.05em;
@@ -249,7 +250,7 @@
         }
         .lightbox-caption { font-size: 11px; font-weight: 400; color: var(--ink); text-transform: uppercase; }
         .lightbox-download {
-            font-family: 'Archivo', sans-serif;
+            font-family: 'Manrope', sans-serif;
             color: var(--ink);
             text-decoration: none;
             font-size: 11px;
@@ -398,6 +399,15 @@
         }
     };
 
+    function escapeHtml(str) {
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+    }
+
     const SUPPORTED_LANGS = Object.keys(STRINGS);
     const DEFAULT_LANG = 'en';
 
@@ -495,8 +505,8 @@
             <header>
                 <div class="header-main">
                     <div class="logo"><span class="bold">SIGNES</span><span class="light">.STUDIO</span></div>
-                    <h1 class="project-title">${data.proyecto}</h1>
-                    <div class="client-name">${data.cliente}</div>
+                    <h1 class="project-title">${escapeHtml(data.proyecto)}</h1>
+                    <div class="client-name">${escapeHtml(data.cliente)}</div>
                 </div>
                 ${langSwitchHtml()}
             </header>
@@ -530,9 +540,9 @@
 
                 html += `
                     <div class="image-card" onclick="openLightbox(${currentGlobalIndex})">
-                        <a href="#" class="thumb-download" title="${T.downloadRender}" onclick="forceDownload('${imgUrl}', '${img}', event);">↓</a>
-                        <img src="${thumbnailUrl}" alt="${img}" loading="lazy">
-                        <div class="image-caption">${cleanCaption}</div>
+                        <a href="#" class="thumb-download" title="${T.downloadRender}" onclick="forceDownload('${imgUrl}', '${escapeHtml(img)}', event);">↓</a>
+                        <img src="${thumbnailUrl}" alt="${escapeHtml(img)}" loading="lazy">
+                        <div class="image-caption">${escapeHtml(cleanCaption)}</div>
                     </div>
                 `;
             });

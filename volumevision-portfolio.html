@@ -9,7 +9,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght=300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@100;400;500&family=Manrope:wght@300;400;500&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -26,7 +26,7 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Manrope', sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
             line-height: 1.6;
@@ -40,12 +40,14 @@
         }
 
         .brand {
-            font-size: 14px;
-            font-weight: 500;
-            letter-spacing: 2px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 15px;
+            letter-spacing: 0.06em;
             text-transform: uppercase;
             margin-bottom: 24px;
         }
+        .brand .bold { font-weight: 400; }
+        .brand .light { font-weight: 100; }
 
         h1 {
             font-size: 32px;
@@ -272,7 +274,7 @@
 <body>
 
     <header>
-        <div class="brand">Signes.Studio</div>
+        <div class="brand"><span class="bold">SIGNES</span><span class="light">.STUDIO</span></div>
         <h1>Senior 3D Artist Portfolio Selection</h1>
         <p class="intro">Architect and Visualization Specialist with a deep focus on the artistry of the final image. Having successfully delivered over 200 projects, I am highly experienced in managing complex lighting setups, high-fidelity shading, and cinematic post-production workflows. Skilled in integrating advanced Generative AI pipelines (ComfyUI, Stable Diffusion, and neural video generation) to enhance look-development and scale production for tier-one international studios.</p>
     </header>

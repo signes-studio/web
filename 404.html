@@ -5,10 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
     <title>Signes.Studio — 404 Not Found</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@100;400;500&family=Manrope:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         /* Estética Warm Minimalism / Japandi */
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: 'Manrope', sans-serif;
             background-color: #fbfaf7;
             color: #1a1a1a;
             margin: 0;
@@ -28,13 +31,15 @@
         }
 
         .logo {
-            font-size: 13px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 15px;
             text-transform: uppercase;
-            letter-spacing: 0.15em;
-            font-weight: 600;
+            letter-spacing: 0.06em;
             color: #1a1a1a;
             margin-bottom: 80px;
         }
+        .logo .bold { font-weight: 400; }
+        .logo .light { font-weight: 100; }
 
         .error-code {
             font-size: 84px;
@@ -119,7 +124,7 @@
 <body>
 
 <div class="error-container">
-    <div class="logo">Signes.Studio</div>
+    <div class="logo"><span class="bold">SIGNES</span><span class="light">.STUDIO</span></div>
     
     <div class="error-code">404</div>
     <h1 class="error-title" id="msgTitle">Page Not Found</h1>

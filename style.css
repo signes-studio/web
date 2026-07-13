@@ -8,7 +8,8 @@
   --ink-muted: #777777; 
   --line: #EAEAEA;
   --sidebar-w: 260px;   
-  --font-base: 'Archivo', sans-serif;
+  --font-base: 'Manrope', sans-serif;
+  --font-logo: 'Oswald', sans-serif;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -50,22 +51,26 @@ a { color: inherit; text-decoration: none; }
   z-index: 100;
 }
 
-#logo .wordmark {
-  font-size: 13px;
-  letter-spacing: 0.08em;
+#logo .wordmark,
+#logo .site-title {
+  font-family: var(--font-logo);
+  font-size: 15px;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
 }
-/* Forzamos el peso medio al texto bold, incluso dentro del enlace */
+/* SIGNES en Oswald Regular */
 #logo .wordmark .bold,
-#logo a .bold { 
-  font-weight: 500; 
+#logo a .bold {
+  font-family: var(--font-logo);
+  font-weight: 400;
 }
 
-/* Fuerza el peso tipográfico fino al .STUDIO dentro del enlace */
-#logo .wordmark .light, 
-#logo a .light { 
-  font-weight: 300; 
-  color: var(--ink); 
+/* .STUDIO en Oswald Thin */
+#logo .wordmark .light,
+#logo a .light {
+  font-family: var(--font-logo);
+  font-weight: 100;
+  color: var(--ink);
 }
 
 #logo .tagline {
