@@ -17,28 +17,49 @@
             --ink: #000000;       
             --ink-muted: #777777; 
             --line: #EAEAEA;
+            --sidebar-w: 260px;
+        }
+
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
         }
 
         body {
             font-family: 'Manrope', sans-serif;
             background-color: var(--bg);
             color: var(--ink);
-            margin: 0;
-            padding: 60px 20px;
             letter-spacing: 0.06em;
             -webkit-font-smoothing: antialiased;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
         }
-        .container { max-width: 1000px; margin: 0 auto; }
+
+        /* DISEÑO DE CONTENEDORES PRINCIPALES (ESPEJO DE LA WEB MAIN) */
+        #canvas {
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
         
         header { 
-            margin-bottom: 60px; 
-            border-bottom: 1px solid var(--line); 
-            padding-bottom: 24px; 
+            width: var(--sidebar-w);
+            height: 100%;
+            padding: 3.5rem 0 3.5rem 3.5rem;
             display: flex;
+            flex-direction: column;
             justify-content: space-between;
-            align-items: flex-start;
+            flex-shrink: 0;
+            border-right: 1px solid var(--line);
+            z-index: 100;
         }
-        .header-main { flex: 1; }
+        
+        .header-top-group {
+            display: flex;
+            flex-direction: column;
+        }
         
         /* Ajuste de logo para calcar la web principal */
         .logo { 
@@ -47,24 +68,51 @@
             text-transform: uppercase; 
             letter-spacing: 0.06em; 
             color: var(--ink);
+            line-height: 1.1;
         }
         .logo .bold { font-weight: 400; }
-        .logo .light { font-weight: 200; }
+        .logo .light { font-weight: 200 !important; }
 
         .tagline {
-             font-size: 8.5px;
+            font-size: 8.5px;
             color: var(--ink-muted);
-              margin-top: 0.4rem;
-              text-transform: uppercase;
-             letter-spacing: 0.04em;
-             display: block;
+            margin-top: 0.4rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            display: block;
         }
 
+        /* NAVEGACIÓN DINÁMICA DE REVISIONES */
+        .main-nav {
+            margin-top: 2.5rem;
+        }
+        .main-nav ul { 
+            list-style: none; 
+        }
+        .main-nav li { 
+            margin-bottom: 0.6rem; 
+            text-transform: uppercase; 
+            font-size: 11px; 
+            color: var(--ink-muted);
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+        .main-nav li:hover, .main-nav li.active-link { 
+            color: var(--ink); 
+            font-weight: 500;
+        }
+
+        /* METADATOS DEL PROYECTO SELECCIONADO */
+        .project-info-block {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--line);
+        }
         .project-title { 
-            font-size: 24px; 
-            font-weight: 300; 
+            font-size: 14px; 
+            font-weight: 400; 
             letter-spacing: 0.02em; 
-            margin: 16px 0 6px 0; 
+            margin-bottom: 4px; 
             text-transform: uppercase; 
         }
         .client-name { 
@@ -75,11 +123,11 @@
             letter-spacing: 0.04em;
         }
 
-        /* Selector de idioma minimalista */
+        /* Selector de idioma minimalista empujado al fondo del Sidebar */
         .lang-switch {
             display: flex;
             gap: 6px;
-            margin-top: 2px;
+            margin-top: auto;
         }
         .lang-btn {
             font-family: 'Manrope', sans-serif;
@@ -90,18 +138,44 @@
             background: none;
             border: 1px solid var(--line);
             padding: 4px 9px;
-            border-radius: 0px; /* Bordes rectos para mantener el rigor geométrico */
+            border-radius: 0px; 
             cursor: pointer;
             font-weight: 400;
             transition: color 0.2s ease, border-color 0.2s ease;
         }
         .lang-btn:hover, .lang-btn.active { color: var(--ink); border-color: var(--ink); }
         
+        /* LIENZO DERECHO DESLIZABLE (CANVAS) */
+        #pageWrapper {
+            flex-grow: 1;
+            height: 100%;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        #app {
+            padding: 3.5rem 4rem;
+            width: 100%;
+            min-height: 100%;
+        }
+        
         /* Secciones y Grid de Renders */
-        .fase-section { margin-bottom: 60px; }
+        .fase-section { 
+            display: none; 
+            animation: fadeIn 0.3s ease forwards;
+        }
+        .fase-section.active-section {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
         .fase-header {
             border-bottom: 1px solid var(--line); 
-            padding-bottom: 8px; 
+            padding-bottom: 12px; 
             margin-bottom: 28px; 
             display: flex;
             justify-content: space-between;
@@ -158,7 +232,7 @@
             font-size: 11px; 
             color: var(--ink); 
             margin-top: 12px; 
-            text-align: left; /* Alineado a la izquierda como en el porfolio */
+            text-align: left; 
             font-weight: 400; 
             text-transform: uppercase; 
         }
@@ -276,19 +350,19 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 140px 20px;
+            height: calc(100vh - 7rem);
+            width: 100%;
         }
         #turnstile-widget { margin-top: 24px; }
 
         footer {
-            margin-top: 100px;
+            margin-top: 80px;
             border-top: 1px solid var(--line);
             padding-top: 30px;
-            text-align: center;
+            text-align: left;
         }
         .legal-notice {
             max-width: 680px;
-            margin: 0 auto;
             font-size: 10px;
             line-height: 1.6;
             color: var(--ink-muted);
@@ -296,11 +370,26 @@
             letter-spacing: 0.02em;
         }
 
-        .status-msg { text-align: center; padding: 120px 20px; font-weight: 300; color: var(--ink-muted); font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; }
+        .status-msg { text-align: center; font-weight: 300; color: var(--ink-muted); font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; }
 
-        @media (max-width: 560px) {
-            header { flex-direction: column; gap: 20px; align-items: flex-start; }
-            .lang-switch { margin-top: 0; }
+        /* AJUSTES RESPONSIVOS */
+        @media (max-width: 860px) {
+            body { overflow-y: auto; height: auto; }
+            #canvas { flex-direction: column; }
+            header { width: 100%; height: auto; padding: 2.5rem 1.5rem 1.5rem 1.5rem; border-right: none; border-bottom: 1px solid var(--line); }
+            .main-nav { margin-top: 1.5rem; }
+            .main-nav ul { display: flex; flex-wrap: wrap; gap: 1rem; }
+            .main-nav li { margin-bottom: 0; }
+            .project-info-block { margin-top: 1.5rem; padding-top: 1rem; }
+            .lang-switch { margin-top: 1.5rem; }
+            #pageWrapper { height: auto; }
+            #app { padding: 2rem 1.5rem; }
+            .fase-header { flex-direction: column; gap: 12px; align-items: flex-start; }
+            .lightbox img { max-width: 95vw; max-height: 65vh; }
+            .lightbox-actions { width: 90%; justify-content: space-between; padding: 12px 16px; bottom: 20px; }
+            .nav-btn { font-size: 28px; padding: 10px; }
+            .nav-prev { left: 5px; }
+            .nav-next { right: 5px; }
         }
     </style>
     <!-- Script Oficial de Cloudflare Turnstile -->
@@ -308,11 +397,35 @@
 </head>
 <body>
 
-<div class="container" id="app">
-    <!-- Estado Inicial: Verificación de Seguridad Invisible -->
-    <div class="security-wrapper">
-        <div class="status-msg" id="sec-msg">Verifying secure connection...</div>
-        <div id="turnstile-widget" class="cf-turnstile" data-sitekey="0x4AAAAAADzPcFSUMS9BwYBI" data-callback="onTurnstileSuccess"></div>
+<div id="canvas">
+    <header id="header">
+        <div class="header-top-group">
+            <div class="logo">
+                <span class="bold">SIGNES</span><span class="light">.STUDIO</span>
+            </div>
+            <span class="tagline">Visual Research for Architecture</span>
+            
+            <!-- Navegación Dinámica Lateral -->
+            <nav id="reviewNavigation" class="main-nav">
+                <ul id="fases-menu"></ul>
+            </nav>
+            
+            <!-- Datos del Proyecto Dinámicos -->
+            <div id="project-meta-wrapper"></div>
+        </div>
+        
+        <!-- Contenedor del selector de idioma -->
+        <div id="lang-wrapper"></div>
+    </header>
+
+    <div id="pageWrapper" role="main">
+        <div id="app">
+            <!-- Estado Inicial: Verificación de Seguridad Invisible -->
+            <div class="security-wrapper" id="security-layer">
+                <div class="status-msg" id="sec-msg">Verifying secure connection...</div>
+                <div id="turnstile-widget" class="cf-turnstile" data-sitekey="0x4AAAAAADzPcFSUMS9BwYBI" data-callback="onTurnstileSuccess"></div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -354,9 +467,9 @@
             zipError: 'Some images failed to download. Please try again.',
             legalNotice: 'Confidentiality Notice: Access to this link and the contained graphic material is strictly private and exclusive to the client. Its distribution or leakage to third parties is entirely prohibited. To optimize performance and ensure project privacy, all information within this space will be permanently deleted 15 days after project closure and final delivery.',
             fases: {
-                rev1: '01. First Draft — Volumetrics & Materiality',
-                rev2: '02. Second Draft — Lighting & Framing',
-                rev3: '03. Third Draft — Details & Final Adjustments',
+                rev1: '01. First Draft',
+                rev2: '02. Second Draft',
+                rev3: '03. Third Draft',
                 signes: '04. Final Delivery'
             }
         },
@@ -377,9 +490,9 @@
             zipError: 'Algunas imágenes no se han podido descargar. Inténtalo de nuevo.',
             legalNotice: 'Aviso de confidencialidad: El acceso a este enlace y a la documentación gráfica contenida es estrictamente privado y exclusivo para el cliente. Queda totalmente prohibida su distribución o filtración a terceros. Con el fin de optimizar el rendimiento y garantizar la privacidad del encargo, toda la información de este espacio será eliminada permanentemente transcurridos 15 dias desde el cierre y entrega del proyecto.',
             fases: {
-                rev1: '01. Primera Revisión — Volumetrías y Materialidad',
-                rev2: '02. Segunda Revisión — Iluminación y Encuadres',
-                rev3: '03. Tercera Revisión — Detalles y Ajustes Finales',
+                rev1: '01. Primera Revisión',
+                rev2: '02. Segunda Revisión',
+                rev3: '03. Tercera Revisión',
                 signes: '04. Entrega Final'
             }
         },
@@ -398,11 +511,11 @@
             preparingZip: 'Preparant…',
             zipProgress: (n, total) => `Descarregant ${n}/${total}…`,
             zipError: 'Algunes imatges no s\'han pogut descarregar. Torna-ho a provar.',
-            legalNotice: "Avís de confidencialitat: L'accés a aquest enllaç i a la documentació gràfica continguda és estrictament privat i exclusiu per al client. Queda toalment prohibida la seua distribució o filtració a tercers. Amb la finalitat d'optimitzar el rendiment i garantir la privacitat de l'encàrrec, tota la informació d'aquest espai serà eliminada permanentment transcorreguts 15 dies des del tancament i lliurament del projecte.",
+            legalNotice: "Avís de confidencialitat: L'accés a aquest enllaç i a la documentació gràfica continguda és estrictamente privat i exclusiu per al client. Queda toalment prohibida la seua distribució o filtració a tercers. Amb la finalitat d'optimitzar el rendiment i garantir la privacitat de l'encàrrec, tota la informació d'aquest espai serà eliminada permanentmente transcorreguts 15 dies des del tancament i lliurament del projecte.",
             fases: {
-                rev1: '01. Primera Revisió — Volumetries i Materialitat',
-                rev2: '02. Segona Revisió — Il·luminació i Enquadraments',
-                rev3: '03. Tercera Revisió — Detalls i Ajustos Finals',
+                rev1: '01. Primera Revisió',
+                rev2: '02. Segona Revisió',
+                rev3: '03. Tercera Revisió',
                 signes: '04. Lliurament Final'
             }
         }
@@ -437,6 +550,9 @@
     let currentLang = detectLang();
     let T = STRINGS[currentLang];
     let manifestData = null;
+    let dataStructure = { rev1: [], rev2: [], rev3: [], signes: [] };
+    let globalActiveImages = [];
+    let currentImageIndex = 0;
 
     document.getElementById('sec-msg').innerText = T.verifying;
     document.title = T.pageTitle;
@@ -489,14 +605,30 @@
         }
     }
 
-    function langSwitchHtml() {
-        return `
+    function renderLangSwitch() {
+        document.getElementById('lang-wrapper').innerHTML = `
             <div class="lang-switch">
                 ${SUPPORTED_LANGS.map(l => `
                     <button class="lang-btn ${l === currentLang ? 'active' : ''}" onclick="switchLang('${l}')">${l}</button>
                 `).join('')}
             </div>
         `;
+    }
+
+    function changeFaseTab(selectedKey) {
+        // Alternar clases activas en el menú lateral
+        document.querySelectorAll('#fases-menu li').forEach(li => {
+            li.classList.remove('active-link');
+        });
+        const activeLi = document.getElementById(`nav-li-${selectedKey}`);
+        if(activeLi) activeLi.classList.add('active-link');
+
+        // Alternar visibilidad de las secciones de imágenes en la derecha
+        document.querySelectorAll('.fase-section').forEach(section => {
+            section.classList.remove('active-section');
+        });
+        const activeSection = document.getElementById(`section-${selectedKey}`);
+        if(activeSection) activeSection.classList.add('active-section');
     }
 
     function buildGallery(data) {
@@ -510,28 +642,35 @@
             else if (lowerName.startsWith('signes_')) dataStructure.signes.push(fileName);
         });
 
-        let html = `
-            <header>
-        <div class="header-main">
-            <div class="logo"><span class="bold">SIGNES</span><span class="light">.STUDIO</span></div>
-            <p class="tagline">Visual Research for Architecture</p> <!-- AÑADE ESTA LÍNEA -->
-            <h1 class="project-title">${escapeHtml(data.proyecto)}</h1>
-            <div class="client-name">${escapeHtml(data.cliente)}</div>
-        </div>
-        ${langSwitchHtml()}
-             </header>
+        // Inyectar metadatos del proyecto en el Sidebar lateral fijo
+        document.getElementById('project-meta-wrapper').innerHTML = `
+            <div class="project-info-block">
+                <h1 class="project-title">${escapeHtml(data.proyecto)}</h1>
+                <div class="client-name">${escapeHtml(data.cliente)}</div>
+            </div>
         `;
 
+        renderLangSwitch();
+
         let hasContent = false;
+        let menuHtml = '';
+        let contentHtml = '';
         globalActiveImages = [];
+        let firstActiveKey = null;
 
         for (const [faseKey, group] of Object.entries(dataStructure)) {
             if (group.length === 0) continue;
             hasContent = true;
             group.sort();
 
-            html += `
-                <section class="fase-section">
+            if (!firstActiveKey) firstActiveKey = faseKey;
+
+            // Construcción del menú lateral dinámico
+            menuHtml += `<li id="nav-li-${faseKey}" onclick="changeFaseTab('${faseKey}')">${T.fases[faseKey]}</li>`;
+
+            // Construcción del área de cuadrículas correspondiente
+            contentHtml += `
+                <section class="fase-section" id="section-${faseKey}">
                     <div class="fase-header">
                         <h2 class="fase-title">${T.fases[faseKey]}</h2>
                         <button class="download-all-btn" id="zipBtn-${faseKey}" onclick="downloadAllInSection('${faseKey}')">${T.downloadAll}</button>
@@ -548,7 +687,7 @@
 
                 const thumbnailUrl = `${BUCKET_URL}/cdn-cgi/image/width=450,quality=80,format=auto/${projectId}/${img}`;
 
-                html += `
+                contentHtml += `
                     <div class="image-card" onclick="openLightbox(${currentGlobalIndex})">
                         <a href="#" class="thumb-download" title="${T.downloadRender}" onclick="forceDownload('${imgUrl}', '${escapeHtml(img)}', event);">↓</a>
                         <img src="${thumbnailUrl}" alt="${escapeHtml(img)}" loading="lazy">
@@ -557,10 +696,11 @@
                 `;
             });
 
-            html += `</div></section>`;
+            contentHtml += `</div></section>`;
         }
 
-        html += `
+        // Agregar el pie de página legal al final de la zona derecha
+        contentHtml += `
             <footer>
                 <div class="legal-notice">
                     ${T.legalNotice}
@@ -568,7 +708,15 @@
             </footer>
         `;
 
-        appContainer.innerHTML = hasContent ? html : `<div class="status-msg">${T.noImages}</div>`;
+        if (hasContent) {
+            document.getElementById('fases-menu').innerHTML = menuHtml;
+            appContainer.innerHTML = contentHtml;
+            // Activar por defecto la primera fase válida cargada del manifest
+            changeFaseTab(firstActiveKey);
+        } else {
+            document.getElementById('fases-menu').innerHTML = '';
+            appContainer.innerHTML = `<div class="status-msg">${T.noImages}</div>`;
+        }
     }
 
     const lightbox = document.getElementById('lightbox');
