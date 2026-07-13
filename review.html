@@ -503,13 +503,14 @@
 
         let html = `
             <header>
-                <div class="header-main">
-                    <div class="logo"><span class="bold">SIGNES</span><span class="light">.STUDIO</span></div>
-                    <h1 class="project-title">${escapeHtml(data.proyecto)}</h1>
-                    <div class="client-name">${escapeHtml(data.cliente)}</div>
-                </div>
-                ${langSwitchHtml()}
-            </header>
+        <div class="header-main">
+            <div class="logo"><span class="bold">SIGNES</span><span class="light">.STUDIO</span></div>
+            <p class="tagline">Visual Research for Architecture</p> <!-- AÑADE ESTA LÍNEA -->
+            <h1 class="project-title">${escapeHtml(data.proyecto)}</h1>
+            <div class="client-name">${escapeHtml(data.cliente)}</div>
+        </div>
+        ${langSwitchHtml()}
+             </header>
         `;
 
         let hasContent = false;
