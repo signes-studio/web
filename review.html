@@ -47,7 +47,7 @@
         header { 
             width: var(--sidebar-w);
             height: 100%;
-            padding: 3.5rem 0 3.5rem 3.5rem;
+            padding: 3.5rem 2rem 3.5rem 3.5rem;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -82,30 +82,32 @@
             display: block;
         }
 
-        /* NAVEGACIÓN DINÁMICA DE REVISIONES */
-        .main-nav {
-            margin-top: 2.5rem;
+        /* Selector de idioma minimalista justo debajo del logo */
+        .lang-switch {
+            display: flex;
+            gap: 6px;
+            margin-top: 1.5rem;
         }
-        .main-nav ul { 
-            list-style: none; 
-        }
-        .main-nav li { 
-            margin-bottom: 0.6rem; 
-            text-transform: uppercase; 
-            font-size: 11px; 
+        .lang-btn {
+            font-family: 'Manrope', sans-serif;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
             color: var(--ink-muted);
+            background: none;
+            border: 1px solid var(--line);
+            padding: 4px 9px;
+            border-radius: 0px; 
             cursor: pointer;
-            transition: color 0.2s ease;
+            font-weight: 400;
+            transition: color 0.2s ease, border-color 0.2s ease;
         }
-        .main-nav li:hover, .main-nav li.active-link { 
-            color: var(--ink); 
-            font-weight: 500;
-        }
+        .lang-btn:hover, .lang-btn.active { color: var(--ink); border-color: var(--ink); }
 
         /* METADATOS DEL PROYECTO SELECCIONADO */
         .project-info-block {
             margin-top: 2rem;
-            padding-top: 1.5rem;
+            padding-top: 1.2rem;
             border-top: 1px solid var(--line);
         }
         .project-title { 
@@ -123,27 +125,52 @@
             letter-spacing: 0.04em;
         }
 
-        /* Selector de idioma minimalista empujado al fondo del Sidebar */
-        .lang-switch {
-            display: flex;
-            gap: 6px;
-            margin-top: auto;
+        /* NAVEGACIÓN DINÁMICA DE REVISIONES */
+        .main-nav {
+            margin-top: 2rem;
+            padding-top: 1.2rem;
+            border-top: 1px solid var(--line);
         }
-        .lang-btn {
-            font-family: 'Manrope', sans-serif;
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+        .main-nav ul { 
+            list-style: none; 
+        }
+        .main-nav li { 
+            margin-bottom: 0.6rem; 
+            text-transform: uppercase; 
+            font-size: 11px; 
             color: var(--ink-muted);
-            background: none;
-            border: 1px solid var(--line);
-            padding: 4px 9px;
-            border-radius: 0px; 
             cursor: pointer;
-            font-weight: 400;
-            transition: color 0.2s ease, border-color 0.2s ease;
+            transition: color 0.2s ease;
         }
-        .lang-btn:hover, .lang-btn.active { color: var(--ink); border-color: var(--ink); }
+        .main-nav li:hover, .main-nav li.active-link { 
+            color: var(--ink); 
+            font-weight: 500;
+        }
+
+        /* PARTE BAJA: COPYRIGHT Y AVISO LEGAL EDITORIAL */
+        .header-bottom-group {
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            padding-top: 2rem;
+        }
+
+        .header-copyright {
+            font-size: 10px;
+            color: var(--ink);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .legal-notice {
+            font-size: 9px;
+            line-height: 1.5;
+            color: var(--ink-muted);
+            font-weight: 300;
+            letter-spacing: 0.01em;
+            text-align: left;
+        }
         
         /* LIENZO DERECHO DESLIZABLE (CANVAS) */
         #pageWrapper {
@@ -355,21 +382,6 @@
         }
         #turnstile-widget { margin-top: 24px; }
 
-        footer {
-            margin-top: 80px;
-            border-top: 1px solid var(--line);
-            padding-top: 30px;
-            text-align: left;
-        }
-        .legal-notice {
-            max-width: 680px;
-            font-size: 10px;
-            line-height: 1.6;
-            color: var(--ink-muted);
-            font-weight: 300;
-            letter-spacing: 0.02em;
-        }
-
         .status-msg { text-align: center; font-weight: 300; color: var(--ink-muted); font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; }
 
         /* AJUSTES RESPONSIVOS */
@@ -377,11 +389,12 @@
             body { overflow-y: auto; height: auto; }
             #canvas { flex-direction: column; }
             header { width: 100%; height: auto; padding: 2.5rem 1.5rem 1.5rem 1.5rem; border-right: none; border-bottom: 1px solid var(--line); }
-            .main-nav { margin-top: 1.5rem; }
+            .lang-switch { margin-top: 1rem; }
+            .main-nav { margin-top: 1.5rem; padding-top: 1rem; }
             .main-nav ul { display: flex; flex-wrap: wrap; gap: 1rem; }
             .main-nav li { margin-bottom: 0; }
             .project-info-block { margin-top: 1.5rem; padding-top: 1rem; }
-            .lang-switch { margin-top: 1.5rem; }
+            .header-bottom-group { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--line); }
             #pageWrapper { height: auto; }
             #app { padding: 2rem 1.5rem; }
             .fase-header { flex-direction: column; gap: 12px; align-items: flex-start; }
@@ -405,17 +418,23 @@
             </div>
             <span class="tagline">Visual Research for Architecture</span>
             
-            <!-- Navegación Dinámica Lateral -->
+            <!-- 1. El selector de idioma ahora vive justo aquí abajo -->
+            <div id="lang-wrapper"></div>
+            
+            <!-- 2. Datos del Proyecto y Cliente -->
+            <div id="project-meta-wrapper"></div>
+            
+            <!-- 3. Categorías de navegación interactiva de revisiones -->
             <nav id="reviewNavigation" class="main-nav">
                 <ul id="fases-menu"></ul>
             </nav>
-            
-            <!-- Datos del Proyecto Dinámicos -->
-            <div id="project-meta-wrapper"></div>
         </div>
         
-        <!-- Contenedor del selector de idioma -->
-        <div id="lang-wrapper"></div>
+        <!-- 4. Parte baja de la columna izquierda fijada al fondo -->
+        <div class="header-bottom-group">
+            <p class="header-copyright">© All images by SIGNES.STUDIO</p>
+            <div class="legal-notice" id="legal-notice-content"></div>
+        </div>
     </header>
 
     <div id="pageWrapper" role="main">
@@ -511,7 +530,7 @@
             preparingZip: 'Preparant…',
             zipProgress: (n, total) => `Descarregant ${n}/${total}…`,
             zipError: 'Algunes imatges no s\'han pogut descarregar. Torna-ho a provar.',
-            legalNotice: "Avís de confidencialitat: L'accés a aquest enllaç i a la documentació gràfica continguda és estrictamente privat i exclusiu per al client. Queda toalment prohibida la seua distribució o filtració a tercers. Amb la finalitat d'optimitzar el rendiment i garantir la privacitat de l'encàrrec, tota la informació d'aquest espai serà eliminada permanentmente transcorreguts 15 dies des del tancament i lliurament del projecte.",
+            legalNotice: "Avís de confidencialitat: L'accés a aquest enllaç i a la documentació gràfica continguda és estrictament privat i exclusiu per al client. Queda toalment prohibida la seua distribució o filtració a tercers. Amb la finalitat d'optimitzar el rendiment i garantir la privacitat de l'encàrrec, tota la informació d'aquest espai serà eliminada permanentment transcorreguts 15 dies des del tancament i lliurament del projecte.",
             fases: {
                 rev1: '01. Primera Revisió',
                 rev2: '02. Segona Revisió',
@@ -642,7 +661,7 @@
             else if (lowerName.startsWith('signes_')) dataStructure.signes.push(fileName);
         });
 
-        // Inyectar metadatos del proyecto en el Sidebar lateral fijo
+        // Inyectar metadatos del proyecto justo debajo de los idiomas
         document.getElementById('project-meta-wrapper').innerHTML = `
             <div class="project-info-block">
                 <h1 class="project-title">${escapeHtml(data.proyecto)}</h1>
@@ -651,6 +670,9 @@
         `;
 
         renderLangSwitch();
+
+        // Inyectar el texto legal traducido en el bottom del Sidebar
+        document.getElementById('legal-notice-content').innerText = T.legalNotice;
 
         let hasContent = false;
         let menuHtml = '';
@@ -668,7 +690,7 @@
             // Construcción del menú lateral dinámico
             menuHtml += `<li id="nav-li-${faseKey}" onclick="changeFaseTab('${faseKey}')">${T.fases[faseKey]}</li>`;
 
-            // Construcción del área de cuadrículas correspondiente
+            // Construcción del área de cuadrículas correspondiente en la derecha
             contentHtml += `
                 <section class="fase-section" id="section-${faseKey}">
                     <div class="fase-header">
@@ -698,15 +720,6 @@
 
             contentHtml += `</div></section>`;
         }
-
-        // Agregar el pie de página legal al final de la zona derecha
-        contentHtml += `
-            <footer>
-                <div class="legal-notice">
-                    ${T.legalNotice}
-                </div>
-            </footer>
-        `;
 
         if (hasContent) {
             document.getElementById('fases-menu').innerHTML = menuHtml;
