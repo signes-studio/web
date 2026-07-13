@@ -82,31 +82,9 @@
             display: block;
         }
 
-        /* Selector de idioma minimalista justo debajo del logo */
-        .lang-switch {
-            display: flex;
-            gap: 6px;
-            margin-top: 1.5rem;
-        }
-        .lang-btn {
-            font-family: 'Manrope', sans-serif;
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--ink-muted);
-            background: none;
-            border: 1px solid var(--line);
-            padding: 4px 9px;
-            border-radius: 0px; 
-            cursor: pointer;
-            font-weight: 400;
-            transition: color 0.2s ease, border-color 0.2s ease;
-        }
-        .lang-btn:hover, .lang-btn.active { color: var(--ink); border-color: var(--ink); }
-
         /* METADATOS DEL PROYECTO SELECCIONADO */
         .project-info-block {
-            margin-top: 2rem;
+            margin-top: 2.5rem;
             padding-top: 1.2rem;
             border-top: 1px solid var(--line);
         }
@@ -147,30 +125,42 @@
             font-weight: 500;
         }
 
-        /* PARTE BAJA: COPYRIGHT Y AVISO LEGAL EDITORIAL */
+        /* PARTE BAJA DE LA COLUMNA: COPYRIGHT Y IDIOMAS ULTRA MINIMALISTAS */
         .header-bottom-group {
             margin-top: auto;
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            gap: 0.6rem;
             padding-top: 2rem;
         }
 
         .header-copyright {
             font-size: 10px;
-            color: var(--ink);
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
+            color: var(--ink-muted);
         }
 
-        .legal-notice {
-            font-size: 9px;
-            line-height: 1.5;
+        /* Selector de idioma inline sutil como en los canales de contacto */
+        .lang-switch {
+            display: flex;
+            align-items: center;
+            font-size: 10px;
             color: var(--ink-muted);
-            font-weight: 300;
-            letter-spacing: 0.01em;
-            text-align: left;
+            text-transform: uppercase;
+            gap: 0.3rem;
         }
+        .lang-btn {
+            font-family: 'Manrope', sans-serif;
+            font-size: 10px;
+            text-transform: uppercase;
+            color: var(--ink-muted);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 400;
+            transition: color 0.2s ease;
+            padding: 0;
+        }
+        .lang-btn:hover, .lang-btn.active { color: var(--ink); font-weight: 500; }
         
         /* LIENZO DERECHO DESLIZABLE (CANVAS) */
         #pageWrapper {
@@ -382,6 +372,22 @@
         }
         #turnstile-widget { margin-top: 24px; }
 
+        /* AVISO LEGAL UBICADO EN LA PARTE INFERIOR DEL ÁREA DE RENDERS */
+        footer {
+            margin-top: 100px;
+            border-top: 1px solid var(--line);
+            padding-top: 30px;
+            text-align: left;
+        }
+        .legal-notice {
+            max-width: 680px;
+            font-size: 10px;
+            line-height: 1.6;
+            color: var(--ink-muted);
+            font-weight: 300;
+            letter-spacing: 0.02em;
+        }
+
         .status-msg { text-align: center; font-weight: 300; color: var(--ink-muted); font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; }
 
         /* AJUSTES RESPONSIVOS */
@@ -389,14 +395,14 @@
             body { overflow-y: auto; height: auto; }
             #canvas { flex-direction: column; }
             header { width: 100%; height: auto; padding: 2.5rem 1.5rem 1.5rem 1.5rem; border-right: none; border-bottom: 1px solid var(--line); }
-            .lang-switch { margin-top: 1rem; }
+            .project-info-block { margin-top: 1.5rem; padding-top: 1rem; }
             .main-nav { margin-top: 1.5rem; padding-top: 1rem; }
             .main-nav ul { display: flex; flex-wrap: wrap; gap: 1rem; }
             .main-nav li { margin-bottom: 0; }
-            .project-info-block { margin-top: 1.5rem; padding-top: 1rem; }
-            .header-bottom-group { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--line); }
+            .header-bottom-group { margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--line); flex-direction: row; justify-content: space-between; align-items: center; }
             #pageWrapper { height: auto; }
             #app { padding: 2rem 1.5rem; }
+            footer { margin-top: 60px; }
             .fase-header { flex-direction: column; gap: 12px; align-items: flex-start; }
             .lightbox img { max-width: 95vw; max-height: 65vh; }
             .lightbox-actions { width: 90%; justify-content: space-between; padding: 12px 16px; bottom: 20px; }
@@ -418,22 +424,19 @@
             </div>
             <span class="tagline">Visual Research for Architecture</span>
             
-            <!-- 1. El selector de idioma ahora vive justo aquí abajo -->
-            <div id="lang-wrapper"></div>
-            
-            <!-- 2. Datos del Proyecto y Cliente -->
+            <!-- 1. Nombre del Proyecto y Cliente -->
             <div id="project-meta-wrapper"></div>
             
-            <!-- 3. Categorías de navegación interactiva de revisiones -->
+            <!-- 2. Categorías de navegación interactiva de revisiones -->
             <nav id="reviewNavigation" class="main-nav">
                 <ul id="fases-menu"></ul>
             </nav>
         </div>
         
-        <!-- 4. Parte baja de la columna izquierda fijada al fondo -->
+        <!-- 3. Columna izquierda baja fijada al fondo: Copyright e Idioma Inline -->
         <div class="header-bottom-group">
             <p class="header-copyright">© All images by SIGNES.STUDIO</p>
-            <div class="legal-notice" id="legal-notice-content"></div>
+            <div id="lang-wrapper"></div>
         </div>
     </header>
 
@@ -529,8 +532,8 @@
             downloadAll: 'Descarregar Tot',
             preparingZip: 'Preparant…',
             zipProgress: (n, total) => `Descarregant ${n}/${total}…`,
-            zipError: 'Algunes imatges no s\'han pogut descarregar. Torna-ho a provar.',
-            legalNotice: "Avís de confidencialitat: L'accés a aquest enllaç i a la documentació gràfica continguda és estrictament privat i exclusiu per al client. Queda toalment prohibida la seua distribució o filtració a tercers. Amb la finalitat d'optimitzar el rendiment i garantir la privacitat de l'encàrrec, tota la informació d'aquest espai serà eliminada permanentment transcorreguts 15 dies des del tancament i lliurament del projecte.",
+            zipError: 'Some images failed to download. Please try again.',
+            legalNotice: "Avís de confidencialitat: L'accés a aquest enllaç i a la documentació gràfica continguda és estrictament privat i exclusiu per al client. Queda toalment prohibida la seua distribució o filtració a tercers. Amb la finalitat d'optimitzar el rendiment i garantir la privacitat de l'encàrrec, toda la informació d'aquest espai serà eliminada permanentment transcorreguts 15 dies des del tancament i lliurament del projecte.",
             fases: {
                 rev1: '01. Primera Revisió',
                 rev2: '02. Segona Revisió',
@@ -625,24 +628,23 @@
     }
 
     function renderLangSwitch() {
+        // Render inline con puntos medios separadores como en los canales del main portfolio
         document.getElementById('lang-wrapper').innerHTML = `
             <div class="lang-switch">
-                ${SUPPORTED_LANGS.map(l => `
-                    <button class="lang-btn ${l === currentLang ? 'active' : ''}" onclick="switchLang('${l}')">${l}</button>
+                ${SUPPORTED_LANGS.map((l, index) => `
+                    <button class="lang-btn ${l === currentLang ? 'active' : ''}" onclick="switchLang('${l}')">${l}</button>${index < SUPPORTED_LANGS.length - 1 ? '·' : ''}
                 `).join('')}
             </div>
         `;
     }
 
     function changeFaseTab(selectedKey) {
-        // Alternar clases activas en el menú lateral
         document.querySelectorAll('#fases-menu li').forEach(li => {
             li.classList.remove('active-link');
         });
         const activeLi = document.getElementById(`nav-li-${selectedKey}`);
         if(activeLi) activeLi.classList.add('active-link');
 
-        // Alternar visibilidad de las secciones de imágenes en la derecha
         document.querySelectorAll('.fase-section').forEach(section => {
             section.classList.remove('active-section');
         });
@@ -661,7 +663,7 @@
             else if (lowerName.startsWith('signes_')) dataStructure.signes.push(fileName);
         });
 
-        // Inyectar metadatos del proyecto justo debajo de los idiomas
+        // Metadatos estructurales debajo de la descripción de marca
         document.getElementById('project-meta-wrapper').innerHTML = `
             <div class="project-info-block">
                 <h1 class="project-title">${escapeHtml(data.proyecto)}</h1>
@@ -670,9 +672,6 @@
         `;
 
         renderLangSwitch();
-
-        // Inyectar el texto legal traducido en el bottom del Sidebar
-        document.getElementById('legal-notice-content').innerText = T.legalNotice;
 
         let hasContent = false;
         let menuHtml = '';
@@ -687,10 +686,8 @@
 
             if (!firstActiveKey) firstActiveKey = faseKey;
 
-            // Construcción del menú lateral dinámico
             menuHtml += `<li id="nav-li-${faseKey}" onclick="changeFaseTab('${faseKey}')">${T.fases[faseKey]}</li>`;
 
-            // Construcción del área de cuadrículas correspondiente en la derecha
             contentHtml += `
                 <section class="fase-section" id="section-${faseKey}">
                     <div class="fase-header">
@@ -721,10 +718,18 @@
             contentHtml += `</div></section>`;
         }
 
+        // El aviso de confidencialidad respira holgadamente aquí, al final de las rejillas de renders
+        contentHtml += `
+            <footer>
+                <div class="legal-notice">
+                    ${T.legalNotice}
+                </div>
+            </footer>
+        `;
+
         if (hasContent) {
             document.getElementById('fases-menu').innerHTML = menuHtml;
             appContainer.innerHTML = contentHtml;
-            // Activar por defecto la primera fase válida cargada del manifest
             changeFaseTab(firstActiveKey);
         } else {
             document.getElementById('fases-menu').innerHTML = '';
