@@ -54,23 +54,25 @@ a { color: inherit; text-decoration: none; }
 #logo .wordmark,
 #logo .site-title {
   font-family: var(--font-logo);
-  font-size: 15px;
+  font-size: 24px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
-/* SIGNES en Oswald Regular */
-#logo .wordmark .bold,
-#logo a .bold {
+/* Aseguramos que el contenedor del logo use la fuente Oswald */
+.site-title {
   font-family: var(--font-logo);
+  font-weight: 400; /* Peso base regular */
+  text-transform: uppercase;
+}
+
+/* SIGNES en Regular (400) */
+.site-title .bold {
   font-weight: 400;
 }
 
-/* .STUDIO en Oswald Thin */
-#logo .wordmark .light,
-#logo a .light {
-  font-family: var(--font-logo);
-  font-weight: 200;
-  color: var(--ink);
+/* .STUDIO en ExtraLight (200) */
+.site-title .light {
+  font-weight: 200 !important;
 }
 
 #logo .tagline {
