@@ -1,0 +1,3 @@
+poner la imagen en bruto dentro de img/img-originals
+ejecutar powershell dentro de la carpeta
+escribir node resize-images.js
