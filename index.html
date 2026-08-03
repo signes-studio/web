@@ -1,4 +1,3 @@
-
 <!--
     Diseño, desarrollo web y comunicación por SIGNES.STUDIO
     https://signes.studio · 2026
@@ -102,19 +101,20 @@
                   <img src="img/SIGNES_05-Interior-C-1200.jpg" srcset="img/SIGNES_05-Interior-C-640.jpg 640w, img/SIGNES_05-Interior-C-1200.jpg 1200w, img/SIGNES_05-Interior-C-1920.jpg 1920w, img/SIGNES_05-Interior-C-2560.jpg 2560w" sizes="(max-width: 768px) 100vw, 90vw" alt="Hivernacle interior C" class="slider-img" loading="lazy" decoding="async">
                 </div>
 
-              <!-- Slide 04 -->
+                <!-- Slide 04 -->
                 <div class="slide" data-title="Reforma St Vicent — Interior C" data-desc="tresmes">
                   <img src="img/SIGNES_01-Exterior-St-Vicent-1200.jpg" srcset="img/SIGNES_01-Exterior-St-Vicent-640.jpg 640w, img/SIGNES_01-Exterior-St-Vicent-1200.jpg 1200w, img/SIGNES_01-Exterior-St-Vicent-1920.jpg 1920w, img/SIGNES_01-Exterior-St-Vicent-2560.jpg 2560w" sizes="(max-width: 768px) 100vw, 90vw" alt="Reforma St Vicent" class="slider-img" loading="lazy" decoding="async">
                 </div>
-              </div>
+                
+              </div> <!-- CIERRE CORRECTO de #slideshow -->
 
               <!-- CONTROLES LATERALES -->
-              <div class="overlay-controls left-control" id="prev-zone" title="Previous Image" role="button" tabindex="0">
+              <button class="overlay-controls left-control" id="prev-zone" title="Previous Image" aria-label="Previous Image">
                 <svg class="arrow-svg" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </div>
-              <div class="overlay-controls right-control" id="next-zone" title="Next Image" role="button" tabindex="0">
+              </button>
+              <button class="overlay-controls right-control" id="next-zone" title="Next Image" aria-label="Next Image">
                 <svg class="arrow-svg" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </div>
+              </button>
 
               <!-- LA ÚNICA MARQUESINA REAL ESCRITORIO -->
               <div id="desktop-canvas-meta" class="meta-container">
@@ -174,7 +174,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const pageContact = document.getElementById('page-contact');
   const navWorkLi = document.getElementById('nav-work-li');
   const navContactLi = document.getElementById('nav-contact-li');
-  const mobileGalleryMeta = document.getElementById('mobile-gallery-meta');
   const desktopCanvasMeta = document.getElementById('desktop-canvas-meta');
   const mobileCopyright = document.querySelector('.mobile-copyright');
   
@@ -216,18 +215,22 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function nextSlide() {
-    // Calcula el total de slides reales que haya en el HTML automáticamente
     let next = (currentIdx + 1) % slides.length;
     updateSlideshow(next);
   }
 
   function prevSlide() {
-    // Evita el atasco en el cambio de sentido calculando el total dinámicamente
     let prev = (currentIdx - 1 + slides.length) % slides.length;
     updateSlideshow(prev);
   }
 
-  window.addEventListener('resize', alignMetaToImage);
+  // Mejora: Debounce para el evento resize
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(alignMetaToImage, 100);
+  });
+  
   window.addEventListener('load', alignMetaToImage);
   
   document.querySelectorAll('.slider-img').forEach(img => {
@@ -258,6 +261,35 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }, { passive: false });
 
+  // --- INICIO: Soporte táctil (Swipe) para móviles ---
+  let touchStartX = 0;
+  let touchEndX = 0;
+  const swipeThreshold = 50; 
+
+  const slideshowElement = document.getElementById('slideshow');
+
+  slideshowElement.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+  }, { passive: true });
+
+  slideshowElement.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+  }, { passive: true });
+
+  function handleSwipe() {
+    const swipeDistance = touchEndX - touchStartX;
+    
+    if (pageWork.classList.contains('active')) {
+      if (swipeDistance < -swipeThreshold) {
+        nextSlide();
+      } else if (swipeDistance > swipeThreshold) {
+        prevSlide();
+      }
+    }
+  }
+  // --- FIN: Soporte táctil ---
+
   function showPage(page, updateHistory = true) {
     if (page === 'work') {
       pageWork.classList.add('active');
@@ -265,7 +297,6 @@ document.addEventListener('DOMContentLoaded', () => {
       navWorkLi.classList.add('active-link');
       navContactLi.classList.remove('active-link');
       if(desktopCanvasMeta) desktopCanvasMeta.style.display = 'flex';
-      if(mobileGalleryMeta) mobileGalleryMeta.style.display = 'flex';
       if(mobileCopyright) mobileCopyright.style.display = 'block';
       setTimeout(alignMetaToImage, 60);
       if (updateHistory) history.pushState({ page: 'work' }, '', '#work');
@@ -275,7 +306,6 @@ document.addEventListener('DOMContentLoaded', () => {
       navContactLi.classList.add('active-link');
       navWorkLi.classList.remove('active-link');
       if(desktopCanvasMeta) desktopCanvasMeta.style.display = 'none';
-      if(mobileGalleryMeta) mobileGalleryMeta.style.display = 'none';
       if(mobileCopyright) mobileCopyright.style.display = 'none';
       if (updateHistory) history.pushState({ page: 'contact' }, '', '#contact');
     }
