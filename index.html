@@ -266,13 +266,14 @@ document.addEventListener('DOMContentLoaded', () => {
   let touchEndX = 0;
   const swipeThreshold = 50; 
 
-  const slideshowElement = document.getElementById('slideshow');
+  // CAMBIO AQUÍ: Ahora escuchamos en 'slideshowWrapper' en lugar de 'slideshow'
+  const swipeElement = document.getElementById('slideshowWrapper');
 
-  slideshowElement.addEventListener('touchstart', (e) => {
+  swipeElement.addEventListener('touchstart', (e) => {
     touchStartX = e.changedTouches[0].screenX;
   }, { passive: true });
 
-  slideshowElement.addEventListener('touchend', (e) => {
+  swipeElement.addEventListener('touchend', (e) => {
     touchEndX = e.changedTouches[0].screenX;
     handleSwipe();
   }, { passive: true });
