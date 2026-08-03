@@ -27,6 +27,19 @@ body {
 
 a { color: inherit; text-decoration: none; }
 
+/* UTILITY CLASSES */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 #canvasWrapper {
   width: 100vw;
   height: 100vh;
@@ -202,7 +215,14 @@ a { color: inherit; text-decoration: none; }
   color: var(--ink);
   opacity: 0.15; 
   transition: opacity 0.2s ease;
+  
+  /* Reset de estilos para <button> */
+  background: transparent;
+  border: none;
+  padding: 0;
+  outline: none;
 }
+
 .left-control { left: 0; justify-content: flex-start; }
 .right-control { right: 0; justify-content: flex-end; }
 .overlay-controls:hover { opacity: 1; }
