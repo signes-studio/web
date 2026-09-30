@@ -1,8 +1,20 @@
-﻿/portfolio
+/portfolio
   X-Robots-Tag: noindex, nofollow
 
 /portfolio/
   X-Robots-Tag: noindex, nofollow
 
 /portfolio.html
+  X-Robots-Tag: noindex, nofollow
+
+/adjuntos
+  X-Robots-Tag: noindex, nofollow
+
+/adjuntos/
+  X-Robots-Tag: noindex, nofollow
+
+/adjuntos.html
+  X-Robots-Tag: noindex, nofollow
+
+/adjuntos/*
   X-Robots-Tag: noindex, nofollow

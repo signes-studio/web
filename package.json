@@ -8,7 +8,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "generate:favicon": "node generate-favicons.js"
+    "generate:favicon": "node generate-favicons.js",
+    "zip:adjuntos": "node zip-adjuntos.js"
   },
   "repository": {
     "type": "git",
