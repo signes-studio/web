@@ -14,7 +14,7 @@ if (Test-Path $DestinationZip) {
 }
 
 $ignoredExtensions = @('.zip', '.html', '.css', '.js', '.json', '.map')
-$ignoredNames = @('caducidad.txt', 'expires.txt', 'vencimiento.txt', 'fecha.txt', 'info.txt', '.DS_Store', 'Thumbs.db')
+$ignoredNames = @('caducidad.txt', 'expires.txt', 'vencimiento.txt', 'fecha.txt', 'info.txt', 'subidas.txt', 'upload.txt', 'onedrive.txt', '.DS_Store', 'Thumbs.db')
 
 $files = Get-ChildItem -Path $SourceFolder -File | Where-Object {
     $ext = $_.Extension.ToLower()

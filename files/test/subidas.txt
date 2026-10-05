@@ -1,0 +1,4 @@
+# Para activar la subida de archivos en esta carpeta:
+# 1. En tu OneDrive web, haz clic derecho en la carpeta del proyecto y pulsa "Solicitar archivos".
+# 2. Pega el enlace en una línea sin almohadilla (#):
+# https://1drv.ms/u/s!tu-enlace-de-onedrive-aqui

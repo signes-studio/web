@@ -1,6 +1,6 @@
 {
   "folder": "test",
-  "updatedAt": "2026-10-05T16:54:04.504Z",
+  "updatedAt": "2026-10-05T17:06:16.726Z",
   "files": [
     {
       "name": "IONOS factura 2026-07-28 - FA_311100721945.pdf",
@@ -29,5 +29,6 @@
     "isExpired": false,
     "daysLeft": 32,
     "formattedDate": "5 de noviembre de 2026"
-  }
+  },
+  "uploadUrl": null
 }

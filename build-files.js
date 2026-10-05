@@ -278,6 +278,29 @@ function generateFolderHtml(folderName, folderData) {
 ${filesListHtml}
           </ul>
         </div>
+${folderData.uploadUrl ? `
+        <!-- Card Upload Section (OneDrive) -->
+        <div class="card-upload-section">
+          <div class="upload-header">
+            <span>Aportar archivos</span>
+            <span>OneDrive</span>
+          </div>
+          <p class="upload-desc">¿Necesitas enviarnos planos, modelos o documentación para este proyecto? Puedes subirlos directamente a nuestro OneDrive aquí:</p>
+          <a 
+            href="${folderData.uploadUrl}" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            class="btn-upload" 
+            title="Subir archivos directamente a OneDrive"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="17 8 12 3 7 8"></polyline>
+              <line x1="12" y1="3" x2="12" y2="15"></line>
+            </svg>
+            <span>Subir archivos a esta carpeta</span>
+          </a>
+        </div>` : ''}
 
         <!-- Card Footer -->
         <footer class="card-footer">
@@ -339,6 +362,7 @@ function buildAllTransfers() {
 
   const ignoredExtensions = ['.zip', '.html', '.css', '.js', '.json', '.map'];
   const expirationFilenames = ['caducidad.txt', 'expires.txt', 'vencimiento.txt', 'fecha.txt', 'info.txt'];
+  const uploadFilenames = ['subidas.txt', 'upload.txt', 'onedrive.txt', 'subir.txt'];
 
   const now = new Date();
   const summaryReport = [];
@@ -370,12 +394,30 @@ function buildAllTransfers() {
       }
     }
 
+    // Check upload URL file (e.g. OneDrive Request link)
+    let uploadUrl = null;
+    for (const upFile of uploadFilenames) {
+      const upPath = path.join(currentFolderDir, upFile);
+      if (fs.existsSync(upPath)) {
+        const text = fs.readFileSync(upPath, 'utf-8');
+        const validLine = text.split('\n')
+          .map(l => l.trim())
+          .filter(l => l && !l.startsWith('#') && !l.startsWith('//'))
+          .find(l => /^https?:\/\//i.test(l));
+        if (validLine) {
+          uploadUrl = validLine.match(/https?:\/\/[^\s]+/)[0];
+          break;
+        }
+      }
+    }
+
     // List downloadable files
     const allFiles = fs.readdirSync(currentFolderDir).filter(name => {
       if (name.startsWith('.') || name === 'Thumbs.db') return false;
       const ext = path.extname(name).toLowerCase();
       if (ignoredExtensions.includes(ext)) return false;
       if (expirationFilenames.includes(name.toLowerCase())) return false;
+      if (uploadFilenames.includes(name.toLowerCase())) return false;
       const full = path.join(currentFolderDir, name);
       return fs.statSync(full).isFile();
     }).sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }));
@@ -427,7 +469,8 @@ function buildAllTransfers() {
       zipName,
       zipSize,
       zipFormatted,
-      expiration
+      expiration,
+      uploadUrl
     };
 
     const folderHtml = generateFolderHtml(folder, folderData);
@@ -445,7 +488,7 @@ function buildAllTransfers() {
       ...folderData
     }, null, 2), 'utf-8');
 
-    console.log(` -> Generated: /files/${folder} (${fileEntries.length} archivos, zip: ${zipFormatted})\n`);
+    console.log(` -> Generated: /files/${folder} (${fileEntries.length} archivos, zip: ${zipFormatted}, subidas: ${uploadUrl ? 'OneDrive' : 'no'})\n`);
 
     summaryReport.push({
       folder,
@@ -455,7 +498,8 @@ function buildAllTransfers() {
       zipSize: zipFormatted,
       expiration: expiration 
         ? (expiration.isExpired ? `⚠️ CADUCADO (${expiration.formattedDate})` : `Activo (hasta ${expiration.formattedDate}, quedan ${expiration.daysLeft} d)`)
-        : 'Sin caducidad'
+        : 'Sin caducidad',
+      subidasOneDrive: uploadUrl ? '✅ Activado' : 'No'
     });
   }
 
