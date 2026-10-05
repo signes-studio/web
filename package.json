@@ -9,7 +9,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "generate:favicon": "node generate-favicons.js",
-    "zip:adjuntos": "node zip-adjuntos.js"
+    "zip:adjuntos": "node zip-adjuntos.js",
+    "files": "node build-files.js"
   },
   "repository": {
     "type": "git",

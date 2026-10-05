@@ -18,3 +18,12 @@
 
 /adjuntos/*
   X-Robots-Tag: noindex, nofollow
+
+/files
+  X-Robots-Tag: noindex, nofollow
+
+/files/*
+  X-Robots-Tag: noindex, nofollow
+
+/files.html
+  X-Robots-Tag: noindex, nofollow
