@@ -11,3 +11,4 @@ node publish-files.js
 
 echo.
 pause
+
