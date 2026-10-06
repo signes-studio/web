@@ -1,0 +1,27 @@
+{
+  "folder": "261006-MC18",
+  "updatedAt": "2026-10-06T11:30:59.113Z",
+  "files": [
+    {
+      "name": "2.5.1-CARPINTERIA EXTERIOR.pdf",
+      "size": 179199,
+      "formattedSize": "175.0 KB",
+      "ext": "PDF",
+      "typeClass": "pdf"
+    }
+  ],
+  "count": 1,
+  "totalBytes": 179199,
+  "totalFormatted": "175.0 KB",
+  "zipName": "261006-MC18.zip",
+  "zipSize": 159625,
+  "zipFormatted": "155.9 KB",
+  "expiration": {
+    "raw": "10/10/2026",
+    "date": "2026-10-10T21:59:59.000Z",
+    "isExpired": false,
+    "daysLeft": 5,
+    "formattedDate": "10 de octubre de 2026"
+  },
+  "uploadUrl": null
+}
