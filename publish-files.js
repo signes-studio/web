@@ -32,3 +32,4 @@ try {
   console.error('Git deployment error:', err.message);
   process.exit(1);
 }
+
