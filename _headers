@@ -7,16 +7,7 @@
 /portfolio.html
   X-Robots-Tag: noindex, nofollow
 
-/adjuntos
-  X-Robots-Tag: noindex, nofollow
-
-/adjuntos/
-  X-Robots-Tag: noindex, nofollow
-
 /adjuntos.html
-  X-Robots-Tag: noindex, nofollow
-
-/adjuntos/*
   X-Robots-Tag: noindex, nofollow
 
 /files
