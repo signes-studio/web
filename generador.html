@@ -95,18 +95,28 @@
     const resultJson = document.getElementById('resultJson');
     const downloadBtn = document.getElementById('downloadBtn');
 
+    let selectedFiles = [];
+
     dropzone.addEventListener('click', () => fileInput.click());
     fileInput.addEventListener('change', handleFiles);
+    proyectoInput.addEventListener('input', updateManifest);
+    clienteInput.addEventListener('input', updateManifest);
 
     function handleFiles(e) {
-        const files = Array.from(e.target.files);
-        if(files.length === 0) return;
+        selectedFiles = Array.from(e.target.files);
+        if(selectedFiles.length === 0) return;
+        updateManifest();
+    }
 
-        const fileNames = files.map(f => f.name);
+    function updateManifest() {
+        if(selectedFiles.length === 0) return;
+
+        const fileNames = selectedFiles.map(f => f.name);
 
         const manifestData = {
             "proyecto": proyectoInput.value.trim() || "Revisión de Encargo",
             "cliente": clienteInput.value.trim() || "Exclusivo",
+            "version": Date.now(),
             "imagenes": fileNames
         };
 
@@ -115,7 +125,7 @@
         resultJson.value = jsonString;
         resultJson.style.display = 'block';
         downloadBtn.style.display = 'block';
-        dropzone.innerText = `¡Listo! Detectadas ${files.length} imágenes para ${proyectoInput.value || 'el proyecto'}.`;
+        dropzone.innerText = `¡Listo! Detectadas ${selectedFiles.length} imágenes para ${proyectoInput.value || 'el proyecto'}.`;
     }
 
     downloadBtn.addEventListener('click', () => {

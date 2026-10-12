@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>SIGNES.STUDIO — Review Portal</title>
     
     <!-- Vinculación del Favicon Oficial de la Marca -->
@@ -585,6 +588,7 @@
     let currentLang = detectLang();
     let T = STRINGS[currentLang];
     let manifestData = null;
+    let manifestVersion = Date.now();
     let dataStructure = { rev1: [], rev2: [], rev3: [], signes: [] };
     let globalActiveImages = [];
     let currentImageIndex = 0;
@@ -602,13 +606,20 @@
     }
 
     function fetchManifest() {
-        fetch(`${BUCKET_URL}/${projectId}/manifest.json`)
+        const cacheBuster = new Date().getTime();
+        fetch(`${BUCKET_URL}/${projectId}/manifest.json?nocache=${cacheBuster}`, {
+            method: 'GET',
+            mode: 'cors',
+            credentials: 'omit',
+            cache: 'no-store'
+        })
             .then(response => {
                 if (!response.ok) throw new Error();
                 return response.json();
             })
             .then(data => {
                 manifestData = data;
+                manifestVersion = data.version || cacheBuster;
                 buildGallery(data);
                 applyStaticStrings();
             })
@@ -709,13 +720,13 @@
             `;
 
             group.forEach(img => {
-                const imgUrl = `${BUCKET_URL}/${projectId}/${img}`;
+                const imgUrl = `${BUCKET_URL}/${projectId}/${img}?v=${manifestVersion}`;
                 let cleanCaption = img.replace(/^rev\d+_/i, '').replace(/^SIGNES_/i, '').replace(/\.[^/.]+$/, '').replace(/^[0-9]+[-_]/, '').replace(/[-_]/g, ' ');
 
                 globalActiveImages.push({ url: imgUrl, caption: cleanCaption, filename: img });
                 const currentGlobalIndex = globalActiveImages.length - 1;
 
-                const thumbnailUrl = `${BUCKET_URL}/cdn-cgi/image/width=450,quality=80,format=auto/${projectId}/${img}`;
+                const thumbnailUrl = `${BUCKET_URL}/cdn-cgi/image/width=450,quality=80,format=auto/${projectId}/${img}?v=${manifestVersion}`;
 
                 contentHtml += `
                     <div class="image-card" onclick="openLightbox(${currentGlobalIndex})">
@@ -820,7 +831,8 @@
         fetch(cleanUrl, {
             method: 'GET',
             mode: 'cors',
-            credentials: 'omit'
+            credentials: 'omit',
+            cache: 'no-store'
         })
         .then(response => {
             if (!response.ok) throw new Error();
@@ -856,7 +868,7 @@
         const fetchOne = (fileName) => {
             const imgUrl = `${BUCKET_URL}/${projectId}/${fileName}`;
             const cleanUrl = `${imgUrl}?nocache=${new Date().getTime()}`;
-            return fetch(cleanUrl, { method: 'GET', mode: 'cors', credentials: 'omit' })
+            return fetch(cleanUrl, { method: 'GET', mode: 'cors', credentials: 'omit', cache: 'no-store' })
                 .then(response => {
                     if (!response.ok) throw new Error(`Failed: ${fileName}`);
                     return response.blob();
