@@ -1,6 +1,6 @@
 {
   "folder": "261006-MC18",
-  "updatedAt": "2026-10-06T11:44:16.552Z",
+  "updatedAt": "2026-10-13T13:00:15.324Z",
   "files": [
     {
       "name": "2.5.1-CARPINTERIA EXTERIOR.pdf",
@@ -19,8 +19,8 @@
   "expiration": {
     "raw": "10/10/2026",
     "date": "2026-10-10T21:59:59.000Z",
-    "isExpired": false,
-    "daysLeft": 5,
+    "isExpired": true,
+    "daysLeft": -2,
     "formattedDate": "10 de octubre de 2026"
   },
   "uploadUrl": null
