@@ -1,0 +1,35 @@
+{
+  "folder": "261027-ODAA",
+  "updatedAt": "2026-10-27T18:04:38.265Z",
+  "files": [
+    {
+      "name": "2519_MADBIT-12-Cubierta.jpg",
+      "size": 11260156,
+      "formattedSize": "10.7 MB",
+      "ext": "JPG",
+      "typeClass": "img"
+    },
+    {
+      "name": "2519_MADBIT-21-Txoco interior.jpg",
+      "size": 17234938,
+      "formattedSize": "16.4 MB",
+      "ext": "JPG",
+      "typeClass": "img"
+    },
+    {
+      "name": "2524-WASHINGTON LIBRARY_01-Reception.jpg",
+      "size": 11697106,
+      "formattedSize": "11.2 MB",
+      "ext": "JPG",
+      "typeClass": "img"
+    }
+  ],
+  "count": 3,
+  "totalBytes": 40192200,
+  "totalFormatted": "38.3 MB",
+  "zipName": "261027-ODAA.zip",
+  "zipSize": 40092109,
+  "zipFormatted": "38.2 MB",
+  "expiration": null,
+  "uploadUrl": null
+}
