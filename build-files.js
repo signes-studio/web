@@ -22,7 +22,7 @@ let config = {
   studioName: "SIGNES.STUDIO",
   studioEmail: "office@signes.studio",
   studioPhone: "+34 614 459 144",
-  defaultBgImage: "/img/portfolio/2506-DESEMBOCADURA-02-Pantalan.jpg"
+  defaultBgImage: "/img/portfolio/2451-VICTORIA%20EUGENIA-03%20Galer%C3%ADa.jpg"
 };
 if (fs.existsSync(configFile)) {
   try {
