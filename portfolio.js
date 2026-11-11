@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (index < 0 || index >= images.length) return;
     currentIndex = index;
     const target = images[currentIndex];
-    lightboxImg.src = target.src;
+    lightboxImg.src = target.currentSrc || target.src;
     lightboxImg.alt = target.alt || 'Enlarged image';
     lightbox.hidden = false;
     void lightbox.offsetWidth;

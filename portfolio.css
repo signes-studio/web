@@ -160,6 +160,10 @@ img {
   background-color: rgba(0, 0, 0, 0.02);
 }
 
+.gallery-figure picture {
+  display: block;
+}
+
 .gallery-img {
   width: 100%;
   height: auto;
