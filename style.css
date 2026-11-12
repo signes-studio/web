@@ -212,6 +212,17 @@ a { color: inherit; text-decoration: none; }
 .meta-text-group { text-align: left; }
 .image-title { font-size: 11px; text-transform: uppercase; margin-bottom: 0.1rem; }
 .image-desc { color: var(--ink-muted); }
+.studio-link {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.studio-link:hover,
+.studio-link:focus-visible {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
 
 /* CONTROLES LATERALES */
 .overlay-controls {
