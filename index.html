@@ -42,7 +42,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600&family=Inter:wght@300;400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=3.3">
+  <link rel="stylesheet" href="style.css?v=3.4">
 
   <script type="application/ld+json">
   {
@@ -371,7 +371,9 @@
       const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
       let currentPlate = 0;
-      let pendingTarget = null;
+      let pendingCard = null;
+      let queuedStep = 0;
+      let scrollOriginLeft = null;
       let lastAnnounced = 0;
       let activeInspectIdx = 0;
 
@@ -400,7 +402,7 @@
       let dragMoved = 0;
       let startX = 0;
       let startScroll = 0;
-      let dragStartPlate = 0;
+      let dragStartCard = null;
       let copyTimer = null;
 
       /* --- Light-dismiss fallback for browsers without <dialog closedby> (Safari) --- */
@@ -449,47 +451,136 @@
         });
       }
 
-      /* --- Single-Postcard Scroll Navigation --- */
-      function getNearestPlate() {
-        if (!wall || wall.clientWidth === 0) return 0;
-        const idx = Math.round(wall.scrollLeft / wall.clientWidth);
-        return Math.max(0, Math.min(cards.length - 1, idx));
+      /* --- Single-Postcard Infinite Scroll Navigation (CSS Order Parking) --- */
+      function getVisualSlides() {
+        return [...cards].sort((a, b) => a.offsetLeft - b.offsetLeft);
       }
 
-      function goToPlate(index, instant = false) {
-        if (!wall || !cards.length) return;
-        const clamped = Math.max(0, Math.min(cards.length - 1, index));
-        const targetCard = cards[clamped];
-        if (!targetCard) return;
-
-        currentPlate = clamped;
-        pendingTarget = clamped;
-
-        const behavior = instant || prefersReducedMotion.matches ? 'instant' : 'smooth';
-        wall.scrollTo({ left: targetCard.offsetLeft, behavior });
+      function getNearestSlide() {
+        if (!wall || !cards.length) return cards[0] || null;
+        const trackCenter = wall.scrollLeft + wall.clientWidth / 2;
+        let best = cards[0];
+        let bestDist = Infinity;
+        for (const card of cards) {
+          const dist = Math.abs(card.offsetLeft + card.offsetWidth / 2 - trackCenter);
+          if (dist < bestDist) {
+            bestDist = dist;
+            best = card;
+          }
+        }
+        return best;
       }
 
-      function stepPlate(direction) {
-        const base = pendingTarget !== null ? pendingTarget : getNearestPlate();
-        const next = Math.max(0, Math.min(cards.length - 1, base + direction));
-        if (next === base) return;
-        goToPlate(next);
-      }
+      function syncParking(domIdx, skipOverflowLock = false) {
+        if (!wall || cards.length < 3) return;
+        const anchorCard = cards[domIdx];
+        if (!anchorCard) return;
+        if (wall.style.getPropertyValue('--current') === String(domIdx)) return;
 
-      function handleScrollSettled() {
-        const settled = getNearestPlate();
-        currentPlate = settled;
-        pendingTarget = null;
+        const beforeOffset = anchorCard.offsetLeft;
+        wall.classList.add('is-parking');
+        if (!skipOverflowLock) wall.classList.add('is-parking-lock');
 
-        if (settled !== lastAnnounced && galleryStatus) {
-          const card = cards[settled];
-          const title = card ? card.dataset.title : '';
-          galleryStatus.textContent = `Slide ${settled + 1} of ${cards.length}: ${title}`;
-          lastAnnounced = settled;
+        wall.style.setProperty('--current', String(domIdx));
+
+        const afterOffset = anchorCard.offsetLeft;
+        if (afterOffset !== beforeOffset) {
+          wall.scrollLeft += afterOffset - beforeOffset;
+        }
+
+        wall.classList.remove('is-parking');
+        if (!skipOverflowLock) {
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              wall.classList.remove('is-parking-lock');
+            });
+          });
         }
       }
 
-      if (wall) {
+      function scrollToCard(targetCard, instant = false) {
+        if (!wall || !targetCard) return;
+        const domIdx = cards.indexOf(targetCard);
+        if (domIdx === -1) return;
+
+        currentPlate = domIdx;
+
+        if (instant || prefersReducedMotion.matches) {
+          pendingCard = null;
+          scrollOriginLeft = null;
+          wall.classList.add('is-parking');
+          wall.scrollLeft = targetCard.offsetLeft;
+          wall.classList.remove('is-parking');
+          syncParking(domIdx, true);
+          return;
+        }
+
+        pendingCard = targetCard;
+        scrollOriginLeft = wall.scrollLeft;
+        wall.scrollTo({ left: targetCard.offsetLeft, behavior: 'smooth' });
+      }
+
+      function stepPlate(direction) {
+        if (!wall || !cards.length) return;
+        const visual = getVisualSlides();
+        const baseCard = pendingCard || getNearestSlide();
+        const visualIdx = visual.indexOf(baseCard);
+        if (visualIdx === -1) return;
+
+        const nextVisualIdx = visualIdx + direction;
+        if (nextVisualIdx < 0 || nextVisualIdx >= visual.length) {
+          /* Reached visual end while a wrap scroll is still in flight: replay once settled */
+          queuedStep = direction;
+          return;
+        }
+
+        queuedStep = 0;
+        scrollToCard(visual[nextVisualIdx]);
+      }
+
+      function handleScrollSettled() {
+        if (!wall || !cards.length) return;
+        const settledCard = getNearestSlide();
+        if (!settledCard) return;
+
+        /* Ignore a stale settle belonging to an earlier scroll before a newly requested scroll moves */
+        if (
+          pendingCard &&
+          settledCard !== pendingCard &&
+          scrollOriginLeft !== null &&
+          Math.abs(wall.scrollLeft - scrollOriginLeft) < 2
+        ) {
+          return;
+        }
+
+        const domIdx = cards.indexOf(settledCard);
+        currentPlate = domIdx;
+        pendingCard = null;
+        scrollOriginLeft = null;
+
+        const replayDir = queuedStep;
+        queuedStep = 0;
+
+        syncParking(domIdx, replayDir !== 0);
+
+        if (domIdx !== lastAnnounced && galleryStatus) {
+          const title = settledCard.dataset.title || '';
+          galleryStatus.textContent = `Slide ${domIdx + 1} of ${cards.length}: ${title}`;
+          lastAnnounced = domIdx;
+        }
+
+        if (replayDir !== 0) {
+          stepPlate(replayDir);
+        }
+      }
+
+      if (wall && cards.length) {
+        if (!CSS.supports('order: sibling-count()')) {
+          wall.style.setProperty('--children-count', String(cards.length));
+        }
+        /* Initial silent parking so Plate 05 is already parked before Plate 01 */
+        syncParking(0, true);
+
         if ('onscrollend' in window) {
           wall.addEventListener('scrollend', handleScrollSettled);
         } else {
@@ -500,7 +591,7 @@
           }, { passive: true });
         }
 
-        /* Wheel: advance exactly one full postcard per scroll gesture */
+        /* Wheel: advance exactly one full postcard per scroll gesture (infinite loop) */
         wall.addEventListener('wheel', (e) => {
           if (dialogs.some((d) => d.open)) return;
 
@@ -534,7 +625,7 @@
           dragMoved = 0;
           startX = e.pageX - wall.offsetLeft;
           startScroll = wall.scrollLeft;
-          dragStartPlate = getNearestPlate();
+          dragStartCard = getNearestSlide();
           wall.classList.add('is-dragging');
         });
 
@@ -544,11 +635,16 @@
           isDragging = false;
           wall.classList.remove('is-dragging');
 
-          if (Math.abs(draggedDelta) > 60) {
-            goToPlate(dragStartPlate + (draggedDelta > 0 ? 1 : -1));
-          } else if (dragMoved >= 6) {
-            goToPlate(dragStartPlate);
+          if (Math.abs(draggedDelta) > 60 && dragStartCard) {
+            const visual = getVisualSlides();
+            const startVisIdx = visual.indexOf(dragStartCard);
+            const nextCard = visual[startVisIdx + (draggedDelta > 0 ? 1 : -1)];
+            if (nextCard) scrollToCard(nextCard);
+            else scrollToCard(dragStartCard);
+          } else if (dragMoved >= 6 && dragStartCard) {
+            scrollToCard(dragStartCard);
           }
+          dragStartCard = null;
         });
 
         wall.addEventListener('mousemove', (e) => {
@@ -564,7 +660,7 @@
         let resizeTimer = null;
         window.addEventListener('resize', () => {
           clearTimeout(resizeTimer);
-          resizeTimer = setTimeout(() => goToPlate(currentPlate, true), 80);
+          resizeTimer = setTimeout(() => scrollToCard(cards[currentPlate], true), 80);
         });
       }
 
@@ -818,7 +914,7 @@
       function resetToWork(e) {
         e.preventDefault();
         closeOtherDialogs(null);
-        goToPlate(0);
+        scrollToCard(cards[0]);
         syncNavState();
       }
 
@@ -839,11 +935,11 @@
           if (e.key === 'ArrowRight') {
             e.preventDefault();
             renderInspection(activeInspectIdx + 1);
-            goToPlate(activeInspectIdx, true);
+            scrollToCard(cards[activeInspectIdx], true);
           } else if (e.key === 'ArrowLeft') {
             e.preventDefault();
             renderInspection(activeInspectIdx - 1);
-            goToPlate(activeInspectIdx, true);
+            scrollToCard(cards[activeInspectIdx], true);
           }
           return;
         }

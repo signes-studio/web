@@ -214,6 +214,24 @@ button {
   scroll-behavior: auto;
 }
 
+#gallery-wall.is-parking {
+  scroll-snap-type: none;
+  scroll-behavior: auto;
+}
+
+#gallery-wall.is-parking-lock {
+  overflow-x: hidden;
+}
+
+/* Continuous infinite looping via CSS order parking (no DOM cloning) */
+#gallery-wall > :first-child {
+  order: clamp(0, var(--current) - (var(--children-count, sibling-count()) - 3), 1);
+}
+
+#gallery-wall > :last-child {
+  order: calc(-1 * clamp(0, 2 - var(--current), 1));
+}
+
 .artwork-card {
   margin: 0;
   flex: 0 0 100%;
