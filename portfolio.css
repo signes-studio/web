@@ -80,20 +80,14 @@ img {
 }
 
 .brand-link {
-  font-family: var(--font-logo);
-  font-size: clamp(20px, 2.5vw, 24px);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
   display: inline-block;
   color: var(--ink);
 }
 
-.brand-link .bold {
-  font-weight: 500;
-}
-
-.brand-link .light {
-  font-weight: 200 !important;
+.brand-logo-img {
+  height: clamp(19px, 2.2vw, 23px);
+  width: auto;
+  display: block;
 }
 
 .brand-tagline {
@@ -223,15 +217,14 @@ img {
 }
 
 .footer-brand {
-  font-family: var(--font-logo);
-  font-size: 16px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  margin-bottom: 0.75rem;
+  margin-bottom: 1rem;
 }
 
-.footer-brand .bold { font-weight: 500; }
-.footer-brand .light { font-weight: 200 !important; }
+.footer-logo-img {
+  height: 44px;
+  width: auto;
+  display: block;
+}
 
 .footer-desc {
   font-size: 11px;

@@ -73,16 +73,14 @@
         }
 
     /* Ajuste fino del logo para calcar la tipografía y posición */
-        .logo { 
-            font-family: 'Montserrat', sans-serif;
-            font-size: 24px; 
-           text-transform: uppercase; 
-            letter-spacing: 0.06em; 
-            color: var(--ink);
-          line-height: 1.2; /* Alineación vertical exacta del interlineado */
+        .logo {
+            display: block;
         }
-        .logo .bold { font-weight: 500; }
-        .logo .light { font-weight: 200 !important; }
+        .logo img {
+            height: 46px;
+            width: auto;
+            display: block;
+        }
 
     /* Tagline idéntico en tamaño y márgenes */
         .tagline {
@@ -436,7 +434,7 @@
     <header id="header">
         <div class="header-top-group">
             <div class="logo">
-                <span class="bold">SIGNES</span><span class="light">.STUDIO</span>
+                <img src="/img/logo-signes-stacked.png" alt="signes.studio" width="262" height="150" decoding="async">
             </div>
             <span class="tagline">Visual Research for Architecture</span>
             

@@ -134,9 +134,10 @@ button {
 
 .brand-wordmark {
   display: block;
-  height: 17px;
+  height: 18px;
   width: auto;
-  color: var(--carbon-ink);
+  user-select: none;
+  -webkit-user-drag: none;
 }
 
 .brand-tagline {
@@ -706,6 +707,13 @@ dialog.sheet-dialog::backdrop {
   color: var(--muted-stone);
 }
 
+.sheet-footer-logo {
+  display: block;
+  height: 12px;
+  width: auto;
+  opacity: 0.65;
+}
+
 /* ==========================================================================
    SMALL-TABLET TYPOGRAPHY SCALE (>= 640px)
    ========================================================================== */
@@ -716,7 +724,7 @@ dialog.sheet-dialog::backdrop {
   }
 
   .brand-wordmark {
-    height: 19.5px;
+    height: 21px;
   }
 
   .brand-tagline {

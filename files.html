@@ -35,15 +35,15 @@
         }
 
         .logo {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 15px;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            color: #1a1a1a;
-            margin-bottom: 80px;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 72px;
         }
-        .logo .bold { font-weight: 500; }
-        .logo .light { font-weight: 200; }
+        .logo img {
+            height: 52px;
+            width: auto;
+            display: block;
+        }
 
         .error-code {
             font-size: 84px;
@@ -128,7 +128,7 @@
 <body>
 
 <div class="error-container">
-    <div class="logo"><span class="bold">SIGNES</span><span class="light">.STUDIO</span></div>
+    <div class="logo"><img src="/img/logo-signes-stacked.png" alt="signes.studio" width="262" height="150" decoding="async"></div>
     
     <div class="error-code">404</div>
     <h1 class="error-title" id="msgTitle">Page Not Found</h1>

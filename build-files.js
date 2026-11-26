@@ -214,7 +214,7 @@ function generateFolderHtml(folderName, folderData) {
         <div class="card-brand">
           <div>
             <a href="/" class="brand-link" aria-label="SIGNES.STUDIO Inicio">
-              <span class="bold">SIGNES</span><span class="light">.STUDIO</span>
+              <img src="/img/logo-signes-horizontal.png" alt="signes.studio" width="300" height="53" style="height: 19px; width: auto; display: block;" decoding="async">
             </a>
             <p class="brand-tagline">Visual Research for Architecture</p>
           </div>
